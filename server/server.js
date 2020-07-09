@@ -7,7 +7,7 @@ const app = express();
 
 const IP = require('os').networkInterfaces( )['wlp3s0'][0]['address'];
 const port = 4000;
-const dbName = 'dbname'
+const dbName = 'deepsocial'
 
 
 // MODELS
