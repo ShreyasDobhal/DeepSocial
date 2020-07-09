@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+body {
+    background-image: url('/images/bg.png');   
+}
+
+.login-container {
+    position: absolute;
+    top: 120px;
+    right: 50px;
+    width: 500px;
+    height: 500px;
+    border-radius: 2px;
+    background-image: linear-gradient(-90deg,#24323d,#25313d);
+}
+
+.login-options-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 45px;
+}
+
+.login-options-btn {
+    width: 210px;
+    height: 40px;
+    border-radius: 2px;
+}
+
+
+.login-options-btn:focus {
+    outline: none;
+}
+
+.login-option-active {
+    border: 1px solid #29826d;
+    background-image: linear-gradient(-90deg,#1ab188,#18b188);
+    color: #d4fff3;
+}
+
+.login-option-inactive {
+    border: 1px solid #2b3840;
+    background-color: #45525a;
+    color: #67767d;
+}
+
+.login-title-container {
+    margin-top: 20px;
+}
+
+.login-title {
+    color: #d5d5df;
+    font-size: 20px;
+    text-align: center;
+}
+
+.login-form-container {
+    margin-left: 17px;
+}
+
+.login-form-container input {
+    background-color: #25313d;
+    border: 1px solid #525f67;
+    padding: 5px 10px;
+    margin: 11px 6px;
+    border-radius: 4px;
+    outline: none;
+    caret-color: white;
+    color: whitesmoke;
+}
+
+.login-form-container .input-small {
+    width: 44%;
+}
+
+.login-form-container .input-large {
+    width: 90%;
+}
+
+.login-form-container .input-hidden {
+    width: 90%;
+    visibility: hidden;
+}
+
+.login-start-btn {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    width: 93%;
+    height: 60px;
+    border-radius: 8px;
+    margin: 17px 0px;
+    border: 1px solid #29826d;
+    background-image: linear-gradient(-90deg,#1ab188,#18b188);
+    color: #d4fff3;
+    outline: none;   
+}
+
+.login-start-btn:focus {
+    outline: none;
+}
