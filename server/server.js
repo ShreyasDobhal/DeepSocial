@@ -39,8 +39,8 @@ app.use(bodyparser.json());
 
 
 // ROUTES
-// let sampleRoute = require('./routes/sampleRoute.js');
-// app.use('/route',sampleRoute);
+let usersRoute = require('./routes/users.js');
+app.use('/users',usersRoute);
 
 
 // END POINTS
