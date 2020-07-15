@@ -10,7 +10,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <NavigationBar/>
+        {/* <NavigationBar/> */}
         <Switch>
           <Route exact path='/' component={SignUp} />
         </Switch>

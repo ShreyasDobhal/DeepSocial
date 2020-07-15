@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 
 class SignUp extends Component {
     state = {
-        loginTitle: ['Sign up','Sign in'],
-        loginBtnClass: ['login-options-btn login-option-active','login-options-btn login-option-inactive'],
         toggleVal: 0
     }
     toggleHandler(value) {
@@ -12,6 +10,8 @@ class SignUp extends Component {
         });
     }
     render() {
+        const loginTitle= ['Sign up','Sign in'];
+        const loginBtnClass= ['login-options-btn login-option-active','login-options-btn login-option-inactive'];
         let formFields;
         if (this.state.toggleVal==0) {
             formFields = (
@@ -37,11 +37,11 @@ class SignUp extends Component {
         return (
             <div className='login-container'>
                 <div className='login-options-container'>
-                    <button className={ this.state.loginBtnClass[(this.state.toggleVal)%2] } onClick={()=>{this.toggleHandler(0);}}>Sign Up</button>
-                    <button className={ this.state.loginBtnClass[(this.state.toggleVal+1)%2] } onClick={()=>{this.toggleHandler(1);}}>Sign In</button>
+                    <button className={ loginBtnClass[(this.state.toggleVal)%2] } onClick={()=>{this.toggleHandler(0);}}>Sign Up</button>
+                    <button className={ loginBtnClass[(this.state.toggleVal+1)%2] } onClick={()=>{this.toggleHandler(1);}}>Sign In</button>
                 </div>
                 <div className='login-title-container'>
-                    <p className='login-title'>{ this.state.loginTitle[this.state.toggleVal] }</p>
+                    <p className='login-title'>{ loginTitle[this.state.toggleVal] }</p>
                 </div>
                 <div className='login-form-container'>
                     {formFields}
