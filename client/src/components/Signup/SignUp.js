@@ -22,16 +22,31 @@ class SignUp extends Component {
     submitHandler = () => {
         if (this.state.toggleVal===0) {
             // Sign up
+
+            if (!this.state.fname || !this.state.lname || !this.state.email || !this.state.password1 || !this.state.password2) {
+                alert("Input fields cannot be empty");
+                return;
+            } else if (this.state.password1!==this.state.password2) {
+                alert("Password fields do not match !");
+                return;
+            }
+
             const request = {
                 fname: this.state.fname,
                 lname: this.state.lname,
                 email: this.state.email,
-                password1: this.state.password1,
-                password2: this.state.password2
+                password: this.state.password1
             }
             this.props.onSignUpHandler(request);
+
         } else {
             // Sign in
+
+            if (!this.state.email || !this.state.password1) {
+                alert("Input fields cannot be empty");
+                return;
+            }
+            
             const request = {
                 email: this.state.email,
                 password: this.state.password1,
