@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
 
-body {
-    background-image: url('/images/bg.png');   
+.login-background {
+    width: 100vw;
+    height: 100vh;
+    background-image: url('/images/bg.png');
 }
 
 .login-container {

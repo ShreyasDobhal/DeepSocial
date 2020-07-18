@@ -81,21 +81,24 @@ class SignUp extends Component {
         }
 
         return (
-            <div className='login-container'>
-                <div className='login-options-container'>
-                    <button className={ loginBtnClass[(this.state.toggleVal)%2] } onClick={()=>{this.toggleHandler(0);}}>Sign Up</button>
-                    <button className={ loginBtnClass[(this.state.toggleVal+1)%2] } onClick={()=>{this.toggleHandler(1);}}>Sign In</button>
-                </div>
-                <div className='login-title-container'>
-                    <p className='login-title'>{ loginTitle[this.state.toggleVal] }</p>
-                </div>
-                <div className='login-form-container'>
-                    {formFields}
-                    <div>
-                        <button className='login-start-btn' onClick={this.submitHandler}>GET STARTED</button>
+            <div className="login-background">
+                <div className='login-container'>
+                    <div className='login-options-container'>
+                        <button className={ loginBtnClass[(this.state.toggleVal)%2] } onClick={()=>{this.toggleHandler(0);}}>Sign Up</button>
+                        <button className={ loginBtnClass[(this.state.toggleVal+1)%2] } onClick={()=>{this.toggleHandler(1);}}>Sign In</button>
+                    </div>
+                    <div className='login-title-container'>
+                        <p className='login-title'>{ loginTitle[this.state.toggleVal] }</p>
+                    </div>
+                    <div className='login-form-container'>
+                        {formFields}
+                        <div>
+                            <button className='login-start-btn' onClick={this.submitHandler}>GET STARTED</button>
+                        </div>
                     </div>
                 </div>
             </div>
+            
         );
     }
 }

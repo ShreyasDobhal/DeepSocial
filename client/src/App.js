@@ -4,8 +4,9 @@ import {connect} from 'react-redux';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import NavigationBar from './components/Navbar';
-import SignUpPage from './components/Signup/SignUpPage';
+// import NavigationBar from './components/Navbar';
+import SignUpPage from './components/SignupPage/SignUpPage';
+import HomePage from './components/HomePage/HomePage';
 
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
@@ -22,8 +23,7 @@ function App(props) {
     <BrowserRouter>
       <div className="App">
         <Switch>
-          <Route exact path='/' component={props.isSignedIn ? (()=>(<h1>Signed in</h1>)) : SignUpPage} />
-          <Route exact path='/navbar' component={NavigationBar} />
+          <Route exact path='/' component={props.isSignedIn ? HomePage : SignUpPage} />
         </Switch>
       </div>
     </BrowserRouter>
