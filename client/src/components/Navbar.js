@@ -15,10 +15,36 @@ import {
     Button
 } from 'reactstrap';
 
+import {connect} from 'react-redux';
+
 const NavigationBar = (props) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggle = () => setIsOpen(!isOpen);
+
+    let loginBtn = null;
+
+    if (props.isSignedIn) {
+        loginBtn = (
+            <Nav>
+                <NavItem className='mx-2'>
+                    <Button onClick={props.deleteTokenId}>Log out</Button>
+                </NavItem>
+            </Nav>
+        )
+    } else {
+        loginBtn = (
+            <Nav>
+                <NavItem className='mx-2 '>
+                    <Button>Sign in</Button>
+                </NavItem>
+                <NavItem className='mx-2'>
+                    <Button>Sign up</Button>
+                </NavItem>
+            </Nav>
+        );
+    }
+    
 
     return (
         <div>
@@ -51,18 +77,25 @@ const NavigationBar = (props) => {
                             </DropdownMenu>
                         </UncontrolledDropdown>
                     </Nav>
-                    <Nav>
-                        <NavItem className='mx-2 '>
-                            <Button>Sign in</Button>
-                        </NavItem>
-                        <NavItem className='mx-2'>
-                            <Button>Sign up</Button>
-                        </NavItem>
-                    </Nav>
+                    {loginBtn}
+                    
                 </Collapse>
             </Navbar>
         </div>
     );
 }
 
-export default withRouter(NavigationBar);
+const mapStateToProps = (state) => {
+    return {
+        tokenId: state.tokenId,
+        isSignedIn: state.isSignedIn
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+      deleteTokenId: (tokenId) => dispatch({type:'DELETE_TOKEN'})
+    }
+  }
+
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(NavigationBar));

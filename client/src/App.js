@@ -1,20 +1,19 @@
 import React from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {connect} from 'react-redux';
+import Cookies from 'universal-cookie';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-// import NavigationBar from './components/Navbar';
 import SignUpPage from './components/SignupPage/SignUpPage';
 import HomePage from './components/HomePage/HomePage';
 
-import Cookies from 'universal-cookie';
 const cookies = new Cookies();
-// cookies.set('tokenId','5f12aa3ff83edf6400d60811');
-// console.log("Token ID : ",cookies.get('tokenId'));
 
 function App(props) {
-  if (cookies.get('tokenId')) {
+
+  if (cookies.get('tokenId') && cookies.get('tokenId')!=='null') {
+    console.log("Loading saved cookie");
     props.setTokenId(cookies.get('tokenId'));
   }
   console.log("App token id:",props.tokenId);
