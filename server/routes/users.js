@@ -125,7 +125,14 @@ router.post('/signin', (req,res) => {
                 .then(isMatch => {
                     console.log(user);
                     if (isMatch) {
-                        res.json({succes:true,"_id":user._id});
+                        res.json({
+                            succes:true,
+                            "_id":user._id,
+                            user:{
+                                fname: user.fname,
+                                lname: user.lname,
+                                email: user.email
+                            }});
                         
                     } else {
                         res.status(400).json({success:false,error:'Password incorrect'});

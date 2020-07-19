@@ -3,6 +3,7 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 
 import SignUp from './SignUp';
+import * as Actions from '../../actions/actions';
 
 class SignUpPage extends Component {
 
@@ -23,6 +24,11 @@ class SignUpPage extends Component {
                 alert("Login successful");
 
                 this.props.setTokenId(data.data._id);
+                this.props.setUser({
+                    fname:data.data.fname,
+                    lname:data.data.lname,
+                    email:data.data.email
+                });
             })
             .catch(error => {
                 console.log(error);
@@ -45,6 +51,11 @@ class SignUpPage extends Component {
                 alert("Login successful");
 
                 this.props.setTokenId(data.data._id);
+                this.props.setUser({
+                    fname:data.data.user.fname,
+                    lname:data.data.user.lname,
+                    email:data.data.user.email
+                });
             })
             .catch(error => {
                 console.log(error);
@@ -67,7 +78,9 @@ const mapStateToProps = (state) => {
   
 const mapDispatchToProps = (dispatch) => {
     return {
-        setTokenId: (tokenId) => dispatch({type:'SET_TOKEN',value:tokenId})
+        // setTokenId: (tokenId) => dispatch({type:'SET_TOKEN',value:tokenId})
+        setTokenId: (tokenId) => dispatch(Actions.setToken(tokenId)),
+        setUser: (user) => dispatch(Actions.setUser(user))
     }
   }
   

@@ -5,12 +5,15 @@ const initialState = {
     tokenId: null,
     isSignedIn: false,
     currentUser: {
-        name: null
+        fname: null,
+        lname: null,
+        email: null
     }
 }
 
 const reducer = (state=initialState,action) => {
     let newState;
+    let newUser;
     switch (action.type) {
         case 'SET_TOKEN':
             newState = {
@@ -27,6 +30,21 @@ const reducer = (state=initialState,action) => {
                 isSignedIn: false
             };
             cookies.set('tokenId',null);
+            return newState;
+        case 'SET_USER':
+            newUser = {
+                ...state.currentUser,
+                fname: action.value.fname,
+                lname: action.value.lname,
+                email: action.value.email
+            }
+            newState = {
+                ...state,
+                currentUser: newUser
+            }
+            cookies.set('fname',action.value.fname);
+            cookies.set('lname',action.value.lname);
+            cookies.set('email',action.value.email);
             return newState;
         default:
             return state;

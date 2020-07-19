@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import SignUpPage from './components/SignupPage/SignUpPage';
 import HomePage from './components/HomePage/HomePage';
+import * as Actions from './actions/actions';
 
 const cookies = new Cookies();
 
@@ -15,6 +16,12 @@ function App(props) {
   if (cookies.get('tokenId') && cookies.get('tokenId')!=='null') {
     console.log("Loading saved cookie");
     props.setTokenId(cookies.get('tokenId'));
+    props.setUser({
+      fname:cookies.get('fname'),
+      lname:cookies.get('lname'),
+      email:cookies.get('email')
+    });
+
   }
   console.log("App token id:",props.tokenId);
 
@@ -38,7 +45,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setTokenId: (tokenId) => dispatch({type:'SET_TOKEN',value:tokenId})
+    // setTokenId: (tokenId) => dispatch({type:'SET_TOKEN',value:tokenId})
+    setTokenId: (tokenId) => dispatch(Actions.setToken(tokenId)),
+    setUser: (user) => dispatch(Actions.setUser(user))
   }
 }
 

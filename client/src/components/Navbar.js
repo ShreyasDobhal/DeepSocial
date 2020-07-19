@@ -1,3 +1,4 @@
+import * as Actions from '../actions/actions'
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import {
@@ -26,10 +27,24 @@ const NavigationBar = (props) => {
 
     if (props.isSignedIn) {
         loginBtn = (
-            <Nav>
-                <NavItem className='mx-2'>
-                    <Button onClick={props.deleteTokenId}>Log out</Button>
-                </NavItem>
+            <Nav >
+                <UncontrolledDropdown nav inNavbar>
+                    <DropdownToggle nav caret className='nav-bar-userButton'>
+                        {props.userName}
+                    </DropdownToggle>
+                    <DropdownMenu right>
+                        <DropdownItem>
+                            My Profile
+                        </DropdownItem>
+                        <DropdownItem>
+                            Settings
+                        </DropdownItem>
+                        <DropdownItem divider />
+                        <DropdownItem onClick={props.deleteTokenId}>
+                            Log out
+                        </DropdownItem>
+                    </DropdownMenu>
+                </UncontrolledDropdown>
             </Nav>
         )
     } else {
@@ -88,13 +103,15 @@ const NavigationBar = (props) => {
 const mapStateToProps = (state) => {
     return {
         tokenId: state.tokenId,
-        isSignedIn: state.isSignedIn
+        isSignedIn: state.isSignedIn,
+        userName: state.currentUser.fname
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-      deleteTokenId: (tokenId) => dispatch({type:'DELETE_TOKEN'})
+    //   deleteTokenId: (tokenId) => dispatch({type:'DELETE_TOKEN'})
+      deleteTokenId: (tokenId) => dispatch(Actions.deleteToken())
     }
   }
 
