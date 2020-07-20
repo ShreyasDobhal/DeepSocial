@@ -1,0 +1,10 @@
+.profile-image-holder {
+    /* border: 2px solid green; */
+}
+
+.profile-image {
+    border-radius: 50%;
+    width: 60px;
+    border: 2px solid darkgray;
+    margin: 5px auto;
+}

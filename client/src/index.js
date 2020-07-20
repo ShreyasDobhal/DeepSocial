@@ -5,8 +5,12 @@ import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 
 import './index.css';
+import './styles/styles.css';
 import './styles/signup.css';
 import './styles/nav-bar.css';
+import './styles/add-post.css';
+import './styles/home-page.css';
+import '../node_modules/font-awesome/css/font-awesome.min.css';
 
 import * as serviceWorker from './serviceWorker';
 import App from './App';
