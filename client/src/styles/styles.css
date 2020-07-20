@@ -8,3 +8,9 @@
     border: 2px solid darkgray;
     margin: 5px auto;
 }
+
+.userSpan {
+    color: #045377;
+    cursor: pointer;
+    font-weight: bold;
+}

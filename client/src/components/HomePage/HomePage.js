@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 
 import NavigationBar from '../Navbar';
 import AddPost from '../Posts/AddPost';
+import Post from '../Posts/Post';
 
 
 class HomePage extends Component {
@@ -16,6 +17,9 @@ class HomePage extends Component {
                 <div className='scroll-container'>
                     <h1 className="text-center">Signed in</h1>
                     <AddPost />
+                    <Post />
+                    <Post />
+                    <Post />
                 </div>
             </div>
         );

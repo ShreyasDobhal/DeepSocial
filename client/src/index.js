@@ -9,6 +9,7 @@ import './styles/styles.css';
 import './styles/signup.css';
 import './styles/nav-bar.css';
 import './styles/add-post.css';
+import './styles/post.css';
 import './styles/home-page.css';
 import '../node_modules/font-awesome/css/font-awesome.min.css';
 
