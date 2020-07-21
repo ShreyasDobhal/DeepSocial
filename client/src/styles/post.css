@@ -48,3 +48,25 @@
 .post-image {
     width: 100%;
 }
+
+.post-footer-container {
+    /* border: 2px solid red; */
+    display: flex;
+    justify-content: space-between;
+}
+
+.post-response-holder {
+    /* border: 2px solid blue; */
+    font-size: 25px;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.post-response-btn {
+    margin: 10px 15px;
+    cursor: pointer;
+}
+
+.post-response-value {
+    font-size: 18px;
+}

@@ -15,7 +15,7 @@ class HomePage extends Component {
             <div>
                 <NavigationBar/>
                 <div className='scroll-container'>
-                    <h1 className="text-center">Signed in</h1>
+                    {/* <h1 className="text-center">Signed in</h1> */}
                     <AddPost />
                     <Post />
                     <Post />
