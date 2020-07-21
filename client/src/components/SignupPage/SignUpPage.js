@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import axiosExpress from '../../axios/axiosExpress';
 import {connect} from 'react-redux';
 
 import SignUp from './SignUp';
@@ -18,7 +18,7 @@ class SignUpPage extends Component {
             email: request.email,
             password: request.password
         };
-        axios.post('http://localhost:4000/users/signup',payload)
+        axiosExpress.post('/users/signup',payload)
             .then(data => {
                 console.log(data.data);
                 alert("Login successful");
@@ -45,7 +45,7 @@ class SignUpPage extends Component {
             email: request.email,
             password: request.password
         };
-        axios.post('http://localhost:4000/users/signin',payload)
+        axiosExpress.post('/users/signin',payload)
             .then(data => {
                 console.log(data.data);
                 alert("Login successful");

@@ -11,12 +11,12 @@ console.log("USER TOKEN",userToken);
 
 const app = express();
 
-const IP = "localhost";
-try {
-    IP=require('os').networkInterfaces( )['wlp3s0'][0]['address'];
-} catch (error) {
-    console.log("Not connected to a network");
-}
+const IP =require('os').networkInterfaces( )['wlp3s0'][0]['address'];
+// try {
+//     IP=require('os').networkInterfaces( )['wlp3s0'][0]['address'];
+// } catch (error) {
+//     console.log("Not connected to a network");
+// }
 const port = 4000;
 const dbName = 'deepsocial'
 
