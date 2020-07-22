@@ -54,5 +54,19 @@
 
 .add-post-float-btn:hover {
     color: #04bba9;
+    cursor: pointer;
 }
 
+.add-post-image-upload {
+    visibility: hidden;
+    display: none;
+}
+
+.add-post-preview-holder {
+    /* border: 2px solid red; */
+    text-align: center;
+}
+
+.add-post-image-preview {
+    height: 100px;
+}
