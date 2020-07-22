@@ -32,9 +32,9 @@ class Post extends Component {
                 </div>
                 <div className='post-footer-container'>
                     <div className='post-response-holder'>
-                        <i class="fa fa-thumbs-o-up post-response-btn" aria-hidden="true"></i><span className='post-response-value'>{this.state.like}</span>
-                        <i class="fa fa-thumbs-o-down post-response-btn" aria-hidden="true"></i><span className='post-response-value'>{this.state.dislike}</span>
-                        <i class="fa fa-comment-o post-response-btn" aria-hidden="true"></i><span className='post-response-value'>{this.state.commentCount}</span>
+                        <i className="fa fa-thumbs-o-up post-response-btn" aria-hidden="true"></i><span className='post-response-value'>{this.state.like}</span>
+                        <i className="fa fa-thumbs-o-down post-response-btn" aria-hidden="true"></i><span className='post-response-value'>{this.state.dislike}</span>
+                        <i className="fa fa-comment-o post-response-btn" aria-hidden="true"></i><span className='post-response-value'>{this.state.commentCount}</span>
                     </div>
                 </div>
             </div>

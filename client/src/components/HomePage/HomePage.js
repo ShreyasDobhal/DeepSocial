@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import NavigationBar from '../Navbar';
+import NavigationBar from '../Navbar/Navbar';
 import AddPost from '../Posts/AddPost';
 import Post from '../Posts/Post';
 

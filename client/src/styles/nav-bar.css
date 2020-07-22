@@ -6,3 +6,15 @@
     color: #fff
 }
 
+.nav-plain-link {
+    color: black;
+    text-decoration: none;
+}
+
+.nav-plain-link:active {
+    color: white;
+}
+
+.drop-menu-icon {
+    margin: 0px 25px 0px 0px;
+}

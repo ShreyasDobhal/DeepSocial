@@ -1,4 +1,4 @@
-import * as Actions from '../actions/actions'
+import * as Actions from '../../actions/actions'
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import {
@@ -34,14 +34,21 @@ const NavigationBar = (props) => {
                     </DropdownToggle>
                     <DropdownMenu right>
                         <DropdownItem>
-                            My Profile
+                            <NavLink className='nav-plain-link' href='/profile'><i class="fa fa-user drop-menu-icon" aria-hidden="true"></i> My Profile</NavLink>
                         </DropdownItem>
                         <DropdownItem>
-                            Settings
+                            <NavLink className='nav-plain-link' href='/friends'><i class="fa fa-users drop-menu-icon" aria-hidden="true"></i> Friends</NavLink>
+                        </DropdownItem>
+                        <DropdownItem>
+                            <NavLink className='nav-plain-link' href='/messages'><i class="fa fa-comments drop-menu-icon" aria-hidden="true"></i> Messages</NavLink>
+                        </DropdownItem>
+                        <DropdownItem>
+                            <NavLink className='nav-plain-link' href='/profile'><i class="fa fa-cogs drop-menu-icon" aria-hidden="true"></i> Settings</NavLink>
+                            {/* <i class="fa fa-cogs" aria-hidden="true"></i> */}
                         </DropdownItem>
                         <DropdownItem divider />
                         <DropdownItem onClick={props.deleteTokenId}>
-                            Log out
+                            <i class="fa fa-sign-out drop-menu-icon" aria-hidden="true"></i> Log out
                         </DropdownItem>
                     </DropdownMenu>
                 </UncontrolledDropdown>
@@ -69,28 +76,16 @@ const NavigationBar = (props) => {
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="mr-auto" navbar>
                         <NavItem>
-                            <NavLink href="/components/">Components</NavLink>
+                            <NavLink href="/search"><i className="fa fa-search" aria-hidden="true"></i></NavLink>
                         </NavItem>
                         <NavItem>
-                            <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
+                            <NavLink href="/">Home</NavLink>
                         </NavItem>
-                        <UncontrolledDropdown nav inNavbar>
-                            <DropdownToggle nav caret>
-                                Options
-                            </DropdownToggle>
-                            <DropdownMenu right>
-                                <DropdownItem>
-                                    Option 1
-                                </DropdownItem>
-                                <DropdownItem>
-                                    Option 2
-                                </DropdownItem>
-                                <DropdownItem divider />
-                                <DropdownItem>
-                                    Reset
-                                </DropdownItem>
-                            </DropdownMenu>
-                        </UncontrolledDropdown>
+                        <NavItem>
+                            <NavLink href="/friends">Friends</NavLink>
+                        </NavItem>
+                        
+                        
                     </Nav>
                     {loginBtn}
                     
