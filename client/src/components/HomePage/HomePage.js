@@ -6,6 +6,7 @@ import AddPost from '../Posts/AddPost';
 import Post from '../Posts/Post';
 
 
+
 class HomePage extends Component {
     componentDidMount() {
         console.log("Home page ready");
@@ -15,12 +16,14 @@ class HomePage extends Component {
             <div>
                 <NavigationBar/>
                 <div className='scroll-container'>
-                    {/* <h1 className="text-center">Signed in</h1> */}
+                    
                     <AddPost />
+                    
                     <Post />
                     <Post />
                     <Post />
                 </div>
+                
             </div>
         );
     }
