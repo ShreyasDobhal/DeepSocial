@@ -1,8 +1,6 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Abel&display=swap'); */
 @import url('https://fonts.googleapis.com/css2?family=Maven+Pro&display=swap');
 
 .post-container {
-    /* height: 100px; */
     background-color: white;
     border: 1px solid rgba(82, 79, 79,0.5);
     box-shadow: 5px 5px 10px gray;
@@ -12,7 +10,6 @@
 }
 
 .post-header-container {
-    /* border: 2px solid red; */
     display: flex;
 }
 
@@ -21,28 +18,15 @@
     margin-top: 5px;
 }
 
-.post-sender-name {
-
-}
-
 .post-upload-time {
-    /* font-family: 'Abel', sans-serif; */
-    /* font-family: 'Maven Pro', sans-serif; */
     font-size: 13px;
 }
 
-
 .post-body-container {
-    /* border: 2px solid green; */
     margin: 10px;
 }
 
-.post-body {
-
-}
-
 .post-image-holder {
-    /* border: 2px solid red; */
     font-size: 30px;
     display: flex;
     justify-content: center;
@@ -54,21 +38,14 @@
 }
 
 .post-image-controls-container {
-    /* border: 2px solid blueviolet; */
-    /* width: 100%; */
     display: inline-block;
-    /* justify-content: space-between; */
     position: relative;
-    /* bottom: 170px; */
     font-size: 40px;
     color: white;
     cursor: pointer;
-    /* box-shadow: 5px 5px 5px gray; */
-    /* height: 100px; */
 }
 
 .post-controls-left {
-    /* position: relative; */
     left: 25px;
 }
 
@@ -77,13 +54,11 @@
 }
 
 .post-footer-container {
-    /* border: 2px solid red; */
     display: flex;
     justify-content: space-between;
 }
 
 .post-response-holder {
-    /* border: 2px solid blue; */
     font-size: 25px;
     display: inline-block;
     margin-left: 10px;
