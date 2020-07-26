@@ -34,21 +34,21 @@ const NavigationBar = (props) => {
                     </DropdownToggle>
                     <DropdownMenu right>
                         <DropdownItem>
-                            <NavLink className='nav-plain-link' href='/profile'><i class="fa fa-user drop-menu-icon" aria-hidden="true"></i> My Profile</NavLink>
+                            <NavLink className='nav-plain-link' href='/profile'><i className="fa fa-user drop-menu-icon" aria-hidden="true"></i> My Profile</NavLink>
                         </DropdownItem>
                         <DropdownItem>
-                            <NavLink className='nav-plain-link' href='/friends'><i class="fa fa-users drop-menu-icon" aria-hidden="true"></i> Friends</NavLink>
+                            <NavLink className='nav-plain-link' href='/friends'><i className="fa fa-users drop-menu-icon" aria-hidden="true"></i> Friends</NavLink>
                         </DropdownItem>
                         <DropdownItem>
-                            <NavLink className='nav-plain-link' href='/messages'><i class="fa fa-comments drop-menu-icon" aria-hidden="true"></i> Messages</NavLink>
+                            <NavLink className='nav-plain-link' href='/messages'><i className="fa fa-comments drop-menu-icon" aria-hidden="true"></i> Messages</NavLink>
                         </DropdownItem>
                         <DropdownItem>
-                            <NavLink className='nav-plain-link' href='/profile'><i class="fa fa-cogs drop-menu-icon" aria-hidden="true"></i> Settings</NavLink>
-                            {/* <i class="fa fa-cogs" aria-hidden="true"></i> */}
+                            <NavLink className='nav-plain-link' href='/profile'><i className="fa fa-cogs drop-menu-icon" aria-hidden="true"></i> Settings</NavLink>
+                            {/* <i className="fa fa-cogs" aria-hidden="true"></i> */}
                         </DropdownItem>
                         <DropdownItem divider />
                         <DropdownItem onClick={props.deleteTokenId}>
-                            <i class="fa fa-sign-out drop-menu-icon" aria-hidden="true"></i> Log out
+                            <i className="fa fa-sign-out drop-menu-icon" aria-hidden="true"></i> Log out
                         </DropdownItem>
                     </DropdownMenu>
                 </UncontrolledDropdown>

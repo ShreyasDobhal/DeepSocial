@@ -35,7 +35,7 @@ class AddPost extends Component {
         if (this.state.files) {
             let images=this.state.files.map((file,index)=>{
                 return (
-                    <img src={file} className='add-post-image-preview'/>
+                    <img src={file} className='add-post-image-preview' alt='Post'/>
                 )
             });
             imagePreview = (
@@ -49,12 +49,12 @@ class AddPost extends Component {
                 <div className='add-post-container'>
                     <div className='add-post-elements-container'>
                         <div className='profile-image-holder'>
-                            <img className='profile-image' src='/images/profile.png'/>
+                            <img className='profile-image' src='/images/profile.png' alt='userDP'/>
                         </div>
                         <div className='add-post-input-holder'>
                             <textarea className='add-post-input' placeholder='Enter something to post'></textarea>
                             <div className='add-post-float-holder'>
-                                <label for='imageUpload'><i className="fa fa-picture-o add-post-send add-post-float-btn" aria-hidden="true"></i></label>
+                                <label htmlFor='imageUpload'><i className="fa fa-picture-o add-post-send add-post-float-btn" aria-hidden="true"></i></label>
                                 <i className="fa fa-paper-plane add-post-send add-post-float-btn" aria-hidden="true"></i>
                             </div>
                         </div>

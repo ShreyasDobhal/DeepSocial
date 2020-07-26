@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import Carousel from './Carousel';
+import PostImageHolder from './PostImageHolder';
 
 class Post extends Component {
     state = {
@@ -6,7 +8,11 @@ class Post extends Component {
         userDP: '/images/profile.jpg',
         date: '21 Jun 2020 at 00:31 AM',
         body: 'Sunset by the ocean.',
-        postImage: '/images/img'+(Math.floor(Math.random()*4)+1)+'.jpg',
+        postImages: [
+            '/images/img'+(Math.floor(Math.random()*4)+1)+'.jpg',
+            '/images/img'+(Math.floor(Math.random()*4)+1)+'.jpg',
+            '/images/img'+(Math.floor(Math.random()*4)+1)+'.jpg'
+        ],
         like: '1.5k',
         dislike: '25',
         commentCount: '37'
@@ -17,7 +23,7 @@ class Post extends Component {
             <div className='post-container'>
                 <div className='post-header-container'>
                     <div className='profile-image-holder'>
-                        <img src={this.state.userDP} className='profile-image'/>
+                        <img src={this.state.userDP} className='profile-image' alt='userDP'/>
                     </div>
                     <div className='post-info-container'>
                         <div className='post-sender-name'><span className='userSpan'>{this.state.userName}</span></div>
@@ -26,9 +32,11 @@ class Post extends Component {
                 </div>
                 <div className='post-body-container'>
                     <div className='post-body'>{this.state.body}</div>
-                    <div className='post-image-holder'>
-                        <img src={this.state.postImage} className='post-image' alt='post-image'/>
-                    </div>
+                    {/* <div className='post-image-holder'>
+                        <img src={this.state.postImage} className='post-image' alt='Post'/>
+                    </div> */}
+                    {/* <Carousel /> */}
+                    <PostImageHolder images={this.state.postImages}/>
                 </div>
                 <div className='post-footer-container'>
                     <div className='post-response-holder'>

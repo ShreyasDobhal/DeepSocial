@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import NavigationBar from '../Navbar/Navbar';
 import AddPost from '../Posts/AddPost';
 import Post from '../Posts/Post';
+import Carousel from '../Posts/Carousel'
 
 
 
@@ -18,7 +19,7 @@ class HomePage extends Component {
                 <div className='scroll-container'>
                     
                     <AddPost />
-                    
+                    {/* <Carousel /> */}
                     <Post />
                     <Post />
                     <Post />
