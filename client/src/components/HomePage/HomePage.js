@@ -63,6 +63,7 @@ class HomePage extends Component {
                     <Post post={this.state.posts[2]}/>
                 </div>
                 
+
             </div>
         );
     }

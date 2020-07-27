@@ -1,6 +1,3 @@
-.profile-image-holder {
-    /* border: 2px solid green; */
-}
 
 .profile-image {
     border-radius: 50%;
@@ -16,9 +13,7 @@
 }
 
 .drag-drop-outer-container {
-    /* display: inline-block; */
     position: relative;
-    /* border: 2px solid red; */
 }
 
 .drag-drop-overlay {
@@ -37,11 +32,13 @@
 }
 
 .drag-drop-overlay-text {
-    /* position: relative;
-    top: 50%;
-    right: 0;
-    left: 0;
-    text-align: center; */
     color: grey;
     font-size: 36px;
+}
+
+.emoji-picker-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    position: absolute;
 }
