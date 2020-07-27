@@ -70,7 +70,7 @@ const NavigationBar = (props) => {
 
     return (
         <div>
-            <Navbar color="dark" dark expand="md">
+            <Navbar color="dark" dark expand="md" fixed='top'>
                 <NavbarBrand href="/">DeepSocial</NavbarBrand>
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
@@ -91,6 +91,7 @@ const NavigationBar = (props) => {
                     
                 </Collapse>
             </Navbar>
+            <div className='nav-spacer'></div>
         </div>
     );
 }
