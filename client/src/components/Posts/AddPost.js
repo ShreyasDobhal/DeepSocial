@@ -16,7 +16,8 @@ class AddPost extends Component {
     onChangeHandler = (event)=> {
         console.log("Uploading files",event.target.files);
         let fileList = [...this.state.files];
-        fileList.push(URL.createObjectURL(event.target.files[0]));
+        fileList.push(event.target.files[0]);
+        // fileList.push(URL.createObjectURL(event.target.files[0]));
         this.setState({
             files: fileList
         });
@@ -28,7 +29,8 @@ class AddPost extends Component {
         for (let i=0;i<files.length;i++) {
             if (!files[i].name)
                 return;
-            fileList.push(URL.createObjectURL(files[i]));
+            fileList.push(files[i]);
+            // fileList.push(URL.createObjectURL(files[i]));
         }
         this.setState({files:fileList});
     }
@@ -51,7 +53,7 @@ class AddPost extends Component {
         if (this.state.files) {
             let images=this.state.files.map((file,index)=>{
                 return (
-                    <img src={file} className='add-post-image-preview' alt='Post'/>
+                    <img src={URL.createObjectURL(file)} className='add-post-image-preview' alt='Post'/>
                 )
             });
             imagePreview = (
