@@ -6,7 +6,7 @@ const morgan = require('morgan');
 const passport = require('passport');
 
 const userToken = require('./authentication/userToken');
-// userToken['shreyas'] = '1234';
+
 console.log("USER TOKEN",userToken);
 
 const app = express();
@@ -54,6 +54,7 @@ app.use(bodyparser.json());
 // STATIC FILES
 // app.use('/static',express.static('static'));
 // app.use(express.urlencoded())
+app.use('/uploads',express.static('uploads'));
 
 const allowCrossDomain = function(req, res, next) {
     // To allow Cross Origin Resource Sharing (CORS)
@@ -67,6 +68,8 @@ app.use(allowCrossDomain);
 // ROUTES
 let usersRoute = require('./routes/users.js');
 app.use('/users',usersRoute);
+let postsRoute = require('./routes/posts.js');
+app.use('/posts',postsRoute);
 
 
 // END POINTS
