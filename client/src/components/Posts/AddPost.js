@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+
 import DragAndDrop from '../HOC/DragAndDrop';
 import EmojiPicker from '../Emoji/EmojiPicker';
 import insertAtCaret from '../Emoji/InsertEmoji';
@@ -8,19 +9,15 @@ class AddPost extends Component {
     
     state = {
         files:[],
-        showEmojiPicker: false
+        showEmojiPicker: false,
+        postBody: null
     }
 
     textArea = React.createRef();
 
     onChangeHandler = (event)=> {
         console.log("Uploading files",event.target.files);
-        let fileList = [...this.state.files];
-        fileList.push(event.target.files[0]);
-        // fileList.push(URL.createObjectURL(event.target.files[0]));
-        this.setState({
-            files: fileList
-        });
+        this.handleDrop(event.target.files);
     }
 
     handleDrop = (files) => {
@@ -46,6 +43,25 @@ class AddPost extends Component {
         insertAtCaret(textarea,emojiObject.emoji);
     }
 
+    postBodyChangeHandler = (e)=>{
+        this.setState({
+            postBody: e.target.value
+        })
+    }
+
+    onSubmitPost = ()=>{
+        if ((this.state.postBody && this.state.postBody.trim() !== '') || (this.state.files.length>0)) {
+            const payload = {
+                _id: this.props.tokenId,
+                postBody: this.state.postBody,
+                postImages: this.state.files,
+                authorName: this.props.firstName + ' ' + this.props.lastName,
+                postDate: new Date()
+            }
+            console.log(payload);
+        }
+    }
+
     render() {
 
         let imagePreview = null;
@@ -53,7 +69,7 @@ class AddPost extends Component {
         if (this.state.files) {
             let images=this.state.files.map((file,index)=>{
                 return (
-                    <img src={URL.createObjectURL(file)} className='add-post-image-preview' alt='Post'/>
+                    <img src={URL.createObjectURL(file)} className='add-post-image-preview' alt='Post' key={index}/>
                 )
             });
             imagePreview = (
@@ -72,17 +88,17 @@ class AddPost extends Component {
                                 <img className='profile-image' src='/images/profile.png' alt='userDP'/>
                             </div>
                             <div className='add-post-input-holder'>
-                                <textarea ref={this.textArea} className='add-post-input' placeholder='Enter something to post'></textarea>
+                                <textarea ref={this.textArea} className='add-post-input' placeholder='Enter something to post' onChange={this.postBodyChangeHandler}></textarea>
                                 <div className='add-post-float-holder'>
                                     <label htmlFor='imageUpload'><i className="fa fa-picture-o add-post-send add-post-float-btn" aria-hidden="true"></i></label>
                                     <i className="fa fa-smile-o add-post-float-btn" aria-hidden="true" onClick={this.toggleEmojiPicker}></i>
-                                    <i className="fa fa-paper-plane add-post-send add-post-float-btn" aria-hidden="true"></i>
+                                    <i className="fa fa-paper-plane add-post-send add-post-float-btn" aria-hidden="true" onClick={this.onSubmitPost}></i>
                                     
                                 </div>
                             </div>
                         </div>
                         <EmojiPicker isVisible={this.state.showEmojiPicker} onEmojiClick={this.onEmojiClick}/>
-                        <input id='imageUpload' className='add-post-image-upload' type='file' onChange={this.onChangeHandler}/>
+                        <input id='imageUpload' className='add-post-image-upload' type='file' onChange={this.onChangeHandler} multiple/>
                         {imagePreview}
                     </div>
                 
@@ -96,7 +112,8 @@ class AddPost extends Component {
 const mapStateToProps = (state)=> {
     return {
         firstName: state.currentUser.fname,
-        lastName: state.currentUser.lname
+        lastName: state.currentUser.lname,
+        tokenId: state.tokenId
     };
 }
 
