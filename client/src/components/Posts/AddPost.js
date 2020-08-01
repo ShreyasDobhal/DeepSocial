@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import axiosExpress from '../../axios/axiosExpress';
+import FormData from 'form-data'
+
 
 import DragAndDrop from '../HOC/DragAndDrop';
 import EmojiPicker from '../Emoji/EmojiPicker';
@@ -9,6 +12,7 @@ class AddPost extends Component {
     
     state = {
         files:[],
+        file: null,
         showEmojiPicker: false,
         postBody: null
     }
@@ -22,14 +26,22 @@ class AddPost extends Component {
 
     handleDrop = (files) => {
         console.log("Uploading files",files);
-        let fileList = [...this.state.files];
+        let fileList = [];
         for (let i=0;i<files.length;i++) {
             if (!files[i].name)
                 return;
             fileList.push(files[i]);
+            console.log("Uploaded",files[i].name);
             // fileList.push(URL.createObjectURL(files[i]));
+            this.setState({
+                file: files[i]
+            });
         }
-        this.setState({files:fileList});
+        console.log("File list ",fileList);
+        this.setState({
+            files:this.state.files.concat(fileList)
+        });
+        console.log("State file",this.state.files);
     }
 
     toggleEmojiPicker = ()=> {
@@ -50,15 +62,64 @@ class AddPost extends Component {
     }
 
     onSubmitPost = ()=>{
+        console.log("State : ",this.state);
+        // return;
         if ((this.state.postBody && this.state.postBody.trim() !== '') || (this.state.files.length>0)) {
-            const payload = {
-                _id: this.props.tokenId,
-                postBody: this.state.postBody,
-                postImages: this.state.files,
-                authorName: this.props.firstName + ' ' + this.props.lastName,
-                postDate: new Date()
-            }
-            console.log(payload);
+            // let postImage = 
+            let formData = new FormData();
+            // for (let i=0;i<this.state.files.length;i++) {
+            //     formData.append('postImages[]',this.state.files[i]);
+            // }
+            formData.append('postImage',this.state.file);
+            formData.append('postBody',this.state.postBody);
+            formData.append('tokenId',this.props.tokenId);
+            formData.append('authorName',this.props.firstName + ' ' + this.props.lastName);
+            formData.append('postDate',new Date());
+
+            axiosExpress.post('/posts/add',formData)
+                .then(data => {
+                    console.log(data.data);
+                    alert("Post published successfully")
+                })
+                .catch(error => {
+                    console.log(error);
+                    alert("Failed to publish the post");
+                })
+            ;
+            
+            
+            // let postImages = [];
+            // for (let i=0;i<this.state.files.length;i++) {
+            //     postImages.push({
+            //         ...this.state.files[i]
+            //     });
+            // }
+            // console.log("Post images : ",postImages);
+            // const payload = {
+            //     _id: this.props.tokenId,
+            //     postBody: this.state.postBody,
+            //     postImages: this.state.files,
+            //     authorName: this.props.firstName + ' ' + this.props.lastName,
+            //     postDate: new Date()
+            // }
+            // console.log('Payload ',payload);
+            // let headers = { 'content-type': 'multipart/form-data; boundary=----WebKitFormBoundaryWcucdPc0sADgzCK0' };
+            // axiosExpress.post('/posts/add',payload,{headers:headers})
+            //     .then(data => {
+            //         console.log(data.data);
+            //         alert("Post published successfully")
+            //     })
+            //     .catch(error => {
+            //         console.log(error);
+            //         alert("Failed to publish the post");
+            //     })
+
+
+            // this.props.onAddPostHandler(payload);
+            this.setState({
+                files: [],
+                postBody: null
+            });
         }
     }
 
@@ -67,6 +128,7 @@ class AddPost extends Component {
         let imagePreview = null;
 
         if (this.state.files) {
+            console.log("State ",this.state.files);
             let images=this.state.files.map((file,index)=>{
                 return (
                     <img src={URL.createObjectURL(file)} className='add-post-image-preview' alt='Post' key={index}/>

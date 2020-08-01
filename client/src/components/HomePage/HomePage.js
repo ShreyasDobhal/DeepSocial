@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
+import axiosExpress from '../../axios/axiosExpress';
 import {connect} from 'react-redux';
+import FormData from 'form-data'
 
 import NavigationBar from '../Navbar/Navbar';
 import AddPost from '../Posts/AddPost';
@@ -49,6 +51,30 @@ class HomePage extends Component {
         ]
     }
 
+    onAddPostHandler = (post)=> {
+        console.log("Post ",post);
+
+        let formData = new FormData();
+        // post.postImages.forEach(file => formData.append('files[]',file,file.name));
+        // formData.append('postImage',post.postImages[0]);
+        formData.append('postBody','Hello from axios');
+        formData.append('authorName','Shreyass Dobhal');
+        // let headers = { 'Content-Type': "multipart/form-data; charset=utf-8; boundary=" + Math.random().toString().substr(2) };
+        let headers = { 'content-type': 'multipart/form-data; boundary=----WebKitFormBoundaryWcucdPc0sADgzCK0' };
+
+
+        // axiosExpress.post('/posts/add',formData,{headers:headers})
+        axiosExpress.post('/posts/add',formData,{headers:headers})
+            .then(data => {
+                console.log(data.data);
+                alert("Post published successfully")
+            })
+            .catch(error => {
+                console.log(error);
+                alert("Failed to publish the post");
+            })
+    }
+
     componentDidMount() {
         console.log("Home page ready");
     }
@@ -57,7 +83,7 @@ class HomePage extends Component {
             <div>
                 <NavigationBar/>
                 <div className='scroll-container'>
-                    <AddPost />
+                    <AddPost onAddPostHandler={this.onAddPostHandler}/>
                     <Post post={this.state.posts[0]}/>
                     <Post post={this.state.posts[1]}/>
                     <Post post={this.state.posts[2]}/>

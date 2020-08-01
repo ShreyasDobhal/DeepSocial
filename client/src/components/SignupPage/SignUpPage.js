@@ -33,7 +33,7 @@ class SignUpPage extends Component {
             .catch(error => {
                 console.log(error);
                 alert("Login failed");
-            })
+            });
     };
 
     onSignInHandler = (request) => {
