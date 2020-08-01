@@ -35,10 +35,28 @@ router.get('/',(req,res)=>{
     res.json({status:'Running'});
 });
 
-router.post('/add',upload.array('postImage',10),(req,res,next)=>{
-    console.log(req.files);
-    console.log(req.files[0].path);
-    res.json({status:'Post added'});
+// router.post('/add',upload.array('postImages',10),(req,res,next)=>{
+// router.post('/add',(req,res,next)=>{
+router.post('/add',upload.single('postImage'),(req,res,next)=>{
+    console.log("Files",req.files);
+    console.log("File",req.file);
+    console.log("Body",req.body);
+    console.log("Data",req.data);
+    console.log("value",req.value);
+    console.log("Header",req.header);
+    console.log("Headers",req.headers);
+    // console.log("File",req.body.files);
+    // console.log(req.files[0].path);
+    // res.json({status:'Post added'});
+
+    if (req.files && req.files.length>0) {
+        console.log(req.files);
+        console.log(req.files[0].path);
+        res.json({status:'Post added'});
+    } else {
+        res.json({status:'Post added without images'});
+
+    }
 });
 
 module.exports = router;
