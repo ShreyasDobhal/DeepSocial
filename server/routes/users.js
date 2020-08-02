@@ -14,7 +14,13 @@ const secret = 'the secret key';
 
 // END PONTS
 router.get('/',(req,res)=>{
-    res.json({status:'Running'});
+    User.find({})
+        .then(users=>{
+            res.json(users);
+        })
+        .catch(error=>{
+            res.json({status:'Failed',error:error,message:'Failed to load users'});
+        });
 });
 
 // Sign-up (with token)
