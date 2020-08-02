@@ -3,7 +3,7 @@ const multer = require('multer');
 
 const router = express.Router();
 
-// const User = require('../models/User');
+const Post = require('../models/Post');
 
 const storage = multer.diskStorage({
     destination: function(req,file,cb) {
@@ -32,7 +32,13 @@ const upload = multer({
 
 // END PONTS
 router.get('/',(req,res)=>{
-    res.json({status:'Running'});
+    Post.find({})
+        .then(posts=>{
+            res.json(posts);
+        })
+        .catch(error=>{
+            res.json({status:'Failed',error:error,message:'Failed to load posts'});
+        });
 });
 
 // router.post('/add',upload.array('postImages',10),(req,res,next)=>{
@@ -45,18 +51,31 @@ router.post('/add',upload.single('postImage'),(req,res,next)=>{
     console.log("value",req.value);
     console.log("Header",req.header);
     console.log("Headers",req.headers);
-    // console.log("File",req.body.files);
-    // console.log(req.files[0].path);
-    // res.json({status:'Post added'});
 
-    if (req.files && req.files.length>0) {
-        console.log(req.files);
-        console.log(req.files[0].path);
-        res.json({status:'Post added'});
-    } else {
-        res.json({status:'Post added without images'});
+    const newPost = new Post({
+        postBody: req.body.postBody,
+        postDate: req.body.postDate,
+        authorName: req.body.authorName,
+        authorId: req.body.tokenId,
+        authorDP: req.body.authorDP,
+        likes: 0,
+        dislikes: 0,
+        commentCount: 0
+    });
 
+    if (req.files) {
+        newPost.postImages = req.files.map(file=>file.path);
+    } else if (req.file) {
+        newPost.postImages = [req.file.path];
     }
+
+    newPost.save()
+        .then(data=>{
+            res.json(data);
+        })
+        .catch(error=>{
+            res.json({status:'Failed',error:error,message:'Failed to save post'});
+        });
 });
 
 module.exports = router;
