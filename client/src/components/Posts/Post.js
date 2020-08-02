@@ -3,20 +3,21 @@ import PostImageHolder from './PostImageHolder';
 
 class Post extends Component {
     
+    
     render() {
         return (
             <div className='post-container'>
                 <div className='post-header-container'>
                     <div className='profile-image-holder'>
-                        <img src={this.props.post.userDP} className='profile-image' alt='userDP'/>
+                        <img src={(this.props.post.authorDP)?this.props.post.authorDP:''} className='profile-image' alt='userDP' onError={(e)=>{console.log("ereor in error handling");e.target.onerror = null; e.target.src="/images/profile.png"}}/>
                     </div>
                     <div className='post-info-container'>
-                        <div className='post-sender-name'><span className='userSpan'>{this.props.post.userName}</span></div>
-                        <div className='post-upload-time'>{this.props.post.date}</div>
+                        <div className='post-sender-name'><span className='userSpan'>{this.props.post.authorName}</span></div>
+                        <div className='post-upload-time'>{this.props.post.postDate}</div>
                     </div>
                 </div>
                 <div className='post-body-container'>
-                    <div className='post-body'>{this.props.post.body}</div>
+                    <div className='post-body'>{this.props.post.postBody}</div>
                     <PostImageHolder images={this.props.post.postImages}/>
                 </div>
                 <div className='post-footer-container'>

@@ -7,7 +7,7 @@ const Post = require('../models/Post');
 
 const storage = multer.diskStorage({
     destination: function(req,file,cb) {
-        cb(null,'./uploads/');
+        cb(null,'../client/public/uploads/');
     },
     filename: function(req,file,cb) {
         cb(null,new Date().toISOString() + file.originalname);
@@ -64,9 +64,9 @@ router.post('/add',upload.single('postImage'),(req,res,next)=>{
     });
 
     if (req.files) {
-        newPost.postImages = req.files.map(file=>file.path);
+        newPost.postImages = req.files.map(file=>file.path.slice(file.path.indexOf('uploads')));
     } else if (req.file) {
-        newPost.postImages = [req.file.path];
+        newPost.postImages = [req.file.path.slice(req.file.path.indexOf('uploads'))];
     }
 
     newPost.save()

@@ -42,3 +42,9 @@
     width: 100%;
     position: absolute;
 }
+
+.loadingSpinner {
+    color: #245f8f;
+    text-align: center;
+    margin: 50px;
+}

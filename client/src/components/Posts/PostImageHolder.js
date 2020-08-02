@@ -20,7 +20,6 @@ class PostImageHolder extends Component {
     }
 
     render() {
-
         if (!this.props.images)
             return null;
 
