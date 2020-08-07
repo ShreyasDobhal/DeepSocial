@@ -5,7 +5,6 @@ class Post extends Component {
     
     
     render() {
-        console.log(this.props.post.postDate);
         return (
             <div className='post-container'>
                 <div className='post-header-container'>

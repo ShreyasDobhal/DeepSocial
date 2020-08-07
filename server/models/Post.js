@@ -34,3 +34,17 @@ const PostSchema = new Schema({
 });
 
 module.exports = Post = mongoose.model('Post',PostSchema);
+
+// db.posts.update(
+//     {authorName: 'Shreyas Dobhal'},
+//     {
+//         $push: {
+//             comments:{
+//                 userName:'Shreya Dobhal',
+//                 userId:'5f1141951df77916356eb866',
+//                 commentDate:ISODate("2020-08-03T16:33:49Z"),
+//                 commentBody:"Ohhh! That's so amazying"
+//             }
+//         }
+//     }
+// )
