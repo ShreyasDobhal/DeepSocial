@@ -41,6 +41,27 @@ router.get('/',(req,res)=>{
         });
 });
 
+router.get('/:postId',(req,res)=>{
+
+    Post.findById(req.params.postId)
+        .then(post=>{
+            res.json(post);
+        })
+        .catch(error=>{
+            res.json({status:'Failed',error:error,message:'Failed to load post'});
+        });
+
+    // Post.find({})
+    //     .then(posts=>{
+    //         res.json(posts);
+    //     })
+    //     .catch(error=>{
+    //         res.json({status:'Failed',error:error,message:'Failed to load posts'});
+    //     });
+});
+
+
+
 // router.post('/add',upload.array('postImages',10),(req,res,next)=>{
 // router.post('/add',(req,res,next)=>{
 router.post('/add',upload.single('postImage'),(req,res,next)=>{
