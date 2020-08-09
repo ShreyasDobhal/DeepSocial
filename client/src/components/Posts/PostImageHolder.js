@@ -20,6 +20,7 @@ class PostImageHolder extends Component {
     }
 
     render() {
+        console.log("Post image from holder",this.props.images);
         if (!this.props.images)
             return null;
 
@@ -37,7 +38,7 @@ class PostImageHolder extends Component {
         return (
             <div className='post-image-holder'>
                 {leftArrow}
-                <img className='post-image' src={this.props.images[this.state.index]} alt='Post'/>
+                <img className='post-image' src={'/'+this.props.images[this.state.index]} alt='Post'/>
                 {rightArrow}
             </div>
         )

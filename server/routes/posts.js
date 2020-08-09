@@ -48,16 +48,8 @@ router.get('/:postId',(req,res)=>{
             res.json(post);
         })
         .catch(error=>{
-            res.json({status:'Failed',error:error,message:'Failed to load post'});
+            res.status(404).json({status:'Failed',error:error,message:'Failed to load post'});
         });
-
-    // Post.find({})
-    //     .then(posts=>{
-    //         res.json(posts);
-    //     })
-    //     .catch(error=>{
-    //         res.json({status:'Failed',error:error,message:'Failed to load posts'});
-    //     });
 });
 
 

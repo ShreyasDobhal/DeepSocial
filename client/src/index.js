@@ -11,6 +11,7 @@ import './styles/nav-bar.css';
 import './styles/add-post.css';
 import './styles/post.css';
 import './styles/home-page.css';
+import './styles/not-found.css';
 import '../node_modules/font-awesome/css/font-awesome.min.css';
 
 import * as serviceWorker from './serviceWorker';

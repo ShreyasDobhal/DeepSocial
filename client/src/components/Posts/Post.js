@@ -9,6 +9,7 @@ class Post extends Component {
     }
     
     render() {
+        console.log("Post image",this.props.post.postImages);
         return (
             <div className='post-container'>
                 <div className='post-header-container'>
