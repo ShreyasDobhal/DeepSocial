@@ -91,4 +91,59 @@ router.post('/add',upload.single('postImage'),(req,res,next)=>{
         });
 });
 
+router.post('/comment-add',(req,res)=>{
+    
+    console.log("User Id",req.body.userId);
+    console.log("User DP",req.body.userDP);
+    console.log("User Name",req.body.userName);
+    console.log("Post Id",req.body.postId);
+    console.log("Comment body",req.body.commentBody);
+    console.log("Comment date",req.body.commentDate);
+    console.log("Comment To",req.body.commentTo);
+
+    // res.json("Ok");
+    // return;
+
+    if (req.body.commentTo) {
+        // Replying to a comment
+        const comment = {
+            userId: req.body.userId,
+            userDP: req.body.userDP,
+            userName: req.body.userName,
+            commentBody: req.body.commentBody,
+            commentDate: req.body.commentDate
+        };
+
+        Post.update({_id:req.body.postId,'comments._id':req.body.commentTo},
+                    {$push : {'comments.$.replies': comment}})
+            .then(doc=>{
+                console.log(doc);
+                res.json({status:'Comment added'});
+            })
+            .catch(error=>{
+                res.json({status:'Falied',error:error,message:'Failed to add comment'})
+            });
+
+
+    } else {
+        // Commenting on a post
+        const comment = {
+            userId: req.body.userId,
+            userDP: req.body.userDP,
+            userName: req.body.userName,
+            commentBody: req.body.commentBody,
+            commentDate: req.body.commentDate
+        };
+
+        Post.findByIdAndUpdate(req.body.postId, {$push: {comments: comment}})
+            .then(doc=>{
+                console.log("Document",doc);
+                res.json({status:'Comment added'});
+            })
+            .catch(error=>{
+                res.json({status:'Failed',error:error,message:'Failed to add comment'})
+            });
+    }
+});
+
 module.exports = router;
