@@ -55,7 +55,7 @@ class AddPost extends Component {
     postBodyChangeHandler = (e)=>{
         this.setState({
             postBody: e.target.value
-        })
+        });
     }
 
     onSubmitPost = ()=>{
@@ -101,6 +101,7 @@ class AddPost extends Component {
                 </div>
             );
         }
+
         return (
             <div>
 

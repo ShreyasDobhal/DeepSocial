@@ -10,8 +10,9 @@ import './styles/signup.css';
 import './styles/nav-bar.css';
 import './styles/add-post.css';
 import './styles/post.css';
+import './styles/comment.css';
 import './styles/home-page.css';
-import './styles/not-found.css';
+import './styles/error.css';
 import '../node_modules/font-awesome/css/font-awesome.min.css';
 
 import * as serviceWorker from './serviceWorker';

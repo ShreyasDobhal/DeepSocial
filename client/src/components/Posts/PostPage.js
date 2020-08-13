@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import { Spinner } from 'reactstrap';
 import axiosExpress from '../../axios/axiosExpress';
 
 import NavigationBar from '../Navbar/Navbar';
-import AddPost from './AddPost';
 import Post from './Post';
 import NotFound from '../Error/NotFound';
+import LoadingSpinner from '../Loader/LoadingSpinner';
+import AddComment from './AddComment';
+import Comment from './Comment';
 
 class PostPage extends Component {
     
@@ -38,34 +39,41 @@ class PostPage extends Component {
 
     render() {
         let PostHolder = null;
+        let CommentHolder = null;
+        let AddCommentHolder = null;
 
         if (this.state.loaded) {
-
             if (this.state.notFound) {
-                PostHolder = (
-                    <NotFound />
-                );
+                PostHolder = (<NotFound />);
             } else {
-                PostHolder = (
-                    <Post post={this.state.post}/>
+                PostHolder = (<Post post={this.state.post} />);
+                AddCommentHolder = (<AddComment postId={this.state.postId}/>);
+                CommentHolder = (
+                    <div>
+                        {this.state.post.comments.map((comment,index)=>{
+                            return (
+                                <Comment comment={comment} key={comment._id}/>
+                            )
+                        })}
+                    </div>
                 );
             }
         } else {
-            PostHolder = (
-                <div className='loadingSpinner'>
-                    <Spinner animation="border" role="status" style={{ width: '3rem', height: '3rem' }}>
-                        <span className="sr-only">Loading...</span>
-                    </Spinner>
-                </div>
-            );
+            PostHolder = (<LoadingSpinner />);
         }
+
+
+
 
         return (
             <div>
-                <NavigationBar/>
+                <NavigationBar />
                 <div className='scroll-container'>
-                    {/* <AddPost /> */}
                     {PostHolder}
+                    {AddCommentHolder}
+                    <div className='comment-holder'>
+                        {CommentHolder}
+                    </div>
                 </div>
             </div>
             // <div>Post Page {this.state.postId}</div>

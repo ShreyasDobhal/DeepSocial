@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 import axiosExpress from '../../axios/axiosExpress';
 import {connect} from 'react-redux';
-import FormData from 'form-data'
-import { Spinner } from 'reactstrap';
 
 import NavigationBar from '../Navbar/Navbar';
 import AddPost from '../Posts/AddPost';
 import Post from '../Posts/Post';
+import LoadingSpinner from '../Loader/LoadingSpinner';
 
 
 
@@ -38,13 +37,7 @@ class HomePage extends Component {
                 );
             });
         } else {
-            PostHolder = (
-                <div className='loadingSpinner'>
-                    <Spinner animation="border" role="status" style={{ width: '3rem', height: '3rem' }}>
-                        <span className="sr-only">Loading...</span>
-                    </Spinner>
-                </div>
-            );
+            PostHolder = (<LoadingSpinner />);
         }
 
         return (
