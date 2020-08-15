@@ -19,7 +19,13 @@ const PostSchema = new Schema({
         mongoose.Schema.Types.String
     ],
     likes: Number,
+    likedBy: [
+        String
+    ],
     dislikes: Number,
+    dislikedBy: [
+        String
+    ],
     commentCount: Number,
     comments: [
         {

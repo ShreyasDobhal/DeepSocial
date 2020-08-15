@@ -37,7 +37,7 @@ router.get('/',(req,res)=>{
             res.json(posts);
         })
         .catch(error=>{
-            res.json({status:'Failed',error:error,message:'Failed to load posts'});
+            res.status(400).json({status:'Failed',error:error,message:'Failed to load posts'});
         });
 });
 
@@ -87,7 +87,7 @@ router.post('/add',upload.single('postImage'),(req,res,next)=>{
             res.json(data);
         })
         .catch(error=>{
-            res.json({status:'Failed',error:error,message:'Failed to save post'});
+            res.status(400).json({status:'Failed',error:error,message:'Failed to save post'});
         });
 });
 
@@ -118,10 +118,10 @@ router.post('/comment-add',(req,res)=>{
                        {$push : {'comments.$.replies': comment}, $inc : {commentCount:1}})
             .then(doc=>{
                 console.log(doc);
-                res.json({status:'Comment added with comment to'});
+                res.json({status:'Comment added'});
             })
             .catch(error=>{
-                res.json({status:'Falied',error:error,message:'Failed to add comment'})
+                res.status(400).json({status:'Failed',error:error,message:'Failed to add comment'})
             });
 
 
@@ -138,17 +138,90 @@ router.post('/comment-add',(req,res)=>{
         Post.findByIdAndUpdate(req.body.postId, 
                               {$push: {comments: comment}, $inc : {commentCount:1}})
             .then(doc=>{
-                console.log("Inside without comment to ");
-                console.log("Added comment without comment to");
                 console.log("Document",doc);
-                res.json({status:'Comment count added'});
+                res.json({status:'Comment added'});
             })
             .catch(error=>{
-                res.json({status:'Failed',error:error,message:'Failed to add comment'})
+                res.status(400).json({status:'Failed',error:error,message:'Failed to add comment'})
             });
     }
 
 
+});
+
+router.post('/comment-like', (req, res) => {
+    Post.findOne({_id:req.body.postId})
+        .then(post=>{
+            if (post.dislikedBy.includes(req.body.userId)) {
+                Post.updateOne({_id:req.body.postId},
+                               {$inc : {dislikes:-1, likes:1},
+                                $push : {likedBy:req.body.userId},
+                                $pull : {dislikedBy:req.body.userId}})
+                    .then(post=>{
+                        res.json({status : 'Post liked successfully'});
+                    })
+                    .catch(error=>{
+                        res.status(400).json({status:'Failed',error:error,message:'Failed to like Post'});
+                    });
+            } else if (post.likedBy.includes(req.body.userId)) {
+                res.json({status:'Post already liked by user'});
+            } else {
+                Post.updateOne({_id:req.body.postId},
+                               {$inc : {likes:1}, 
+                                $push : {likedBy: req.body.userId}})
+                    .then(post=> {
+                        res.json({status: "Post liked successfully"});
+                    })
+                    .catch(err=>{
+                        res.status(400).json({status:'Failed',error:error,message:'Failed to like Post'});
+                    })
+            }
+        })
+        .catch(error=>{
+            res.status(400).json({status:'Failed',error:error,message:'Failed to like Post'});
+        });
+    
+});
+
+router.post('/comment-dislike', (req, res) => {
+    Post.findOne({_id:req.body.postId})
+        .then(post=>{
+            console.log("Post found");
+            if (post.likedBy.includes(req.body.userId)) {
+                console.log("Name in liked list");
+                Post.updateOne({_id:req.body.postId},
+                               {$inc : {dislikes:1, likes:-1},
+                                $pull : {likedBy:req.body.userId},
+                                $push : {dislikedBy:req.body.userId}})
+                    .then(post=>{
+                        console.log("Post disliked");
+                        res.json({status : 'Post disliked successfully'});
+                    })
+                    .catch(error=>{
+                        console.log("Post not disliked");
+                        console.log(error);
+                        res.status(400).json({status:'Failed',error:error,message:'Failed to dislike Post'});
+                    });
+            } else if (post.dislikedBy.includes(req.body.userId)) {
+                console.log("Name in disliked list");
+                res.json({status:'Post already disliked by user'});
+            } else {
+                console.log("Name not in any list");
+                Post.updateOne({_id:req.body.postId},
+                               {$inc : {dislikes:1}, 
+                                $push : {dislikedBy: req.body.userId}})
+                    .then(post=> {
+                        res.json({status: "Post disliked successfully"});
+                    })
+                    .catch(err=>{
+                        res.status(400).json({status:'Failed',error:error,message:'Failed to dislike Post'});
+                    })
+            }
+        })
+        .catch(error=>{
+            res.status(400).json({status:'Failed',error:error,message:'Failed to dislike Post'});
+        });
+    
 });
 
 module.exports = router;
