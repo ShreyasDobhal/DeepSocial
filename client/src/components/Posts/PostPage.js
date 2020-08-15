@@ -52,7 +52,9 @@ class PostPage extends Component {
                     <div>
                         {this.state.post.comments.map((comment,index)=>{
                             return (
-                                <Comment comment={comment} key={comment._id}/>
+                                <div className='comment-container'>
+                                    <Comment comment={comment} key={comment._id} commentId={comment._id} postId={this.state.postId}/>
+                                </div>
                             )
                         })}
                     </div>
@@ -76,7 +78,6 @@ class PostPage extends Component {
                     </div>
                 </div>
             </div>
-            // <div>Post Page {this.state.postId}</div>
         );
     }
 }

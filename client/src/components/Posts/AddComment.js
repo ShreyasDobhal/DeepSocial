@@ -11,22 +11,14 @@ class AddComment extends Component {
     onSubmitComment = ()=> {
         if (this.state.commentBody && this.state.commentBody.trim() !== '') {
 
-            console.log("userId",this.props.userId);
-            console.log("userDP",'');
-            console.log("userName",this.props.firstName+' '+this.props.lastName);
-            console.log("postId",this.props.postId);
-            console.log("commentBody",this.state.commentBody);
-            console.log("commentDate",new Date());
-            console.log("commentTo",'');
-            // return;
-
             const comment = {
                 userId: this.props.userId,
                 userDP: '',
                 userName: this.props.firstName+' '+this.props.lastName,
                 postId: this.props.postId,
                 commentBody: this.state.commentBody,
-                commentDate: new Date()
+                commentDate: new Date(),
+                commentTo: this.props.commentId
             }
 
             console.log(comment);

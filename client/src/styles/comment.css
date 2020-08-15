@@ -1,3 +1,29 @@
-.comment-container {
+.reply-container {
     margin-left: 100px;
+}
+
+.comment-container {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.comment-content-holder {
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment-type {
+    border: 5px solid;
+    border-left: none;
+    border-bottom: none;
+    width: 32px;
+    border-radius: 0px 10px 5px 0px;
+}
+
+.comment-reply-button {
+    border: none;
+    color: #2f587d;
+    background: none;
+    font-size: 16px;
+    font-weight: bold;
 }
