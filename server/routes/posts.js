@@ -114,11 +114,11 @@ router.post('/comment-add',(req,res)=>{
             commentDate: req.body.commentDate
         };
 
-        Post.update({_id:req.body.postId,'comments._id':req.body.commentTo},
-                    {$push : {'comments.$.replies': comment}})
+        Post.updateOne({_id:req.body.postId,'comments._id':req.body.commentTo},
+                       {$push : {'comments.$.replies': comment}, $inc : {commentCount:1}})
             .then(doc=>{
                 console.log(doc);
-                res.json({status:'Comment added'});
+                res.json({status:'Comment added with comment to'});
             })
             .catch(error=>{
                 res.json({status:'Falied',error:error,message:'Failed to add comment'})
@@ -135,15 +135,20 @@ router.post('/comment-add',(req,res)=>{
             commentDate: req.body.commentDate
         };
 
-        Post.findByIdAndUpdate(req.body.postId, {$push: {comments: comment}})
+        Post.findByIdAndUpdate(req.body.postId, 
+                              {$push: {comments: comment}, $inc : {commentCount:1}})
             .then(doc=>{
+                console.log("Inside without comment to ");
+                console.log("Added comment without comment to");
                 console.log("Document",doc);
-                res.json({status:'Comment added'});
+                res.json({status:'Comment count added'});
             })
             .catch(error=>{
                 res.json({status:'Failed',error:error,message:'Failed to add comment'})
             });
     }
+
+
 });
 
 module.exports = router;
