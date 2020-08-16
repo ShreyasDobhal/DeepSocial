@@ -1,11 +1,21 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
+import axiosExpress from '../../axios/axiosExpress';
 import PostImageHolder from './PostImageHolder';
 
 class Post extends Component {
     
     onCommentClickHandler = ()=>{
         this.props.history.push('/posts/'+this.props.post._id);
+    }
+
+    onResponseHandler = (type) => {
+        this.props.onResponseHandler({
+            type: type,
+            userId: this.props.userId,
+            postId: this.props.post._id
+        })
     }
     
     render() {
@@ -26,8 +36,8 @@ class Post extends Component {
                 </div>
                 <div className='post-footer-container'>
                     <div className='post-response-holder'>
-                        <i className="fa fa-thumbs-o-up post-response-btn" aria-hidden="true"></i><span className='post-response-value'>{this.props.post.likes}</span>
-                        <i className="fa fa-thumbs-o-down post-response-btn" aria-hidden="true"></i><span className='post-response-value'>{this.props.post.dislikes}</span>
+                        <i className="fa fa-thumbs-o-up post-response-btn" aria-hidden="true" onClick={() => this.onResponseHandler('like')}></i><span className='post-response-value'>{this.props.post.likes}</span>
+                        <i className="fa fa-thumbs-o-down post-response-btn" aria-hidden="true" onClick={() => this.onResponseHandler('dislike')}></i><span className='post-response-value'>{this.props.post.dislikes}</span>
                         <i className="fa fa-comment-o post-response-btn" aria-hidden="true" onClick={this.onCommentClickHandler}></i><span className='post-response-value'>{this.props.post.commentCount}</span>
                     </div>
                 </div>
@@ -36,4 +46,10 @@ class Post extends Component {
     }
 }
 
-export default withRouter(Post);
+const mapStateToProps = (state)=> {
+    return {
+        userId: state.tokenId
+    };
+}
+
+export default connect(mapStateToProps)(withRouter(Post));

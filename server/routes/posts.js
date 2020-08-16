@@ -158,7 +158,8 @@ router.post('/comment-like', (req, res) => {
                                 $push : {likedBy:req.body.userId},
                                 $pull : {dislikedBy:req.body.userId}})
                     .then(post=>{
-                        res.json({status : 'Post liked successfully'});
+                        console.log("Sending payload",post);
+                        res.json({status : 'Post liked successfully', data : {_id:req.body.postId, like:1, dislike:-1}});
                     })
                     .catch(error=>{
                         res.status(400).json({status:'Failed',error:error,message:'Failed to like Post'});
@@ -170,7 +171,8 @@ router.post('/comment-like', (req, res) => {
                                {$inc : {likes:1}, 
                                 $push : {likedBy: req.body.userId}})
                     .then(post=> {
-                        res.json({status: "Post liked successfully"});
+                        console.log("Sending payload",post);
+                        res.json({status: "Post liked successfully", data : {_id:req.body.postId, like:1, dislike:0}});
                     })
                     .catch(err=>{
                         res.status(400).json({status:'Failed',error:error,message:'Failed to like Post'});
@@ -195,7 +197,7 @@ router.post('/comment-dislike', (req, res) => {
                                 $push : {dislikedBy:req.body.userId}})
                     .then(post=>{
                         console.log("Post disliked");
-                        res.json({status : 'Post disliked successfully'});
+                        res.json({status : 'Post disliked successfully', data : {_id:req.body.postId, like:-1, dislike:1}});
                     })
                     .catch(error=>{
                         console.log("Post not disliked");
@@ -211,7 +213,7 @@ router.post('/comment-dislike', (req, res) => {
                                {$inc : {dislikes:1}, 
                                 $push : {dislikedBy: req.body.userId}})
                     .then(post=> {
-                        res.json({status: "Post disliked successfully"});
+                        res.json({status: "Post disliked successfully", data : {_id:req.body.postId, like:0, dislike:1}});
                     })
                     .catch(err=>{
                         res.status(400).json({status:'Failed',error:error,message:'Failed to dislike Post'});

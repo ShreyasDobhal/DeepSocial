@@ -16,6 +16,56 @@ class HomePage extends Component {
         loaded: false
     }
 
+    onResponseHandler = (response) => {
+        const payload = {
+            postId: response.postId,
+            userId: response.userId
+        }
+        if (response.type === 'like') {
+            axiosExpress.post('/posts/comment-like',payload)
+            .then(doc => {
+                console.log("Received payload",doc);
+                let newPosts = this.state.posts.map(post => {
+                    if (doc.data.data._id === post._id) {
+                        let newPost = {
+                            ...post
+                        };
+                        newPost.likes += doc.data.data.like;
+                        newPost.dislikes += doc.data.data.dislike;
+                        return newPost;
+                    } else {
+                        return post;
+                    }
+                });
+
+                this.setState({
+                    posts: newPosts
+                });
+            })
+        } else if (response.type === 'dislike') {
+            axiosExpress.post('/posts/comment-dislike',payload)
+            .then(doc => {
+                console.log("Received payload",doc);
+                let newPosts = this.state.posts.map(post => {
+                    if (doc.data.data._id === post._id) {
+                        let newPost = {
+                            ...post
+                        };
+                        newPost.likes += doc.data.data.like;
+                        newPost.dislikes += doc.data.data.dislike;
+                        return newPost;
+                    } else {
+                        return post;
+                    }
+                });
+
+                this.setState({
+                    posts: newPosts
+                });
+            })
+        }
+    }
+
     componentDidMount() {
         axiosExpress.get('/posts')
             .then(posts=>{
@@ -33,7 +83,7 @@ class HomePage extends Component {
         if (this.state.loaded) {
             PostHolder = this.state.posts.map(post=>{
                 return (
-                    <Post post={post}/>
+                    <Post post={post} onResponseHandler={this.onResponseHandler}/>
                 );
             });
         } else {

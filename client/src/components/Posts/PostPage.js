@@ -17,6 +17,47 @@ class PostPage extends Component {
         post: null
     }
 
+    onResponseHandler = (response) => {
+        const payload = {
+            postId: response.postId,
+            userId: response.userId
+        }
+        if (response.type === 'like') {
+            axiosExpress.post('/posts/comment-like',payload)
+            .then(doc => {
+                console.log("Received payload",doc);
+                if (doc.data.data._id === this.state.post._id) {
+                    let newPost = {
+                        ...this.state.post
+                    };
+                    newPost.likes += doc.data.data.like;
+                    newPost.dislikes += doc.data.data.dislike;
+                    this.setState({
+                        post: newPost
+                    });
+
+                }
+
+            })
+        } else if (response.type === 'dislike') {
+            axiosExpress.post('/posts/comment-dislike',payload)
+            .then(doc => {
+                console.log("Received payload",doc);
+                if (doc.data.data._id === this.state.post._id) {
+                    let newPost = {
+                        ...this.state.post
+                    };
+                    newPost.likes += doc.data.data.like;
+                    newPost.dislikes += doc.data.data.dislike;
+                    this.setState({
+                        post: newPost
+                    });
+                }
+                
+            })
+        }
+    }
+
     componentDidMount() {
         this.setState({
             postId:this.props.match.params.postId
@@ -46,7 +87,7 @@ class PostPage extends Component {
             if (this.state.notFound) {
                 PostHolder = (<NotFound />);
             } else {
-                PostHolder = (<Post post={this.state.post} />);
+                PostHolder = (<Post post={this.state.post} onResponseHandler={this.onResponseHandler}/>);
                 AddCommentHolder = (<AddComment postId={this.state.postId}/>);
                 CommentHolder = (
                     <div>
