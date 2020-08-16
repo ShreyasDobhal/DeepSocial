@@ -5,6 +5,11 @@ import axiosExpress from '../../axios/axiosExpress';
 import PostImageHolder from './PostImageHolder';
 
 class Post extends Component {
+
+    state = {
+        thumbUp: 'fa-thumbs-o-up',
+        thumbDown: 'fa-thumbs-o-down'
+    }
     
     onCommentClickHandler = ()=>{
         this.props.history.push('/posts/'+this.props.post._id);
@@ -15,10 +20,38 @@ class Post extends Component {
             type: type,
             userId: this.props.userId,
             postId: this.props.post._id
-        })
+        });
+        if (type === 'like') {
+            this.setState({
+                thumbUp : 'fa-thumbs-up',
+                thumbDown : 'fa-thumbs-o-down'
+            });
+        } else if (type === 'dislike') {
+            this.setState({
+                thumbUp : 'fa-thumbs-o-up',
+                thumbDown : 'fa-thumbs-down'
+            });
+        }
+    }
+
+    componentDidMount() {
+        if (this.props.post.likedBy.includes(this.props.userId)) {
+            this.setState({
+                thumbUp : 'fa-thumbs-up',
+                thumbDown : 'fa-thumbs-o-down'
+            });
+        } else if (this.props.post.dislikedBy.includes(this.props.userId)) {
+            this.setState({
+                thumbUp : 'fa-thumbs-o-up',
+                thumbDown : 'fa-thumbs-down'
+            });
+        }
     }
     
     render() {
+
+        
+
         return (
             <div className='post-container'>
                 <div className='post-header-container'>
@@ -36,8 +69,10 @@ class Post extends Component {
                 </div>
                 <div className='post-footer-container'>
                     <div className='post-response-holder'>
-                        <i className="fa fa-thumbs-o-up post-response-btn" aria-hidden="true" onClick={() => this.onResponseHandler('like')}></i><span className='post-response-value'>{this.props.post.likes}</span>
-                        <i className="fa fa-thumbs-o-down post-response-btn" aria-hidden="true" onClick={() => this.onResponseHandler('dislike')}></i><span className='post-response-value'>{this.props.post.dislikes}</span>
+                        <i className={"fa " + this.state.thumbUp + " post-response-btn"} aria-hidden="true" onClick={() => this.onResponseHandler('like')}></i><span className='post-response-value'>{this.props.post.likes}</span>
+                        <i className={"fa " + this.state.thumbDown +" post-response-btn"} aria-hidden="true" onClick={() => this.onResponseHandler('dislike')}></i><span className='post-response-value'>{this.props.post.dislikes}</span>
+                        {/* <i className={"fa fa-thumbs-o-up post-response-btn"} aria-hidden="true" onClick={() => this.onResponseHandler('like')}></i><span className='post-response-value'>{this.props.post.likes}</span>
+                        <i className={"fa fa-thumbs-o-down post-response-btn"} aria-hidden="true" onClick={() => this.onResponseHandler('dislike')}></i><span className='post-response-value'>{this.props.post.dislikes}</span> */}
                         <i className="fa fa-comment-o post-response-btn" aria-hidden="true" onClick={this.onCommentClickHandler}></i><span className='post-response-value'>{this.props.post.commentCount}</span>
                     </div>
                 </div>

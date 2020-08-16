@@ -22,6 +22,7 @@ class PostPage extends Component {
             postId: response.postId,
             userId: response.userId
         }
+
         if (response.type === 'like') {
             axiosExpress.post('/posts/comment-like',payload)
             .then(doc => {
@@ -38,7 +39,7 @@ class PostPage extends Component {
 
                 }
 
-            })
+            });
         } else if (response.type === 'dislike') {
             axiosExpress.post('/posts/comment-dislike',payload)
             .then(doc => {
@@ -54,7 +55,7 @@ class PostPage extends Component {
                     });
                 }
                 
-            })
+            });
         }
     }
 
@@ -94,7 +95,7 @@ class PostPage extends Component {
                         {this.state.post.comments.map((comment,index)=>{
                             return (
                                 <div className='comment-container'>
-                                    <Comment comment={comment} key={comment._id} commentId={comment._id} postId={this.state.postId}/>
+                                    <Comment comment={comment} key={comment._id} commentId={comment._id} postId={this.state.postId} />
                                 </div>
                             )
                         })}
@@ -104,8 +105,6 @@ class PostPage extends Component {
         } else {
             PostHolder = (<LoadingSpinner />);
         }
-
-
 
 
         return (

@@ -165,7 +165,7 @@ router.post('/comment-like', (req, res) => {
                         res.status(400).json({status:'Failed',error:error,message:'Failed to like Post'});
                     });
             } else if (post.likedBy.includes(req.body.userId)) {
-                res.json({status:'Post already liked by user'});
+                res.json({status:'Post already liked by user', data : {_id:req.body.postId, like:0, dislike:0}});
             } else {
                 Post.updateOne({_id:req.body.postId},
                                {$inc : {likes:1}, 
@@ -205,8 +205,7 @@ router.post('/comment-dislike', (req, res) => {
                         res.status(400).json({status:'Failed',error:error,message:'Failed to dislike Post'});
                     });
             } else if (post.dislikedBy.includes(req.body.userId)) {
-                console.log("Name in disliked list");
-                res.json({status:'Post already disliked by user'});
+                res.json({status:'Post already disliked by user', data : {_id:req.body.postId, like:0, dislike:0}});
             } else {
                 console.log("Name not in any list");
                 Post.updateOne({_id:req.body.postId},
