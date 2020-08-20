@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import SignUpPage from './components/SignupPage/SignUpPage';
 import HomePage from './components/HomePage/HomePage';
 import PostPage from './components/Posts/PostPage';
+import ProfilePage from './components/ProfilePage/ProfilePage';
 import * as Actions from './actions/actions';
 
 const cookies = new Cookies();
@@ -31,6 +32,7 @@ function App(props) {
       <div className="App">
         <Switch>
           <Route exact path='/' component={props.isSignedIn ? HomePage : SignUpPage} />
+          <Route exact path='/profile' component={props.isSignedIn ? ProfilePage : SignUpPage} />
           <Route exact path='/posts/:postId' component={props.isSignedIn ? PostPage : SignUpPage} />
         </Switch>
       </div>

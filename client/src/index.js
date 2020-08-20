@@ -12,6 +12,7 @@ import './styles/add-post.css';
 import './styles/post.css';
 import './styles/comment.css';
 import './styles/home-page.css';
+import './styles/profile-page.css';
 import './styles/error.css';
 import '../node_modules/font-awesome/css/font-awesome.min.css';
 
