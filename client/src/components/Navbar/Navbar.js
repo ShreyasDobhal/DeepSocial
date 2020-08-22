@@ -34,7 +34,7 @@ const NavigationBar = (props) => {
                     </DropdownToggle>
                     <DropdownMenu right>
                         <DropdownItem>
-                            <NavLink className='nav-plain-link' href='/profile'><i className="fa fa-user drop-menu-icon" aria-hidden="true"></i> My Profile</NavLink>
+                            <NavLink className='nav-plain-link' href={'/profile/'+props.tokenId}><i className="fa fa-user drop-menu-icon" aria-hidden="true"></i> My Profile</NavLink>
                         </DropdownItem>
                         <DropdownItem>
                             <NavLink className='nav-plain-link' href='/friends'><i className="fa fa-users drop-menu-icon" aria-hidden="true"></i> Friends</NavLink>

@@ -32,7 +32,7 @@ function App(props) {
       <div className="App">
         <Switch>
           <Route exact path='/' component={props.isSignedIn ? HomePage : SignUpPage} />
-          <Route exact path='/profile' component={props.isSignedIn ? ProfilePage : SignUpPage} />
+          <Route exact path='/profile/:userId' component={props.isSignedIn ? ProfilePage : SignUpPage} />
           <Route exact path='/posts/:postId' component={props.isSignedIn ? PostPage : SignUpPage} />
         </Switch>
       </div>
