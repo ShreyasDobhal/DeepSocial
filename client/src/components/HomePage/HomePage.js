@@ -22,7 +22,7 @@ class HomePage extends Component {
             userId: response.userId
         }
         if (response.type === 'like') {
-            axiosExpress.post('/posts/comment-like',payload)
+            axiosExpress.post('/posts/post-like',payload)
             .then(doc => {
                 console.log("Received payload",doc);
                 let newPosts = this.state.posts.map(post => {
@@ -43,7 +43,7 @@ class HomePage extends Component {
                 });
             })
         } else if (response.type === 'dislike') {
-            axiosExpress.post('/posts/comment-dislike',payload)
+            axiosExpress.post('/posts/post-dislike',payload)
             .then(doc => {
                 console.log("Received payload",doc);
                 let newPosts = this.state.posts.map(post => {
@@ -67,6 +67,7 @@ class HomePage extends Component {
     }
 
     componentDidMount() {
+        // TODO: get posts of self and friends only
         axiosExpress.get('/posts')
             .then(posts=>{
                 this.setState({

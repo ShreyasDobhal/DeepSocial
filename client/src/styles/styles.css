@@ -12,6 +12,12 @@
     font-weight: bold;
 }
 
+.iconSpan {
+    color: #444242;
+    padding: 10px;
+    font-size: 20px;
+}
+
 .drag-drop-outer-container {
     position: relative;
 }
@@ -47,4 +53,29 @@
     color: #245f8f;
     text-align: center;
     margin: 50px;
+}
+
+/* Overlay CSS  */
+.image-overlay-container > .overlay-parent {
+    transition: .5s ease;
+    backface-visibility: hidden;
+}
+
+.image-overlay-container:hover > .overlay-parent {
+    opacity: 0.75;
+}
+
+.overlay-holder {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.image-overlay-container:hover .overlay-holder {
+    opacity: 1;
 }

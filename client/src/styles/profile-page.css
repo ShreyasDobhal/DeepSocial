@@ -4,12 +4,13 @@
     box-shadow: 10px 10px 10px gray;
     /* border-radius: 5px; */
     width: 100%;
-    height: 1000px;
+    min-height: 1000px;
     max-width: 750px;
     margin: 10px auto;
+    padding-bottom: 30px;
 }
 
-.profile-wallpaper-image {
+.profile-cover-image {
     /* border: 2px solid red; */
     border-bottom: 2px solid #b8babd;
     height: 250px;
@@ -17,19 +18,33 @@
     overflow: hidden;
 }
 
-.profile-wallpaper-image > img{
+@keyframes coverImageAnimation {
+    0%   {bottom: 0px;}
+    50%  {bottom: 245px;}
+    100% {bottom: 0px;}
+}
+
+.profile-cover-image > img{
     width: 100%;
+    opacity: 0.90;
+    position: relative;
+    animation-name: coverImageAnimation;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
     /* border: 2px solid blue; */
 }
 
 .profile-user-container {
     display: flex;
+    /* margin-top: -10px; */
+    
     /* grid-template-columns: 1fr fit-content; */
 }
 
 .profile-display-image {
     border: 2px solid #a9a9a9;
     background-color: #e8e7e7;
+    box-shadow: 0px 0px 32px #595a5a;
     border-radius: 50%;
     overflow: hidden;
     display: inline-block;
@@ -45,6 +60,14 @@
     width: 100%;
 }
 
+.profile-display-image-overlay {
+    background-color: #505050;
+    border-radius: 20px;
+    color: white;
+    font-size: 14px;
+    padding: 10px;
+}
+
 .profile-user-info {
     /* border: 2px solid royalblue; */
     display: inline-block;
@@ -58,4 +81,54 @@
 
 .profile-user-info > .profile-email-info {
     color: #504949;
+}
+
+.profile-about-container {
+    /* border: 2px solid red; */
+    margin: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-about-container p {
+    /* border: 2px solid yellow; */
+    color: #504949;
+    font-size: 18px;
+    margin: 4px;
+    padding: 0px;
+}
+
+.photo-gallery-container {
+    /* border: 2px solid greenyellow; */
+}
+
+.photo-gallery-heading {
+    padding: 15px;
+}
+
+.gallery-photo-holder {
+    border: 2px solid gray;
+    padding-top: 5px;
+}
+
+.gallery-thumbnail {
+    width: 138px;
+    height: 138px;
+    display: inline-block;
+    margin: 3px 5px;
+    overflow: hidden;
+}
+
+.gallery-thumbnail img {
+    width: 100%;    /* Scale up to fill container width */
+    height: 100%;   /* Scale up to fill container height */
+    /* -ms-interpolation-mode: bicubic; */
+}
+
+.gallery-button-holder {
+    margin-top: 20px;
+}
+
+.gallery-button-holder button {
+    padding: 10px 50px;
 }

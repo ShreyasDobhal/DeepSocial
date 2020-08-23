@@ -24,7 +24,7 @@ class PostPage extends Component {
         }
 
         if (response.type === 'like') {
-            axiosExpress.post('/posts/comment-like',payload)
+            axiosExpress.post('/posts/post-like',payload)
             .then(doc => {
                 console.log("Received payload",doc);
                 if (doc.data.data._id === this.state.post._id) {
@@ -41,7 +41,7 @@ class PostPage extends Component {
 
             });
         } else if (response.type === 'dislike') {
-            axiosExpress.post('/posts/comment-dislike',payload)
+            axiosExpress.post('/posts/post-dislike',payload)
             .then(doc => {
                 console.log("Received payload",doc);
                 if (doc.data.data._id === this.state.post._id) {

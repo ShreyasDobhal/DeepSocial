@@ -31,6 +31,9 @@ const upload = multer({
 
 
 // END PONTS
+/**
+ * GET all posts
+ */
 router.get('/',(req,res)=>{
     Post.find({})
         .then(posts=>{
@@ -41,6 +44,9 @@ router.get('/',(req,res)=>{
         });
 });
 
+/**
+ * GET post with given postId
+ */
 router.get('/:postId',(req,res)=>{
 
     Post.findById(req.params.postId)
@@ -53,7 +59,16 @@ router.get('/:postId',(req,res)=>{
 });
 
 
-
+/**
+ * POST method to add a new post
+ * payload -
+ * postBody
+ * postDate
+ * postImage
+ * authorName
+ * tokenId
+ * authorDP
+ */
 // router.post('/add',upload.array('postImages',10),(req,res,next)=>{
 // router.post('/add',(req,res,next)=>{
 router.post('/add',upload.single('postImage'),(req,res,next)=>{
@@ -91,6 +106,16 @@ router.post('/add',upload.single('postImage'),(req,res,next)=>{
         });
 });
 
+/**
+ * POST method to add a comment
+ * payload - 
+ * commentTo - if undefined adds a comment to post, else adds as a reply to particular comment
+ * userId
+ * userDP
+ * userName
+ * commentBody
+ * commentDate
+ */
 router.post('/comment-add',(req,res)=>{
     
     console.log("User Id",req.body.userId);
@@ -100,9 +125,6 @@ router.post('/comment-add',(req,res)=>{
     console.log("Comment body",req.body.commentBody);
     console.log("Comment date",req.body.commentDate);
     console.log("Comment To",req.body.commentTo);
-
-    // res.json("Ok");
-    // return;
 
     if (req.body.commentTo) {
         // Replying to a comment
@@ -149,7 +171,13 @@ router.post('/comment-add',(req,res)=>{
 
 });
 
-router.post('/comment-like', (req, res) => {
+/**
+ * POST method to like a post
+ * payload - 
+ * postId
+ * userId
+ */
+router.post('/post-like', (req, res) => {
     Post.findOne({_id:req.body.postId})
         .then(post=>{
             if (post.dislikedBy.includes(req.body.userId)) {
@@ -185,7 +213,13 @@ router.post('/comment-like', (req, res) => {
     
 });
 
-router.post('/comment-dislike', (req, res) => {
+/**
+ * POST method to dislike a post
+ * payload - 
+ * postId
+ * userId
+ */
+router.post('/post-dislike', (req, res) => {
     Post.findOne({_id:req.body.postId})
         .then(post=>{
             console.log("Post found");

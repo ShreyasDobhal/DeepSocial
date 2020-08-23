@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
-import axiosExpress from '../../axios/axiosExpress';
 import PostImageHolder from './PostImageHolder';
 
 class Post extends Component {
@@ -49,8 +48,6 @@ class Post extends Component {
     }
     
     render() {
-
-        
 
         return (
             <div className='post-container'>
