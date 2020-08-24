@@ -18,7 +18,7 @@ const TabbedView = (props) => {
     
     NavItems = props.pageNames.map((name, index) => {
         return (
-            <NavItem>
+            <NavItem className='fragmentTab'>
                 <NavLink className={classnames({active: activeTab === String(index+1)})} 
                          onClick={() => { toggle(String(index+1)); }}>
                     {name}
