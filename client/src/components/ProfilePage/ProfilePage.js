@@ -10,6 +10,8 @@ import DragAndDrop from '../HOC/DragAndDrop';
 import PhotoGallery from './PhotoGallery';
 import Post from '../Posts/Post';
 import TabbedView from '../Utility/TabbedView';
+import Jumbotron from '../Utility/Jumbotron';
+import Modal from '../Utility/Modal';
 
 class ProfilePage extends Component {
    
@@ -17,6 +19,7 @@ class ProfilePage extends Component {
         notFound: false,
         isLoaded: false,
         isOwner: false,
+        modalToggle: true,
         userId: null,
         userName: 'User Name',
         userEmail: 'user@gmail.com',
@@ -63,7 +66,7 @@ class ProfilePage extends Component {
     handleDrop = (files) => {
         
         if (!files[0].name)
-        return;
+            return;
         console.log("Uploading file",files[0]);
         this.setState({
             imageFile: files[0]
@@ -138,6 +141,14 @@ class ProfilePage extends Component {
         }
     }
 
+    modalHandler = (e) => {
+        e.preventDefault();
+        this.setState({
+        //   modalToggle: !this.state.modalToggle
+          modalToggle: true
+        })
+      }
+
     render() {
 
         const aboutPage = (
@@ -157,8 +168,36 @@ class ProfilePage extends Component {
                 <Post post={post} onResponseHandler={this.onResponseHandler}/>
             );
         });
-        let page2 = (<div>Hello Page 2</div>);
-        let page3 = (<div>Hello Page 3</div>);
+        
+        const friendsPage = (
+            <div>
+                <Jumbotron title={(<span>0 Friends <i className="fa fa-frown-o" aria-hidden="true"></i></span>)} 
+                           body1="You haven't added any friends yet. Browse for your friends using search option on the Navigation Bar."
+                           body2="Or have a photo of someone but do not remember his or her name ? Use our find by face feature now."
+                           btnText="Find Friends"
+                           goto="/search"/>
+            </div>
+        );
+
+        const uploadUserDPModal = (
+            <Modal show={this.state.modalToggle} modalClosed={this.modalHandler}>
+                <DragAndDrop handleDrop={this.handleDrop}>
+                    <div className='upload-userdp-modal-container'>
+                        <h4>Upload a Photo</h4>
+                        <div className='upload-userdp-preview-holder'>
+                            {/* <img src='/images/default.png'/> */}
+                            <img src={this.state.imageFile ? URL.createObjectURL(this.state.imageFile) : '/images/default.png'}/>
+                        </div>
+                        <div className='text-center'>
+                            <button className='btn btn-primary my-2'>Done</button>
+                        </div>
+                    </div>
+                    
+                </DragAndDrop>
+            </Modal>
+        );
+
+
         let pageHolder = null;
         if (this.state.isLoaded) {
             if (!this.state.notFound) {
@@ -169,7 +208,7 @@ class ProfilePage extends Component {
                         </div>
                         <div className='profile-user-container'>
                             <div className='profile-display-image image-overlay-container'>
-                                <img className="overlay-parent" src={this.state.userDP ? this.state.userDP : '/images/profile.png'} alt='User DP'/>
+                                <img className="overlay-parent" src={this.state.userDP ? this.state.userDP : '/images/profile.png'} onClick={this.modalHandler} alt='User DP'/>
                                 <div class="overlay-holder">
                                     <div class="profile-display-image-overlay">Upload</div>
                                 </div>
@@ -183,7 +222,7 @@ class ProfilePage extends Component {
                         
 
                         <TabbedView pageNames={[<i class="fa fa-camera" aria-hidden="true"></i>, 'Timeline', 'About', 'Friends']} 
-                                    pageComponents={[<PhotoGallery/>, timeLinePage, aboutPage, page3]}/>
+                                    pageComponents={[<PhotoGallery/>, timeLinePage, aboutPage, friendsPage]}/>
 
                         
 
@@ -212,6 +251,7 @@ class ProfilePage extends Component {
         return (
             <div>
                 <NavigationBar/>
+                {uploadUserDPModal}
                 {pageHolder}
             </div>
         )
