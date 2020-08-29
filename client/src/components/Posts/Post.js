@@ -48,12 +48,17 @@ class Post extends Component {
     }
     
     render() {
-
+        let userDP = (this.props.post.authorDP) ? this.props.post.authorDP : null;
+        if (this.props.post.authorCurrentDP && this.props.post.authorCurrentDP.userDP)
+                userDP = '/'+this.props.post.authorCurrentDP.userDP;
+            else 
+                userDP = (this.props.post.authorDP) ? this.props.post.authorDP : '/images/profile.png';
+        
         return (
             <div className='post-container'>
                 <div className='post-header-container'>
                     <div className='profile-image-holder'>
-                        <img src={(this.props.post.authorDP)?this.props.post.authorDP:''} className='profile-image' alt='userDP' onError={(e)=>{e.target.onerror = null; e.target.src="/images/profile.png"}}/>
+                        <img src={userDP} className='profile-image' alt='userDP' />
                     </div>
                     <div className='post-info-container'>
                         <div className='post-sender-name'><span className='userSpan'>{this.props.post.authorName}</span></div>

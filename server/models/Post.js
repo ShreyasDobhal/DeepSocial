@@ -14,7 +14,8 @@ const PostSchema = new Schema({
         required: true 
     },
     authorDP: String,
-    authorId: String,
+    // authorId: String,
+    authorId: mongoose.Schema.Types.ObjectId,
     tags: [
         mongoose.Schema.Types.String
     ],

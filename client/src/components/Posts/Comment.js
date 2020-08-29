@@ -35,7 +35,7 @@ class Comment extends Component {
                         <div>
                             <div className='post-header-container'>
                                 <div className='profile-image-holder'>
-                                    <img src={(this.props.comment.userDP) ? this.props.comment.userDP : ''} className='profile-image' alt='userDP' onError={(e)=>{e.target.onerror = null; e.target.src="/images/profile.png"}}/>
+                                    <img src={(this.props.comment.userDP) ? '/'+this.props.comment.userDP : '/images/profile.png'} className='profile-image' alt='userDP'/>
                                 </div>
                                 <div className='post-info-container'>
                                     <div className='post-sender-name'><span className='userSpan'>{this.props.comment.userName}</span></div>

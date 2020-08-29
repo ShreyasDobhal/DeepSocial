@@ -1,5 +1,6 @@
 const express = require('express');
 const multer = require('multer');
+const mongoose = require('mongoose');
 
 const router = express.Router();
 
@@ -35,13 +36,38 @@ const upload = multer({
  * GET all posts
  */
 router.get('/',(req,res)=>{
-    Post.find({})
-        .then(posts=>{
+    // Post.find({})
+    //     .then(posts=>{
+    //         res.json(posts);
+    //     })
+    //     .catch(error=>{
+    //         res.status(400).json({status:'Failed',error:error,message:'Failed to load posts'});
+    //     });
+    Post.aggregate([
+        {
+            $lookup: {
+                from: 'users',
+                let: {authorId: '$authorId'},
+                pipeline: [
+                    {$match: {$expr : {$eq: ['$$authorId','$_id']}}},
+                    {$project: {userDP:1, _id:0}}
+                ],
+                as:'authorCurrentDP',
+            }
+        },
+        {
+            $unwind: {
+                path: '$authorCurrentDP', 
+                preserveNullAndEmptyArrays: true
+            }
+        }
+    ]).exec((err, posts) => {
+        if (err) {
+            res.status(400).json({status:'Failed',error:err,message:'Failed to load posts'});
+        } else {
             res.json(posts);
-        })
-        .catch(error=>{
-            res.status(400).json({status:'Failed',error:error,message:'Failed to load posts'});
-        });
+        }
+    });
 });
 
 /**
@@ -49,14 +75,45 @@ router.get('/',(req,res)=>{
  */
 router.get('/:postId',(req,res)=>{
 
-    Post.findById(req.params.postId)
-        .then(post=>{
-            res.json(post);
-        })
-        .catch(error=>{
-            res.status(404).json({status:'Failed',error:error,message:'Failed to load post'});
-        });
+    // Post.findById(req.params.postId)
+    //     .then(post=>{
+    //         res.json(post);
+    //     })
+    //     .catch(error=>{
+    //         res.status(404).json({status:'Failed',error:error,message:'Failed to load post'});
+    //     });
+    // return;
+    // let postId = `ObjectId(${req.params.postId})`
+    let postId = mongoose.Types.ObjectId(req.params.postId);
+    Post.aggregate([
+        {$match: {_id: postId}},
+        {
+            $lookup: {
+                from: 'users',
+                let: {authorId: '$authorId', postId: '$_id'},
+                pipeline: [
+                    {$match: {$expr : {$eq: ['$$authorId','$_id']}}},
+                    {$project: {userDP:1, _id:0}}
+                ],
+                as:'authorCurrentDP',
+            }
+        },
+        {
+            $unwind: {
+                path: '$authorCurrentDP', 
+                preserveNullAndEmptyArrays: true
+            }
+        }
+    ]).exec((err, posts) => {
+        if (err) {
+            res.status(400).json({status:'Failed',error:err,message:'Failed to load posts'});
+        } else {
+            res.json(posts[0]);
+        }
+    });
 });
+
+
 
 
 /**

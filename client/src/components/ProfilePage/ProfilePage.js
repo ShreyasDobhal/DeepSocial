@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import FormData from 'form-data'
 import axiosExpress from '../../axios/axiosExpress';
 import ReactCrop from 'react-image-crop';
+import * as Actions from '../../actions/actions';
 
 import NavigationBar from '../Navbar/Navbar';
 import LoadingSpinner from '../Loader/LoadingSpinner';
@@ -54,7 +55,7 @@ class ProfilePage extends Component {
                 this.setState({
                     userName: user.data.fname + ' ' + user.data.lname,
                     userEmail: user.data.email,
-                    userDP: user.data.userDP,
+                    userDP: user.data.userDP ? '/'+user.data.userDP : null,
                     isLoaded: true
                 });
             })
@@ -99,7 +100,7 @@ class ProfilePage extends Component {
         formData.append('userId',this.props.userId);
         formData.append('userImage',this.state.croppedImageBlob,"userDP.jpg");
 
-        axiosExpress.post('/users/add-image',formData)
+        axiosExpress.post('/users/set-userdp',formData)
             .then( doc => {
                 console.log(doc);
             })
@@ -349,6 +350,12 @@ class ProfilePage extends Component {
 const mapStateToProps = (state) => {
     return {
         userId: state.tokenId
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setUser: (user) => dispatch(Actions.setUser(user))
     }
 }
 

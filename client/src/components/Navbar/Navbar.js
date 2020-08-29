@@ -106,9 +106,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-    //   deleteTokenId: (tokenId) => dispatch({type:'DELETE_TOKEN'})
-      deleteTokenId: (tokenId) => dispatch(Actions.deleteToken())
+        deleteTokenId: (tokenId) => dispatch(Actions.deleteToken())
     }
-  }
+}
 
 export default connect(mapStateToProps,mapDispatchToProps)(withRouter(NavigationBar));

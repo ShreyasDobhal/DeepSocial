@@ -92,27 +92,36 @@ router.post('/add-image',upload.single('userImage'),(req,res,next)=>{
         .catch(error => {
             res.status(400).json({status:'Failed',error:error,message:'Failed to upload image/s'});
         });
+});
 
-    // const payload = new Post({
-    //     postBody: req.body.postBody,
-    //     postDate: req.body.postDate,
-    //     authorName: req.body.authorName,
-    //     authorId: req.body.tokenId,
-    //     authorDP: req.body.authorDP,
-    //     likes: 0,
-    //     dislikes: 0,
-    //     commentCount: 0
-    // });
-
+/**
+ * POST method to upload a DP
+ * payload -
+ * userId
+ * userImage
+ */
+router.post('/set-userdp',upload.single('userImage'),(req,res,next)=>{
     
+    let image = null;
+    if (req.files && req.files.length > 0) {
+        console.log("Images received");
+        image = req.files[0].path.slice(file.path.indexOf('uploads'));
+    } else if (req.file) {
+        console.log("Image received");
+        image = req.file.path.slice(req.file.path.indexOf('uploads'));
+    } else {
+        console.log("No image received");
+        res.status(400).json({status:'Failed',message:'No image uploaded'});
+        return;
+    }
 
-    // newPost.save()
-    //     .then(data=>{
-    //         res.json(data);
-    //     })
-    //     .catch(error=>{
-    //         res.status(400).json({status:'Failed',error:error,message:'Failed to save post'});
-    //     });
+    User.updateOne({_id:req.body.userId},{$set: {userDP: image}})
+        .then(doc => {
+            res.json(doc);
+        })
+        .catch(error => {
+            res.status(400).json({status:'Failed',error:error,message:'Failed to upload image'});
+        });
 });
 
 // Sign-up (with token)
@@ -229,7 +238,8 @@ router.post('/signin', (req,res) => {
                             user:{
                                 fname: user.fname,
                                 lname: user.lname,
-                                email: user.email
+                                email: user.email,
+                                userDP: user.userDP
                             }});
                         
                     } else {

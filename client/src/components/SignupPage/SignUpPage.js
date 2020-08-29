@@ -54,7 +54,8 @@ class SignUpPage extends Component {
                 this.props.setUser({
                     fname:data.data.user.fname,
                     lname:data.data.user.lname,
-                    email:data.data.user.email
+                    email:data.data.user.email,
+                    userDP:data.data.user.userDP
                 });
             })
             .catch(error => {

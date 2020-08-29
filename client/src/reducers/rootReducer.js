@@ -7,7 +7,8 @@ const initialState = {
     currentUser: {
         fname: null,
         lname: null,
-        email: null
+        email: null,
+        userDP: null,
     }
 }
 
@@ -36,7 +37,8 @@ const reducer = (state=initialState,action) => {
                 ...state.currentUser,
                 fname: action.value.fname,
                 lname: action.value.lname,
-                email: action.value.email
+                email: action.value.email,
+                userDP: action.value.userDP
             }
             newState = {
                 ...state,
@@ -45,6 +47,7 @@ const reducer = (state=initialState,action) => {
             cookies.set('fname',action.value.fname);
             cookies.set('lname',action.value.lname);
             cookies.set('email',action.value.email);
+            cookies.set('userDP',action.value.userDP);
             return newState;
         default:
             return state;

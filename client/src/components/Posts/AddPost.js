@@ -102,6 +102,7 @@ class AddPost extends Component {
             );
         }
 
+        console.log("USer DP",this.props.userDP);
         return (
             <div>
 
@@ -109,7 +110,7 @@ class AddPost extends Component {
                     <div className='add-post-container'>
                         <div className='add-post-elements-container'>
                             <div className='profile-image-holder'>
-                                <img className='profile-image' src='/images/profile.png' alt='userDP'/>
+                                <img className='profile-image' src={this.props.userDP ? '/'+this.props.userDP :'/images/profile.png'} alt='userDP'/>
                             </div>
                             <div className='add-post-input-holder'>
                                 <textarea ref={this.textArea} className='add-post-input' placeholder='Enter something to post' onChange={this.postBodyChangeHandler}></textarea>
@@ -137,6 +138,7 @@ const mapStateToProps = (state)=> {
     return {
         firstName: state.currentUser.fname,
         lastName: state.currentUser.lname,
+        userDP: state.currentUser.userDP,
         tokenId: state.tokenId
     };
 }

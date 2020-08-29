@@ -11,6 +11,7 @@ import PostPage from './components/Posts/PostPage';
 import ProfilePage from './components/ProfilePage/ProfilePage';
 import TestComponent from './components/Utility/test';
 import * as Actions from './actions/actions';
+import axiosExpress from './axios/axiosExpress';
 
 const cookies = new Cookies();
 
@@ -19,12 +20,25 @@ function App(props) {
   if (cookies.get('tokenId') && cookies.get('tokenId')!=='null') {
     console.log("Loading saved cookie");
     props.setTokenId(cookies.get('tokenId'));
-    props.setUser({
-      fname:cookies.get('fname'),
-      lname:cookies.get('lname'),
-      email:cookies.get('email')
-    });
-
+    
+    axiosExpress.get('/users/'+cookies.get('tokenId'))
+      .then(user => {
+        console.log("Loading user from server");
+        props.setUser({
+          fname:cookies.get('fname'),
+          lname:cookies.get('lname'),
+          email:cookies.get('email'),
+          userDP:user.data.userDP
+        });
+      })
+      .catch(err => {
+        console.log("Loading user from local cache");
+        props.setUser({
+          fname:cookies.get('fname'),
+          lname:cookies.get('lname'),
+          email:cookies.get('email')
+        });
+      })
   }
   console.log("App token id:",props.tokenId);
 
