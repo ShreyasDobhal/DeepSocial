@@ -9,6 +9,7 @@ import SignUpPage from './components/SignupPage/SignUpPage';
 import HomePage from './components/HomePage/HomePage';
 import PostPage from './components/Posts/PostPage';
 import ProfilePage from './components/ProfilePage/ProfilePage';
+import TestComponent from './components/Utility/test';
 import * as Actions from './actions/actions';
 
 const cookies = new Cookies();
@@ -34,6 +35,7 @@ function App(props) {
           <Route exact path='/' component={props.isSignedIn ? HomePage : SignUpPage} />
           <Route exact path='/profile/:userId' component={props.isSignedIn ? ProfilePage : SignUpPage} />
           <Route exact path='/posts/:postId' component={props.isSignedIn ? PostPage : SignUpPage} />
+          <Route exact path='/test' component={TestComponent} />
         </Switch>
       </div>
     </BrowserRouter>

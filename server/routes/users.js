@@ -76,9 +76,13 @@ router.post('/add-image',upload.single('userImage'),(req,res,next)=>{
     
     let images = []
     if (req.files) {
+        console.log("Images received");
         images = req.files.map(file=>file.path.slice(file.path.indexOf('uploads')));
     } else if (req.file) {
+        console.log("Image received");
         images = [req.file.path.slice(req.file.path.indexOf('uploads'))];
+    } else {
+        console.log("No image received");
     }
 
     User.updateOne({_id:req.body.userId},{$push: {userImages: {$each: images}}})

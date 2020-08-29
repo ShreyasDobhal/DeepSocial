@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import FormData from 'form-data'
 import axiosExpress from '../../axios/axiosExpress';
+import ReactCrop from 'react-image-crop';
 
 import NavigationBar from '../Navbar/Navbar';
 import LoadingSpinner from '../Loader/LoadingSpinner';
@@ -19,13 +20,24 @@ class ProfilePage extends Component {
         notFound: false,
         isLoaded: false,
         isOwner: false,
+
         modalToggle: true,
+
+        crop: {
+            unit: '%',
+            width: 30,
+            aspect: 1 / 1
+        },
+        userDPsrc: '/images/default.png',
+
         userId: null,
         userName: 'User Name',
         userEmail: 'user@gmail.com',
         userDP: null,
         userBackgroundImage: '/images/profile-wallpaper.jpg',
+
         imageFile: null,
+
         posts: []
         // userBackgroundImage: '/uploads/2020-08-10T16:25:35.197ZIMG-20191007-WA0189.jpg'
     }
@@ -69,17 +81,29 @@ class ProfilePage extends Component {
             return;
         console.log("Uploading file",files[0]);
         this.setState({
-            imageFile: files[0]
+            imageFile: files[0],
+            userDPsrc: URL.createObjectURL(files[0])
         });
     }
 
-    // temp function to handle upload
-    onClick = ()=> {
+    onUploadDPHandler = ()=> {
+        // this.makeClientCrop(crop);
+        // return;
+        if (!this.state.imageFile) {
+            this.setState({
+                modalToggle: !this.state.modalToggle
+            });
+            return;
+        }
+
+        console.log(this.state.croppedImageUrl);
+        return;
 
         let formData = new FormData();
             
         formData.append('userId',this.props.userId);
-        formData.append('userImage',this.state.imageFile);
+        // formData.append('userImage',this.state.imageFile);
+        formData.append('userImage',this.state.croppedImageUrl.slice(5));
 
         axiosExpress.post('/users/add-image',formData)
             .then( doc => {
@@ -88,6 +112,11 @@ class ProfilePage extends Component {
             .catch( error => {
                 console.log(error);
             });
+        
+        this.setState({
+            // modalToggle: !this.state.modalToggle
+            modalToggle: true
+        });
     }
 
     // Post like - dislike handler
@@ -144,10 +173,77 @@ class ProfilePage extends Component {
     modalHandler = (e) => {
         e.preventDefault();
         this.setState({
-        //   modalToggle: !this.state.modalToggle
-          modalToggle: true
-        })
-      }
+            modalToggle: !this.state.modalToggle
+        //   modalToggle: true
+        });
+    }
+
+    onImageLoaded = image => {
+        // console.log("image loading complete profile page");
+        this.imageRef = image;
+    };
+
+    onCropChange = (crop, percentCrop) => {
+        this.setState({
+            crop: crop
+        });
+        // console.log(crop);
+    }
+
+    onCropComplete = crop => {
+        // console.log("Crop complete profile page");
+        this.makeClientCrop(crop);
+    };
+
+    async makeClientCrop(crop) {
+        if (this.imageRef && crop.width && crop.height) {
+            const croppedImageUrl = await this.getCroppedImg(
+                this.imageRef,
+                crop,
+                'newFile.jpeg'
+            );
+            this.setState({ croppedImageUrl });
+        }
+    }
+
+    getCroppedImg(image, crop, fileName) {
+        const canvas = document.createElement('canvas');
+        const scaleX = image.naturalWidth / image.width;
+        const scaleY = image.naturalHeight / image.height;
+        canvas.width = crop.width;
+        canvas.height = crop.height;
+        const ctx = canvas.getContext('2d');
+    
+        ctx.drawImage(
+            image,
+            crop.x * scaleX,
+            crop.y * scaleY,
+            crop.width * scaleX,
+            crop.height * scaleY,
+            0,
+            0,
+            crop.width,
+            crop.height
+        );
+    
+        return new Promise((resolve, reject) => {
+            canvas.toBlob(blob => {
+                if (!blob) {
+                    //reject(new Error('Canvas is empty'));
+                    console.error('Canvas is empty');
+                    return;
+                }
+                blob.name = fileName;
+                window.URL.revokeObjectURL(this.fileUrl);
+                this.fileUrl = window.URL.createObjectURL(blob);
+                resolve(this.fileUrl);
+            }, 'image/jpeg');
+        });
+    }
+
+    onCropDone = ()=> {
+        console.log("Image URL ",this.state.croppedImageUrl);
+    }
 
     render() {
 
@@ -178,18 +274,28 @@ class ProfilePage extends Component {
                            goto="/search"/>
             </div>
         );
-
+        
+        
         const uploadUserDPModal = (
             <Modal show={this.state.modalToggle} modalClosed={this.modalHandler}>
                 <DragAndDrop handleDrop={this.handleDrop}>
                     <div className='upload-userdp-modal-container'>
                         <h4>Upload a Photo</h4>
                         <div className='upload-userdp-preview-holder'>
-                            {/* <img src='/images/default.png'/> */}
-                            <img src={this.state.imageFile ? URL.createObjectURL(this.state.imageFile) : '/images/default.png'}/>
+                            {/* <img src={this.state.imageFile ? URL.createObjectURL(this.state.imageFile) : '/images/default.png'}/> */}
+                            <ReactCrop 
+                                src={this.state.userDPsrc}
+                                onChange={this.onCropChange}
+                                onComplete={this.onCropComplete}
+                                onImageLoaded={this.onImageLoaded}
+                                crop={this.state.crop}
+                                ruleOfThirds
+                                // minWidth='50px'
+
+                                />
                         </div>
                         <div className='text-center'>
-                            <button className='btn btn-primary my-2'>Done</button>
+                            <button className='btn btn-primary my-2' onClick={this.onUploadDPHandler}>Done</button>
                         </div>
                     </div>
                     
