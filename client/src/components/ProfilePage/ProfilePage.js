@@ -21,7 +21,7 @@ class ProfilePage extends Component {
         isLoaded: false,
         isOwner: false,
 
-        modalToggle: true,
+        modalToggle: false,
 
         crop: {
             unit: '%',
@@ -29,6 +29,7 @@ class ProfilePage extends Component {
             aspect: 1 / 1
         },
         userDPsrc: '/images/default.png',
+        croppedImageBlob: null,
 
         userId: null,
         userName: 'User Name',
@@ -39,7 +40,6 @@ class ProfilePage extends Component {
         imageFile: null,
 
         posts: []
-        // userBackgroundImage: '/uploads/2020-08-10T16:25:35.197ZIMG-20191007-WA0189.jpg'
     }
 
     componentDidMount() {
@@ -87,23 +87,17 @@ class ProfilePage extends Component {
     }
 
     onUploadDPHandler = ()=> {
-        // this.makeClientCrop(crop);
-        // return;
         if (!this.state.imageFile) {
             this.setState({
-                modalToggle: !this.state.modalToggle
+                modalToggle: false
             });
             return;
         }
 
-        console.log(this.state.croppedImageUrl);
-        return;
-
         let formData = new FormData();
             
         formData.append('userId',this.props.userId);
-        // formData.append('userImage',this.state.imageFile);
-        formData.append('userImage',this.state.croppedImageUrl.slice(5));
+        formData.append('userImage',this.state.croppedImageBlob,"userDP.jpg");
 
         axiosExpress.post('/users/add-image',formData)
             .then( doc => {
@@ -114,8 +108,7 @@ class ProfilePage extends Component {
             });
         
         this.setState({
-            // modalToggle: !this.state.modalToggle
-            modalToggle: true
+            modalToggle: false
         });
     }
 
@@ -174,12 +167,10 @@ class ProfilePage extends Component {
         e.preventDefault();
         this.setState({
             modalToggle: !this.state.modalToggle
-        //   modalToggle: true
         });
     }
 
     onImageLoaded = image => {
-        // console.log("image loading complete profile page");
         this.imageRef = image;
     };
 
@@ -187,22 +178,20 @@ class ProfilePage extends Component {
         this.setState({
             crop: crop
         });
-        // console.log(crop);
     }
 
     onCropComplete = crop => {
-        // console.log("Crop complete profile page");
         this.makeClientCrop(crop);
     };
 
     async makeClientCrop(crop) {
         if (this.imageRef && crop.width && crop.height) {
-            const croppedImageUrl = await this.getCroppedImg(
+            const croppedImageBlob = await this.getCroppedImg(
                 this.imageRef,
                 crop,
                 'newFile.jpeg'
             );
-            this.setState({ croppedImageUrl });
+            this.setState({ croppedImageBlob });
         }
     }
 
@@ -229,14 +218,11 @@ class ProfilePage extends Component {
         return new Promise((resolve, reject) => {
             canvas.toBlob(blob => {
                 if (!blob) {
-                    //reject(new Error('Canvas is empty'));
                     console.error('Canvas is empty');
                     return;
                 }
                 blob.name = fileName;
-                window.URL.revokeObjectURL(this.fileUrl);
-                this.fileUrl = window.URL.createObjectURL(blob);
-                resolve(this.fileUrl);
+                resolve(blob);
             }, 'image/jpeg');
         });
     }
@@ -265,6 +251,7 @@ class ProfilePage extends Component {
             );
         });
         
+        // TODO: Compelete friends page
         const friendsPage = (
             <div>
                 <Jumbotron title={(<span>0 Friends <i className="fa fa-frown-o" aria-hidden="true"></i></span>)} 
@@ -282,7 +269,6 @@ class ProfilePage extends Component {
                     <div className='upload-userdp-modal-container'>
                         <h4>Upload a Photo</h4>
                         <div className='upload-userdp-preview-holder'>
-                            {/* <img src={this.state.imageFile ? URL.createObjectURL(this.state.imageFile) : '/images/default.png'}/> */}
                             <ReactCrop 
                                 src={this.state.userDPsrc}
                                 onChange={this.onCropChange}
@@ -290,8 +276,6 @@ class ProfilePage extends Component {
                                 onImageLoaded={this.onImageLoaded}
                                 crop={this.state.crop}
                                 ruleOfThirds
-                                // minWidth='50px'
-
                                 />
                         </div>
                         <div className='text-center'>
@@ -331,8 +315,6 @@ class ProfilePage extends Component {
                                     pageComponents={[<PhotoGallery/>, timeLinePage, aboutPage, friendsPage]}/>
 
                         
-
-
 
 
 
