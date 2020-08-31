@@ -69,6 +69,7 @@ class Post extends Component {
                     <div className='post-body'>{this.props.post.postBody}</div>
                     <PostImageHolder images={this.props.post.postImages}/>
                 </div>
+                <hr />
                 <div className='post-footer-container'>
                     <div className='post-response-holder'>
                         <i className={"fa " + this.state.thumbUp + " post-response-btn"} aria-hidden="true" onClick={() => this.onResponseHandler('like')}></i><span className='post-response-value'>{this.props.post.likes}</span>

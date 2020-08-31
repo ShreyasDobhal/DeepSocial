@@ -68,6 +68,9 @@ class AddPost extends Component {
             formData.append('authorName',this.props.firstName + ' ' + this.props.lastName);
             formData.append('postDate',new Date());
 
+            let textarea = this.textArea.current;
+            textarea.value = '';
+
             axiosExpress.post('/posts/add',formData)
                 .then(data => {
                     console.log(data.data);

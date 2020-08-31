@@ -8,7 +8,10 @@ class AddComment extends Component {
         commentBody: null
     }
 
-    onSubmitComment = ()=> {
+    textArea = React.createRef();
+
+    onSubmitComment = (e)=> {
+        
         if (this.state.commentBody && this.state.commentBody.trim() !== '') {
 
             const comment = {
@@ -37,6 +40,8 @@ class AddComment extends Component {
                 commentBody: null
             });
         }
+        let textarea = this.textArea.current;
+        textarea.value = '';
     }
 
     commentBodyChangeHandler = (e)=> {

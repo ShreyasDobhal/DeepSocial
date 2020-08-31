@@ -60,7 +60,8 @@ router.get('/',(req,res)=>{
                 path: '$authorCurrentDP', 
                 preserveNullAndEmptyArrays: true
             }
-        }
+        },
+        {$sort: {postDate: -1}}
     ]).exec((err, posts) => {
         if (err) {
             res.status(400).json({status:'Failed',error:err,message:'Failed to load posts'});
