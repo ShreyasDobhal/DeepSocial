@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {ToastContainer, toast} from 'react-toastify';
 
 class SignUp extends Component {
     state = {
@@ -20,38 +21,38 @@ class SignUp extends Component {
         });
     }
     submitHandler = () => {
+        
         if (this.state.toggleVal===0) {
             // Sign up
 
             if (!this.state.fname || !this.state.lname || !this.state.email || !this.state.password1 || !this.state.password2) {
-                alert("Input fields cannot be empty");
+                toast.error(<div><h4> Error !</h4><p> Input fields cannot be empty</p></div>);
                 return;
             } else if (this.state.password1!==this.state.password2) {
-                alert("Password fields do not match !");
+                toast.error(<div><h4> Error !</h4><p> Password fields do not match !</p></div>);
                 return;
+            } else {
+                const request = {
+                    fname: this.state.fname,
+                    lname: this.state.lname,
+                    email: this.state.email,
+                    password: this.state.password1
+                }
+                this.props.onSignUpHandler(request);
             }
-
-            const request = {
-                fname: this.state.fname,
-                lname: this.state.lname,
-                email: this.state.email,
-                password: this.state.password1
-            }
-            this.props.onSignUpHandler(request);
 
         } else {
-            // Sign in
 
             if (!this.state.email || !this.state.password1) {
-                alert("Input fields cannot be empty");
+                toast.error(<div><h4> Error !</h4><p> Input fields cannot be empty</p></div>);
                 return;
+            } else {
+                const request = {
+                    email: this.state.email,
+                    password: this.state.password1,
+                }
+                this.props.onSignInHandler(request);
             }
-            
-            const request = {
-                email: this.state.email,
-                password: this.state.password1,
-            }
-            this.props.onSignInHandler(request);
         }
     }
     render() {
@@ -82,6 +83,10 @@ class SignUp extends Component {
 
         return (
             <div className="login-background">
+                <ToastContainer 
+                    autoClose={3000}
+                    hideProgressBar={true}
+                    />
                 <div className='login-container'>
                     <div className='login-options-container'>
                         <button className={ loginBtnClass[(this.state.toggleVal)%2] } onClick={()=>{this.toggleHandler(0);}}>Sign Up</button>

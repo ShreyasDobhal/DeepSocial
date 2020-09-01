@@ -3,7 +3,23 @@
 .login-background {
     width: 100vw;
     height: 100vh;
-    background-image: url('/images/bg.png');
+    /* background-image: url('/images/bg.png'); */
+
+    /* background-image: url('/images/bg.gif') no; */
+    /* background-image: url('/images/bg1.gif'); no  */
+    /* background-image: url('/images/bg2.gif'); */
+    /* background-image: url('/images/bg3.gif'); */
+    /* background-image: url('/images/bg.png'); no */
+    /* background-image: url('/images/bg1.jpg'); no  */
+    /* background-image: url('/images/bg2.jpg'); no   */
+    /* background-image: url('/images/bg3.jpg'); */
+    /* background-image: url('/images/bg4.jpg'); no  */
+    /* background-image: url('/images/bg5.jpg'); no  */
+    background-image: url('/images/bg6.jpg');
+    
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 .login-container {
@@ -14,6 +30,7 @@
     height: 500px;
     border-radius: 2px;
     background-image: linear-gradient(-90deg,#24323d,#25313d);
+    box-shadow: 10px 10px 10px #5351514d;
 }
 
 .login-options-container {
@@ -102,6 +119,10 @@
 
 .login-start-btn:focus {
     outline: none;
+}
+
+.login-start-btn:hover {
+    box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.25);
 }
 
 /* For smaller screens */

@@ -16,6 +16,7 @@ import './styles/profile-page.css';
 import './styles/error.css';
 import '../node_modules/font-awesome/css/font-awesome.min.css';
 import 'react-image-crop/dist/ReactCrop.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 import * as serviceWorker from './serviceWorker';
 import App from './App';

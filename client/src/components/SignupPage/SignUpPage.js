@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axiosExpress from '../../axios/axiosExpress';
 import {connect} from 'react-redux';
+import {ToastContainer, toast} from 'react-toastify';
+
 
 import SignUp from './SignUp';
 import * as Actions from '../../actions/actions';
@@ -21,18 +23,20 @@ class SignUpPage extends Component {
         axiosExpress.post('/users/signup',payload)
             .then(data => {
                 console.log(data.data);
-                alert("Login successful");
-
-                this.props.setTokenId(data.data._id);
-                this.props.setUser({
-                    fname:data.data.fname,
-                    lname:data.data.lname,
-                    email:data.data.email
+                toast(<div><h4> Welcome !</h4><p> New account created successfully</p></div>,{
+                    onClose: () => {
+                        this.props.setTokenId(data.data._id);
+                        this.props.setUser({
+                            fname:data.data.fname,
+                            lname:data.data.lname,
+                            email:data.data.email
+                        });
+                    }
                 });
             })
             .catch(error => {
                 console.log(error);
-                alert("Login failed");
+                toast(<div><h4> Server Error !</h4><p> Sign-up failed</p></div>);
             });
     };
 
@@ -48,24 +52,32 @@ class SignUpPage extends Component {
         axiosExpress.post('/users/signin',payload)
             .then(data => {
                 console.log(data.data);
-                alert("Login successful");
-
-                this.props.setTokenId(data.data._id);
-                this.props.setUser({
-                    fname:data.data.user.fname,
-                    lname:data.data.user.lname,
-                    email:data.data.user.email,
-                    userDP:data.data.user.userDP
+                toast(<div><h4> Welcome !</h4><p> Signed in successfully</p></div>,{
+                    onClose: () => {
+                        this.props.setTokenId(data.data._id);
+                        this.props.setUser({
+                            fname:data.data.user.fname,
+                            lname:data.data.user.lname,
+                            email:data.data.user.email,
+                            userDP:data.data.user.userDP
+                        });
+                    }
                 });
             })
             .catch(error => {
                 console.log(error);
-                alert("Login failed");
+                toast(<div><h4> Server Error !</h4><p> Login failed</p></div>);
             })
     };
     render() {
         return (
-            <SignUp onSignUpHandler={this.onSignUpHandler} onSignInHandler={this.onSignInHandler}/>
+            <div>
+                <ToastContainer 
+                    autoClose={3000}
+                    hideProgressBar={true}
+                    />
+                <SignUp onSignUpHandler={this.onSignUpHandler} onSignInHandler={this.onSignInHandler}/>
+            </div>
         );
     }
 }

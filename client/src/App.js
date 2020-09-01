@@ -17,7 +17,7 @@ const cookies = new Cookies();
 
 function App(props) {
 
-  if (cookies.get('tokenId') && cookies.get('tokenId')!=='null') {
+  if (true &&(cookies.get('tokenId') && cookies.get('tokenId')!=='null')) {
     console.log("Loading saved cookie");
     props.setTokenId(cookies.get('tokenId'));
     

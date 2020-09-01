@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom';
 import React, { PureComponent, Component } from 'react';
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
+import {ToastContainer, toast} from 'react-toastify';
 // import getCroppedImg from '../../utility/ImageCrop';
 
 // import './App.css';
@@ -122,6 +123,7 @@ class MainApp extends App {
 
     onClick = (data) => {
         console.log(data);
+        toast("Button clicked");
     }
     render () {
         return (
@@ -129,8 +131,9 @@ class MainApp extends App {
                  style={{
                      border: '2px solid red'
                  }}>
-                     
+                
                 <App onDone={this.onClick}/>
+                <ToastContainer />
             </div>
         );
     }

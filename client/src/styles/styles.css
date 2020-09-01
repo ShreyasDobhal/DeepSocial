@@ -1,3 +1,37 @@
+/* input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color color 5000s ease-in-out 0s;
+    /* transition: color 5000s ease-in-out 0s; */
+    /* -webkit-text-fill-color: #25313d !important;
+    -webkit-text-stroke-color: whitesmoke !important; */
+    /* caret-color: white; */
+    /* color: whitesmoke; */
+    /* background-color: #25313d; */
+/* } */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-animation: autofill 0s forwards;
+    animation: autofill 0s forwards;
+}
+
+@keyframes autofill {
+    100% {
+        background: transparent;
+        color: whitesmoke;
+    }
+}
+
+@-webkit-keyframes autofill {
+    100% {
+        background: transparent;
+        color: whitesmoke;
+    }
+}
 
 .profile-image {
     border-radius: 50%;
