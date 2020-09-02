@@ -76,8 +76,14 @@ class AddPost extends Component {
                     let textarea = this.textArea.current;
                     textarea.value = '';
                     console.log(data.data);
+                    
                     toast.info(<div><h6>Post published successfully</h6></div>,{
                         onClose: () => {window.location.reload();}
+                    });
+
+                    this.setState({
+                        files: [],
+                        postBody: null
                     });
                 })
                 .catch(error => {
@@ -85,10 +91,7 @@ class AddPost extends Component {
                     toast.error(<div><h4>Server Error !</h4><p>Failed to publish the post</p></div>);
                 });
             
-            this.setState({
-                files: [],
-                postBody: null
-            });
+            
         }
     }
 

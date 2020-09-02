@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import axiosExpress from '../../axios/axiosExpress';
+import {ToastContainer, toast} from 'react-toastify';
 
 class AddComment extends Component {
     
@@ -29,19 +30,25 @@ class AddComment extends Component {
             axiosExpress.post('/posts/comment-add',comment)
                 .then(data => {
                     console.log(data.data);
-                    alert("Comment added")
+                    let textarea = this.textArea.current;
+                    textarea.value = '';
+                    
+                    toast.info(<div><h6>Comment added successfully !</h6></div>,{
+                        onClose: () => {window.location.reload()}
+                    });
+
+                    this.setState({
+                        commentBody: null
+                    });
                 })
                 .catch(error => {
                     console.log(error);
-                    alert("Failed to add Comment");
+                    toast.error(<div><h4>Server Error !</h4><p>Failed to add comment</p></div>);
                 });
             
-            this.setState({
-                commentBody: null
-            });
+            
         }
-        let textarea = this.textArea.current;
-        textarea.value = '';
+        
     }
 
     commentBodyChangeHandler = (e)=> {
@@ -54,6 +61,10 @@ class AddComment extends Component {
     render() {
         return (
             <div>
+                <ToastContainer 
+                    autoClose={3000}
+                    hideProgressBar={true}
+                    />
                 <div className='add-post-container'>
                     <div className='add-post-elements-container'>
                         <div className='profile-image-holder'>
