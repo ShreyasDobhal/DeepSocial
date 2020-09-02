@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import axiosExpress from '../../axios/axiosExpress';
-import FormData from 'form-data'
+import FormData from 'form-data';
+import {ToastContainer, toast} from 'react-toastify';
 
 
 import DragAndDrop from '../HOC/DragAndDrop';
@@ -68,17 +69,20 @@ class AddPost extends Component {
             formData.append('authorName',this.props.firstName + ' ' + this.props.lastName);
             formData.append('postDate',new Date());
 
-            let textarea = this.textArea.current;
-            textarea.value = '';
+            
 
             axiosExpress.post('/posts/add',formData)
                 .then(data => {
+                    let textarea = this.textArea.current;
+                    textarea.value = '';
                     console.log(data.data);
-                    alert("Post published successfully")
+                    toast.info(<div><h6>Post published successfully</h6></div>,{
+                        onClose: () => {window.location.reload();}
+                    });
                 })
                 .catch(error => {
                     console.log(error);
-                    alert("Failed to publish the post");
+                    toast.error(<div><h4>Server Error !</h4><p>Failed to publish the post</p></div>);
                 });
             
             this.setState({
@@ -108,7 +112,10 @@ class AddPost extends Component {
         console.log("USer DP",this.props.userDP);
         return (
             <div>
-
+                <ToastContainer 
+                    autoClose={3000}
+                    hideProgressBar={true}
+                    />
                 <DragAndDrop handleDrop={this.handleDrop}>
                     <div className='add-post-container'>
                         <div className='add-post-elements-container'>

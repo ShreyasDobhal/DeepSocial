@@ -195,7 +195,7 @@ router.post('/signup', (req,res) => {
     User.findOne({email: req.body.email})
         .then(user => {
             if(user){
-               return res.status(400).json({success:false,error:'Email address already exists'});
+               return res.status(400).json({success:false,message:'Email address already exists'});
             } else {
                 const newUser = new User({
                     fname: req.body.fname,
@@ -226,7 +226,7 @@ router.post('/signin', (req,res) => {
     User.findOne({ email })
         .then(user => {
             if (!user) {
-               return res.status(404).json({error:"No such user found"});
+               return res.status(404).json({message:"No such user found"});
             }
             bcrypt.compare(password, user.password)
                 .then(isMatch => {
@@ -243,7 +243,7 @@ router.post('/signin', (req,res) => {
                             }});
                         
                     } else {
-                        res.status(400).json({success:false,error:'Password incorrect'});
+                        res.status(400).json({success:false,message:'Password incorrect'});
                     }
                 });
         });

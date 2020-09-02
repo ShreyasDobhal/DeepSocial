@@ -36,7 +36,13 @@ class SignUpPage extends Component {
             })
             .catch(error => {
                 console.log(error);
-                toast(<div><h4> Server Error !</h4><p> Sign-up failed</p></div>);
+                let errorHead = 'Server Error !';
+                let errorMsg = 'Sign-up failed';
+                if (error.response.data.message) {
+                    errorHead = 'Sign-up Failed !';
+                    errorMsg = error.response.data.message;
+                }
+                toast.error(<div><h4>{errorHead}</h4><p>{errorMsg}</p></div>);
             });
     };
 
@@ -51,6 +57,7 @@ class SignUpPage extends Component {
         };
         axiosExpress.post('/users/signin',payload)
             .then(data => {
+                
                 console.log(data.data);
                 toast(<div><h4> Welcome !</h4><p> Signed in successfully</p></div>,{
                     onClose: () => {
@@ -66,7 +73,13 @@ class SignUpPage extends Component {
             })
             .catch(error => {
                 console.log(error);
-                toast(<div><h4> Server Error !</h4><p> Login failed</p></div>);
+                let errorHead = 'Server Error !';
+                let errorMsg = 'Login failed';
+                if (error.response.data.message) {
+                    errorHead = 'Login Failed !';
+                    errorMsg = error.response.data.message;
+                }
+                toast.error(<div><h4>{errorHead}</h4><p>{errorMsg}</p></div>);
             })
     };
     render() {
