@@ -4,15 +4,17 @@ import FormData from 'form-data'
 import axiosExpress from '../../axios/axiosExpress';
 import ReactCrop from 'react-image-crop';
 import * as Actions from '../../actions/actions';
+import {ToastContainer, toast} from 'react-toastify';
 
 import NavigationBar from '../Navbar/Navbar';
 import LoadingSpinner from '../Loader/LoadingSpinner';
 import NotFound from '../Error/NotFound';
 import DragAndDrop from '../HOC/DragAndDrop';
 import PhotoGallery from './PhotoGallery';
-import Post from '../Posts/Post';
+import TimelineTab from './TimelineTab';
+import AboutTab from './AboutTab';
+import FriendsTab from './FriendsTab';
 import TabbedView from '../Utility/TabbedView';
-import Jumbotron from '../Utility/Jumbotron';
 import Modal from '../Utility/Modal';
 
 class ProfilePage extends Component {
@@ -29,7 +31,7 @@ class ProfilePage extends Component {
             width: 30,
             aspect: 1 / 1
         },
-        userDPsrc: '/images/default.png',
+        userDPsrc: null,
         croppedImageBlob: null,
 
         userId: null,
@@ -40,7 +42,7 @@ class ProfilePage extends Component {
 
         imageFile: null,
 
-        posts: []
+        friends: []
     }
 
     componentDidMount() {
@@ -56,6 +58,7 @@ class ProfilePage extends Component {
                     userName: user.data.fname + ' ' + user.data.lname,
                     userEmail: user.data.email,
                     userDP: user.data.userDP ? '/'+user.data.userDP : null,
+                    userDPsrc: user.data.userDP ? '/'+user.data.userDP : '/images/default.png',
                     isLoaded: true
                 });
             })
@@ -64,15 +67,6 @@ class ProfilePage extends Component {
                     notFound: true,
                     isLoaded: true
                 });
-            });
-
-        // TODO: Get posts of user only
-        axiosExpress.get('/posts')
-            .then(posts=>{
-                this.setState({
-                    posts: posts.data
-                });
-                console.log("Posts ",posts.data);
             });
     }
 
@@ -103,65 +97,18 @@ class ProfilePage extends Component {
         axiosExpress.post('/users/set-userdp',formData)
             .then( doc => {
                 console.log(doc);
+                toast.info(<div><h6>Profile picture updated successfully</h6></div>,{
+                    onClose: () => {window.location.reload()}
+                });
             })
             .catch( error => {
                 console.log(error);
+                toast.error(<div><h4>Server Error !</h4><p>Failed to update profile picture</p></div>);
             });
         
         this.setState({
             modalToggle: false
         });
-    }
-
-    // Post like - dislike handler
-    onResponseHandler = (response) => {
-        const payload = {
-            postId: response.postId,
-            userId: response.userId
-        }
-        if (response.type === 'like') {
-            axiosExpress.post('/posts/post-like',payload)
-            .then(doc => {
-                console.log("Received payload",doc);
-                let newPosts = this.state.posts.map(post => {
-                    if (doc.data.data._id === post._id) {
-                        let newPost = {
-                            ...post
-                        };
-                        newPost.likes += doc.data.data.like;
-                        newPost.dislikes += doc.data.data.dislike;
-                        return newPost;
-                    } else {
-                        return post;
-                    }
-                });
-
-                this.setState({
-                    posts: newPosts
-                });
-            })
-        } else if (response.type === 'dislike') {
-            axiosExpress.post('/posts/post-dislike',payload)
-            .then(doc => {
-                console.log("Received payload",doc);
-                let newPosts = this.state.posts.map(post => {
-                    if (doc.data.data._id === post._id) {
-                        let newPost = {
-                            ...post
-                        };
-                        newPost.likes += doc.data.data.like;
-                        newPost.dislikes += doc.data.data.dislike;
-                        return newPost;
-                    } else {
-                        return post;
-                    }
-                });
-
-                this.setState({
-                    posts: newPosts
-                });
-            })
-        }
     }
 
     modalHandler = (e) => {
@@ -234,35 +181,22 @@ class ProfilePage extends Component {
 
     render() {
 
-        const aboutPage = (
-            <div className='profile-about-container'>
-                <p><span className='iconSpan'><i className="fa fa-map-marker" aria-hidden="true"></i></span> Dehradun, Uttarakhand</p>
-                <p><span className='iconSpan'><i className="fa fa-phone" aria-hidden="true"></i></span> +91-9876543210</p>
-                <p><span className='iconSpan'><i className="fa fa-briefcase" aria-hidden="true"></i></span> Member Technical at DEShaw</p>
-                <p><span className='iconSpan'><i className="fa fa-pencil" aria-hidden="true"></i></span> Loves to code</p>
-                <p><span className='iconSpan'><i class="fa fa-graduation-cap" aria-hidden="true"></i></span> Studied from MNNIT Allahabad</p>
-                <p><span className='iconSpan'><i className="fa fa-birthday-cake" aria-hidden="true"></i></span> 8th October 1998</p>
-                <p className='profile-email-info'>{this.state.isOwner ? 'Your page' : 'Viewing other page'}</p>
-            </div>
-        );
+        let tabPages = [];
+        let tabTitles = [];
 
-        const timeLinePage = this.state.posts.map(post=>{
-            return (
-                <Post post={post} onResponseHandler={this.onResponseHandler}/>
-            );
-        });
+        tabPages.push(<PhotoGallery />);
+        tabTitles.push(<i class="fa fa-camera" aria-hidden="true"></i>);
         
-        // TODO: Compelete friends page
-        const friendsPage = (
-            <div>
-                <Jumbotron title={(<span>0 Friends <i className="fa fa-frown-o" aria-hidden="true"></i></span>)} 
-                           body1="You haven't added any friends yet. Browse for your friends using search option on the Navigation Bar."
-                           body2="Or have a photo of someone but do not remember his or her name ? Use our find by face feature now."
-                           btnText="Find Friends"
-                           goto="/search"/>
-            </div>
-        );
+        tabPages.push(<TimelineTab userId={this.state.userId}/>);
+        tabTitles.push('Timeline');
+
+        tabPages.push(<AboutTab isOwner={this.state.isOwner}/>);
+        tabTitles.push('About');
         
+        if (this.state.isOwner || this.state.friends.length > 0) {
+            tabPages.push(<FriendsTab />);
+            tabTitles.push('Friends');
+        }
         
         const uploadUserDPModal = (
             <Modal show={this.state.modalToggle} modalClosed={this.modalHandler}>
@@ -312,20 +246,7 @@ class ProfilePage extends Component {
                         </div>
                         
 
-                        <TabbedView pageNames={[<i class="fa fa-camera" aria-hidden="true"></i>, 'Timeline', 'About', 'Friends']} 
-                                    pageComponents={[<PhotoGallery/>, timeLinePage, aboutPage, friendsPage]}/>
-
-                        
-
-
-
-
-                        {/* <button onClick={this.onClick}>Upload</button>
-                        <DragAndDrop handleDrop={this.handleDrop}>
-                            <div style={{height:'500px',border:'2px solid red'}}>
-
-                            </div>
-                        </DragAndDrop> */}
+                        <TabbedView pageNames={tabTitles} pageComponents={tabPages} />
                         
 
                     </div>
@@ -340,6 +261,10 @@ class ProfilePage extends Component {
         return (
             <div>
                 <NavigationBar/>
+                <ToastContainer 
+                    autoClose={3000}
+                    hideProgressBar={true}
+                    />
                 {uploadUserDPModal}
                 {pageHolder}
             </div>

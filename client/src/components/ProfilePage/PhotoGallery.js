@@ -26,7 +26,7 @@ class PhotoGallery extends Component {
     }
 
     render () {
-
+        // TODO: Show relevant photos
         let imagesHolder = this.state.images.map((image,index) => {
             return (
                 <div className='gallery-thumbnail'>

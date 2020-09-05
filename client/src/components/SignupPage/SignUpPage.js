@@ -80,7 +80,7 @@ class SignUpPage extends Component {
                     errorMsg = error.response.data.message;
                 }
                 toast.error(<div><h4>{errorHead}</h4><p>{errorMsg}</p></div>);
-            })
+            });
     };
     render() {
         return (
