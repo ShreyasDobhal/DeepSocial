@@ -183,6 +183,9 @@ class ProfilePage extends Component {
 
         let tabPages = [];
         let tabTitles = [];
+        
+        tabPages.push(<AboutTab isOwner={this.state.isOwner} userId={this.state.userId}/>);
+        tabTitles.push('About');
 
         tabPages.push(<PhotoGallery />);
         tabTitles.push(<i class="fa fa-camera" aria-hidden="true"></i>);
@@ -190,37 +193,43 @@ class ProfilePage extends Component {
         tabPages.push(<TimelineTab userId={this.state.userId}/>);
         tabTitles.push('Timeline');
 
-        tabPages.push(<AboutTab isOwner={this.state.isOwner}/>);
-        tabTitles.push('About');
         
         if (this.state.isOwner || this.state.friends.length > 0) {
             tabPages.push(<FriendsTab />);
             tabTitles.push('Friends');
         }
+
+        let uploadUserDPModal=null;
+
+        if (this.state.isOwner) {
+            uploadUserDPModal = (
+                <Modal show={this.state.modalToggle} modalClosed={this.modalHandler}>
+                    <DragAndDrop handleDrop={this.handleDrop}>
+                        <div className='upload-userdp-modal-container'>
+                            <h4>Upload a Photo</h4>
+                            <div className='upload-userdp-preview-holder'>
+                                <ReactCrop 
+                                    src={this.state.userDPsrc}
+                                    onChange={this.onCropChange}
+                                    onComplete={this.onCropComplete}
+                                    onImageLoaded={this.onImageLoaded}
+                                    crop={this.state.crop}
+                                    ruleOfThirds
+                                    />
+                            </div>
+                            <div className='text-center'>
+                                <button className='btn btn-primary my-2' onClick={this.onUploadDPHandler}>Done</button>
+                            </div>
+                        </div>
+                        
+                    </DragAndDrop>
+                </Modal>
+            );
+        } else {
+
+        }
         
-        const uploadUserDPModal = (
-            <Modal show={this.state.modalToggle} modalClosed={this.modalHandler}>
-                <DragAndDrop handleDrop={this.handleDrop}>
-                    <div className='upload-userdp-modal-container'>
-                        <h4>Upload a Photo</h4>
-                        <div className='upload-userdp-preview-holder'>
-                            <ReactCrop 
-                                src={this.state.userDPsrc}
-                                onChange={this.onCropChange}
-                                onComplete={this.onCropComplete}
-                                onImageLoaded={this.onImageLoaded}
-                                crop={this.state.crop}
-                                ruleOfThirds
-                                />
-                        </div>
-                        <div className='text-center'>
-                            <button className='btn btn-primary my-2' onClick={this.onUploadDPHandler}>Done</button>
-                        </div>
-                    </div>
-                    
-                </DragAndDrop>
-            </Modal>
-        );
+         
 
 
         let pageHolder = null;
@@ -232,7 +241,7 @@ class ProfilePage extends Component {
                             <img src={this.state.userBackgroundImage} alt='user profile background'/>
                         </div>
                         <div className='profile-user-container'>
-                            <div className='profile-display-image image-overlay-container'>
+                            <div className={this.state.isOwner?'profile-display-image image-overlay-container':'profile-display-image'}>
                                 <img className="overlay-parent" src={this.state.userDP ? this.state.userDP : '/images/profile.png'} onClick={this.modalHandler} alt='User DP'/>
                                 <div class="overlay-holder">
                                     <div class="profile-display-image-overlay">Upload</div>

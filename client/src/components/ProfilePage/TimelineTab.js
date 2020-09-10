@@ -60,11 +60,11 @@ class TimelineTab extends Component {
     }
 
     componentDidMount() {
-        // TODO: Get posts of user only
         axiosExpress.get('/posts')
             .then(posts=>{
+                let newPosts = posts.data.filter(post => post.authorId === this.props.userId);
                 this.setState({
-                    posts: posts.data
+                    posts: newPosts
                 });
                 console.log("Posts ",posts.data);
             });

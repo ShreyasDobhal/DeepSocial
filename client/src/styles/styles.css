@@ -52,6 +52,10 @@ input:-webkit-autofill:active {
     font-size: 20px;
 }
 
+.iconSpan:hover {
+    color: #009688;
+}
+
 .drag-drop-outer-container {
     position: relative;
 }
@@ -108,6 +112,10 @@ input:-webkit-autofill:active {
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     text-align: center;
+}
+
+.image-overlay-container {
+    cursor: pointer;
 }
 
 .image-overlay-container:hover .overlay-holder {
