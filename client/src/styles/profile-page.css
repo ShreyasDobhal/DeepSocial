@@ -90,8 +90,10 @@
     flex-direction: column;
 }
 
-.profile-about-container span {
-    /* border: 2px solid green; */
+.profile-about-container {
+    border: 2px solid #878888;
+    box-shadow: 0px 0px 10px black;
+    padding: 20px;
 }
 
 .profile-about-item {

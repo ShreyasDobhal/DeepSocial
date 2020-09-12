@@ -124,6 +124,37 @@ router.post('/set-userdp',upload.single('userImage'),(req,res,next)=>{
         });
 });
 
+/**
+ * POST method to add info about user
+ * payload -
+ * userId
+ * location
+ * phone
+ * work
+ * about
+ * education
+ * birthday
+ */
+router.post('/add-info', (req, res) => {
+    const info = {
+        location: req.body.location,
+        phone: req.body.phone,
+        work: req.body.work,
+        about: req.body.about,
+        education: req.body.education,
+        birthday: req.body.birthday
+    }
+    User.findByIdAndUpdate(req.body.userId, {$set : {info: info}})
+        .then(doc => {
+            console.log(doc);
+            res.json({message: 'User info updated'});
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(400).json({status: 'Failed', message: 'Failed to update user info', error: error});
+        })
+});
+
 // Sign-up (with token)
 router.post('/register', (req,res) => {
     User.findOne({email: req.body.email})

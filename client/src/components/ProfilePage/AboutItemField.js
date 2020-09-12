@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
 
 class AboutItemField extends Component {
-    state = {
-        text: null
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            text: props.data
+        }
+    }
+    
+    componentWillReceiveProps (props) {
+        if (props.data) {
+            this.setState({text: props.data});
+        }
     }
 
-    
-    componentDidMount() {
-        this.setState({text: this.props.data});
-    }
-    
     onChangeHandler = (e) => {
         this.setState({text: e.target.value});
     }
@@ -24,9 +30,11 @@ class AboutItemField extends Component {
                 textField = (<input placeholder={this.props.placeholder} onChange={this.onChangeHandler}/>);
             }
         } else {
-            textField = (<p>{this.props.data}</p>);
+            if (this.props.data)
+                textField = (<p>{this.props.data}</p>);
         }
-        return textField;
+
+        return [this.props.icon && textField != null ? this.props.icon : null,textField];
     }
 }
 

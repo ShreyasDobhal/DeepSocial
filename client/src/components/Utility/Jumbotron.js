@@ -10,14 +10,16 @@ const Example = (props) => {
                 <hr className="my-2" />
                 <p>{props.body2}</p>
                 {
-                    props.goto ?
-                    <p className="lead">
-                        <a className='btn btn-primary' href={props.goto} color="primary">{props.btnText}</a>
-                    </p>
-                    :
-                    <p className="lead">
-                        <Button onClick={props.onClick} color="primary">{props.btnText}</Button>
-                    </p>
+                    props.btnText ? (
+                        props.goto ?
+                        <p className="lead">
+                            <a className='btn btn-primary' href={props.goto} color="primary">{props.btnText}</a>
+                        </p>
+                        :
+                        <p className="lead">
+                            <Button onClick={props.onClick} color="primary">{props.btnText}</Button>
+                        </p>
+                    ): null
                 }
                 
             </Jumbotron>

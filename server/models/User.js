@@ -31,17 +31,15 @@ const UserSchema = new Schema({
         {type: String}
     ],
 
-    location: String,
-
-    phone: String,
-
-    work: String,
-
-    about: String,
-
-    education: String,
-
-    birthday: String
+    info: {
+        location: String,
+        phone: String,
+        work: String,
+        about: String,
+        education: String,
+        birthday: String
+    }
+    
 });
 
 module.exports = User = mongoose.model('User',UserSchema);
