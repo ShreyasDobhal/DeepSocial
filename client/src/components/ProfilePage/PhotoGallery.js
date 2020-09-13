@@ -1,53 +1,46 @@
 import React, {Component} from 'react';
+import Gallery from 'react-grid-gallery';
+import axiosExpress from '../../axios/axiosExpress';
 
 class PhotoGallery extends Component {
     state = {
         isViewAll: false,
-        images: [
-            '/images/img1.jpg',
-            '/images/img2.jpg',
-            '/images/img3.jpg',
-            '/images/img4.jpg',
-            '/images/img1.jpg',
-            '/images/img2.jpg',
-            '/images/img3.jpg',
-            '/images/img4.jpg',
-            '/images/img1.jpg',
-            '/images/img2.jpg',
-            '/images/img3.jpg',
-            '/images/img4.jpg'
-        ]
+        images: []
     }
 
-    toggleViewAll = () => {
-        this.setState({
-            isViewAll: !this.state.isViewAll
-        });
+    componentDidMount() {
+        axiosExpress.get('/users/'+this.props.userId+'/photos')
+            .then(photos => {
+                console.log("Photos", photos.data);
+                const images = photos.data.map(photo => {
+                    return '/'+photo.postImages;
+                });
+
+                this.setState({images: images});
+            });
     }
 
     render () {
-        // TODO: Show relevant photos
-        let imagesHolder = this.state.images.map((image,index) => {
-            return (
-                <div className='gallery-thumbnail'>
-                    <img src={image} alt='Photo' key={index}/>
-                </div>
-            );
+        
+        let images = this.state.images.map(image => {
+            return {
+                src: image,
+                thumbnail: image
+            }
         });
-
-
-        if (!this.state.isViewAll) {
-            imagesHolder = imagesHolder.slice(0,10);
-        }
 
         return (
             <div className='photo-gallery-container'>
                 <h4 className='photo-gallery-heading'>Photos</h4>
-                <div className='gallery-photo-holder'>
-                    {imagesHolder}
-                </div>
-                <div className='gallery-button-holder text-center'>
-                    <button className='btn btn-primary btn-large' onClick={this.toggleViewAll}>{this.state.isViewAll ? 'Show less' : 'Show all'}</button>
+                <div className='gallery-photo-holder' 
+                    style={{
+                        display: "block",
+                        minHeight: "1px",
+                        width: "100%",
+                        overflow: "auto"
+                    }}>
+                    <Gallery images={images} 
+                        showLightboxThumbnails={true}/>
                 </div>
             </div>
         );

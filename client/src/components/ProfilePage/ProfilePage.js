@@ -183,13 +183,13 @@ class ProfilePage extends Component {
 
         let tabPages = [];
         let tabTitles = [];
+
+        tabPages.push(<PhotoGallery userId={this.state.userId} />);
+        tabTitles.push(<i class="fa fa-camera" aria-hidden="true"></i>);
         
         tabPages.push(<AboutTab isOwner={this.state.isOwner} userId={this.state.userId}/>);
         tabTitles.push('About');
 
-        tabPages.push(<PhotoGallery />);
-        tabTitles.push(<i class="fa fa-camera" aria-hidden="true"></i>);
-        
         tabPages.push(<TimelineTab userId={this.state.userId}/>);
         tabTitles.push('Timeline');
 

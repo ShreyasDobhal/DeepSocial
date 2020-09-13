@@ -32,17 +32,11 @@ const upload = multer({
 
 
 // END PONTS
+
 /**
  * GET all posts
  */
 router.get('/',(req,res)=>{
-    // Post.find({})
-    //     .then(posts=>{
-    //         res.json(posts);
-    //     })
-    //     .catch(error=>{
-    //         res.status(400).json({status:'Failed',error:error,message:'Failed to load posts'});
-    //     });
     Post.aggregate([
         {
             $lookup: {

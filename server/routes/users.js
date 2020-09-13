@@ -5,7 +5,9 @@ const jwt = require('jsonwebtoken');
 const multer = require('multer');
 
 const router = express.Router();
+const mongoose = require('mongoose');
 const User = require('../models/User');
+const Post = require('../models/Post');
 
 const userToken = require('../authentication/userToken');
 
@@ -64,6 +66,34 @@ router.get('/:userId',(req,res)=>{
         .catch(error=>{
             res.status(404).json({status:'Failed',error:error,message:'Failed to load users'});
         });
+});
+
+/**
+ * GET all photos of given user
+ */
+router.get('/:userId/photos', (req, res) => {
+    Post.aggregate([
+        {
+            $match: {
+                authorId: mongoose.Types.ObjectId(req.params.userId)
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                postImages: 1
+            }
+        },
+        {
+            $unwind: '$postImages'
+        }
+    ]).exec((err, posts) => {
+        if (err) {
+            res.status(400).json({status:'Failed',error:err,message:'Failed to load photos'});
+        } else {
+            res.json(posts);
+        }
+    });
 });
 
 /**

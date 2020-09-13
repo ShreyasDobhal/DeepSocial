@@ -93,6 +93,7 @@
 .profile-about-container {
     border: 2px solid #878888;
     box-shadow: 0px 0px 10px black;
+    border-radius: 10px;
     padding: 20px;
 }
 
@@ -137,17 +138,12 @@
     background-color: #becacb40;
 }
 
-.photo-gallery-container {
-    /* border: 2px solid greenyellow; */
-}
-
 .photo-gallery-heading {
     padding: 15px;
 }
 
 .gallery-photo-holder {
-    border: 2px solid gray;
-    padding-top: 5px;
+    padding: 5px;
 }
 
 .gallery-thumbnail {
@@ -171,10 +167,6 @@
     padding: 10px 50px;
 }
 
-.upload-userdp-modal-container {
-    /* width: 600px; */
-}
-
 .upload-userdp-preview-holder {
     
     margin: 5px;
@@ -186,5 +178,4 @@
     max-width: 100%;
     max-height: 450px;
     border: 2px solid gray;
-    /* border: 2px solid blue; */
 }
