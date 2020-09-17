@@ -2,7 +2,6 @@
     border: 1px solid #b8babd;
     background-color: #ffffff;
     box-shadow: 10px 10px 10px gray;
-    /* border-radius: 5px; */
     width: 100%;
     min-height: 1000px;
     max-width: 750px;
@@ -11,7 +10,6 @@
 }
 
 .profile-cover-image {
-    /* border: 2px solid red; */
     border-bottom: 2px solid #b8babd;
     height: 250px;
     background-image: center;
@@ -31,14 +29,10 @@
     animation-name: coverImageAnimation;
     animation-duration: 20s;
     animation-iteration-count: infinite;
-    /* border: 2px solid blue; */
 }
 
 .profile-user-container {
     display: flex;
-    /* margin-top: -10px; */
-    
-    /* grid-template-columns: 1fr fit-content; */
 }
 
 .profile-display-image {
@@ -56,7 +50,6 @@
 }
 
 .profile-display-image > img {
-    /* border: 2px solid royalblue; */
     width: 100%;
 }
 
@@ -69,7 +62,6 @@
 }
 
 .profile-user-info {
-    /* border: 2px solid royalblue; */
     display: inline-block;
     flex: 1;
     margin-left: 85px;
@@ -84,7 +76,6 @@
 }
 
 .profile-about-container {
-    /* border: 2px solid red; */
     margin: 25px;
     display: flex;
     flex-direction: column;
@@ -101,23 +92,19 @@
     display: flex;
     justify-content: flex-end;
     width: 80%;
-    /* border: 2px solid blueviolet; */
 }
 
 .profile-about-container p {
-    /* border: 2px solid yellow; */
     display: inline-block;
     color: #504949;
     font-size: 18px;
     margin: 4px;
     padding: 2px;
-    /* border: 1px solid #a9a9a9; */
     width: 80%;
     line-height: 35px;
 }
 
 .profile-about-container input {
-    /* border: 2px solid yellow; */
     display: inline-block;
     width: 80%;
     color: #504949;
@@ -136,6 +123,10 @@
 
 .about-field-updated {
     background-color: #becacb40;
+}
+
+.photo-gallery-container .no-image {
+    width: 200px;
 }
 
 .photo-gallery-heading {
@@ -168,7 +159,7 @@
 }
 
 .upload-userdp-preview-holder {
-    
+    min-width: 400px;
     margin: 5px;
     display: flex;
     justify-content: center;
@@ -177,5 +168,63 @@
 .upload-userdp-preview-holder img{
     max-width: 100%;
     max-height: 450px;
+    min-height: 250px;
     border: 2px solid gray;
+}
+
+
+/* For even smaller screens */
+@media only screen and (max-width:720px)  {
+
+    .profile-container {
+        border: none;
+        min-height: 95vh;
+        box-shadow: none;
+    }
+    
+    .profile-cover-image {
+        height: 125px;
+    }
+    
+    .profile-cover-image > img{
+        animation: none;
+    }
+
+    .profile-display-image {
+        width: 100px;
+        height: 100px;
+        bottom: 25px;
+        left: 25px;
+    }
+    
+    .profile-user-info {
+        margin-left: 45px;
+    }
+
+    .profile-user-info > .profile-name-info {
+        font-size: 26px;
+    }
+
+    .profile-user-info > .profile-email-info {
+        font-size: 13px;
+        line-height: 8px;
+        margin-left: 5px;
+    }
+    
+    .profile-about-container {
+        margin: 10px;
+    }
+    
+    .profile-about-container {
+        padding: 0px;
+    }
+    
+    .profile-about-item {
+        width: 92%;
+    }
+    
+    .about-submit-btn-container > h4 {
+        font-size: 20px;
+    }
+    
 }

@@ -70,6 +70,10 @@ class ProfilePage extends Component {
             });
     }
 
+    onChangeHandler = (event)=> {
+        this.handleDrop(event.target.files);
+    }
+
     handleDrop = (files) => {
         
         if (!files[0].name)
@@ -217,6 +221,7 @@ class ProfilePage extends Component {
                                     ruleOfThirds
                                     />
                             </div>
+                            <input type='file' onChange={this.onChangeHandler} />
                             <div className='text-center'>
                                 <button className='btn btn-primary my-2' onClick={this.onUploadDPHandler}>Done</button>
                             </div>
@@ -228,9 +233,6 @@ class ProfilePage extends Component {
         } else {
 
         }
-        
-         
-
 
         let pageHolder = null;
         if (this.state.isLoaded) {

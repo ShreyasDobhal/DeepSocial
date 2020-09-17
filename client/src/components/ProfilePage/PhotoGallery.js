@@ -22,6 +22,17 @@ class PhotoGallery extends Component {
 
     render () {
         
+        if (this.state.images.length === 0) {
+            return (
+                <div className='photo-gallery-container'>
+                    <h4 className='photo-gallery-heading'>Photos</h4>
+                    <div className='text-center'>
+                        <img className='no-image' src='/images/no-images.png'/>
+                        <h5>No Photos added yet</h5>
+                    </div>
+                </div>
+            );
+        }
         let images = this.state.images.map(image => {
             return {
                 src: image,
@@ -40,7 +51,9 @@ class PhotoGallery extends Component {
                         overflow: "auto"
                     }}>
                     <Gallery images={images} 
-                        showLightboxThumbnails={true}/>
+                        showLightboxThumbnails={true}
+                        enableImageSelection={false}
+                        enableLightbox={true}/>
                 </div>
             </div>
         );

@@ -22,3 +22,10 @@
 .nav-spacer {
     margin-top: 75px;
 }
+
+/* For even smaller screens */
+@media only screen and (max-width:500px)  {
+    .nav-spacer {
+        margin-top: 45px;
+    }
+}
