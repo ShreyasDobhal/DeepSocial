@@ -5,10 +5,6 @@ const cookieparser = require('cookie-parser');
 const morgan = require('morgan');
 const passport = require('passport');
 
-const userToken = require('./authentication/userToken');
-
-console.log("USER TOKEN",userToken);
-
 const app = express();
 
 const IP =require('os').networkInterfaces( )['wlp3s0'][0]['address'];
@@ -70,6 +66,8 @@ let usersRoute = require('./routes/users.js');
 app.use('/users',usersRoute);
 let postsRoute = require('./routes/posts.js');
 app.use('/posts',postsRoute);
+let friendsRoute = require('./routes/friends.js');
+app.use('/friends',friendsRoute);
 
 
 // END POINTS

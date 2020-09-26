@@ -5,6 +5,7 @@ import axiosExpress from '../../axios/axiosExpress';
 import ReactCrop from 'react-image-crop';
 import * as Actions from '../../actions/actions';
 import {ToastContainer, toast} from 'react-toastify';
+import { Badge } from 'reactstrap';
 
 import NavigationBar from '../Navbar/Navbar';
 import LoadingSpinner from '../Loader/LoadingSpinner';
@@ -42,7 +43,8 @@ class ProfilePage extends Component {
 
         imageFile: null,
 
-        friends: []
+        friends: [],
+        friendshipStatus: 'Add Friend'
     }
 
     componentDidMount() {
@@ -252,6 +254,9 @@ class ProfilePage extends Component {
                             <div className='profile-user-info'>
                                 <h1 className='profile-name-info'>{this.state.userName}</h1>
                                 <p className='profile-email-info'>{this.state.userEmail}</p>
+                                {this.state.isOwner ? null : 
+                                    (<h5 className='profile-friend-info'> <Badge color='info'>{this.state.friendshipStatus}</Badge></h5>)
+                                }
                             </div>
 
                         </div>

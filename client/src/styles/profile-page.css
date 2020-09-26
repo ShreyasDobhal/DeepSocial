@@ -75,6 +75,11 @@
     color: #504949;
 }
 
+.profile-user-info > .profile-friend-info > .badge {
+    cursor: pointer;
+    padding: 7px;
+}
+
 .profile-about-container {
     margin: 25px;
     display: flex;

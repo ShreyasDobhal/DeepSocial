@@ -75,7 +75,7 @@ class SignUpPage extends Component {
                 console.log(error);
                 let errorHead = 'Server Error !';
                 let errorMsg = 'Login failed';
-                if (error.response.data.message) {
+                if (error.response && error.response.data.message) {
                     errorHead = 'Login Failed !';
                     errorMsg = error.response.data.message;
                 }

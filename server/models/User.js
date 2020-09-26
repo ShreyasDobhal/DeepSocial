@@ -34,7 +34,15 @@ const UserSchema = new Schema({
         about: String,
         education: String,
         birthday: String
-    }
+    },
+
+    friends: [
+        mongoose.Schema.Types.ObjectId
+    ],
+
+    friendRequests: [
+        mongoose.Schema.Types.ObjectId
+    ]
     
 });
 
