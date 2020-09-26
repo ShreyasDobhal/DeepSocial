@@ -44,7 +44,8 @@ class ProfilePage extends Component {
         imageFile: null,
 
         friends: [],
-        friendshipStatus: 'Add Friend'
+        friendMessage: null,
+        friendMethod: 'request'
     }
 
     componentDidMount() {
@@ -70,6 +71,15 @@ class ProfilePage extends Component {
                     isLoaded: true
                 });
             });
+        
+            axiosExpress.post('/friends/relation/'+this.props.match.params.userId, {userId: this.props.userId})
+                .then(data => {
+                    console.log('Relation ',data.data);
+                    this.setState({
+                        friendMessage: data.data.actionMessage,
+                        friendMethod: data.data.actionMethod
+                    });
+                })
     }
 
     onChangeHandler = (event)=> {
@@ -185,6 +195,27 @@ class ProfilePage extends Component {
         console.log("Image URL ",this.state.croppedImageUrl);
     }
 
+    handleFriendMethod = () => {
+        axiosExpress.post('/friends/'+this.state.friendMethod+'/'+this.state.userId,{friendId: this.props.userId})
+            .then(doc => {
+                axiosExpress.post('/friends/relation/'+this.state.userId, {userId: this.props.userId})
+                    .then(data => {
+                        console.log('Relation ',data.data);
+                        this.setState({
+                            friendMessage: data.data.actionMessage,
+                            friendMethod: data.data.actionMethod
+                        });
+                    })
+            })
+            .catch(error => {
+                // console.log(error);
+                if (error.response && error.response.data.message) {
+                    console.log(error.response.data.message);
+                }
+                toast.error(<div><h4>Server Error !</h4><p>Failed to complete the action</p></div>);
+            })
+    }
+
     render() {
 
         let tabPages = [];
@@ -255,7 +286,7 @@ class ProfilePage extends Component {
                                 <h1 className='profile-name-info'>{this.state.userName}</h1>
                                 <p className='profile-email-info'>{this.state.userEmail}</p>
                                 {this.state.isOwner ? null : 
-                                    (<h5 className='profile-friend-info'> <Badge color='info'>{this.state.friendshipStatus}</Badge></h5>)
+                                    (<h5 className='profile-friend-info'> <Badge color='info' onClick={this.handleFriendMethod}>{this.state.friendMessage}</Badge></h5>)
                                 }
                             </div>
 

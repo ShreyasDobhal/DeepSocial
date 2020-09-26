@@ -148,12 +148,15 @@ router.post('/add/:userId',(req, res)=>{
  */
 router.post('/remove/:userId',(req, res)=>{
     // TODO: implement this
+    console.log("User1",req.params.userId);
+    console.log("User2",req.body.friendId);
     User.find({$or: [{_id: req.params.userId}, {_id: req.body.friendId}]})
         .then(users => {
             let user1 = null, user2 = null;
             let user1Index = 0, user2Index = 1;
             if (users.length != 2) {
                 res.status(400).json({status: 'Failed', message: '1) Issue in finding the given users'});
+                return;
             } else if (users[0]._id == req.params.userId && users[1]._id == req.body.friendId) {
                 user1 = users[0];
                 user2 = users[1];
@@ -164,8 +167,10 @@ router.post('/remove/:userId',(req, res)=>{
                 user2Index = 0;
             } else {
                 res.status(400).json({status: 'Failed', message: '2) Issue in finding the given users'});
+                return;
             }
-
+            console.log("User1",user1);
+            console.log("User2",user2);
             if (user1.friendRequests.includes(req.body.friendId)) {
                 // Removing request
                 console.log('Removing request from user1',user1.fname);
@@ -208,6 +213,33 @@ router.post('/remove/:userId',(req, res)=>{
             console.log('Error : ',error);
             res.status(400).json({status: 'Failed', message: '4) Failed to remove friend', error: error});
         });
+});
+
+/**
+ * POST method to get the relationship status between given users
+ * payload -
+ * userId
+ */
+router.post('/relation/:userId',(req, res) => {
+    User.findById(req.params.userId)
+        .then(user => {
+            if (req.params.userId == req.body.userId) {
+                // Friend Request was sent
+                res.json({relation: 'Self', actionMessage: 'None', actionMethod: 'none'});
+            } else if (user.friendRequests.includes(req.body.userId)) {
+                // Friend Request was sent
+                res.json({relation: 'Requested', actionMessage: 'Cancel Request', actionMethod: 'cancel'});
+            } else if (user.friends.includes(req.body.userId)) {
+                // Friend
+                res.json({relation: 'Friend', actionMessage: 'Remove Friend', actionMethod: 'remove'});
+            } else {
+                // Nothing
+                res.json({relation: 'None', actionMessage: 'Add Friend', actionMethod: 'request'});
+            }
+        })
+        .catch(error => {
+            res.status(400).json({status:'Failed', message:'Failed to find relationship', error:error});
+        })
 });
 
 module.exports = router;
