@@ -1,11 +1,21 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const {graphqlHTTP} = require('express-graphql');
 
+const schema = require('../schema/schema');
 const User = require('../models/User');
 
 const router = express.Router();
 
 // END PONTS
+
+/** 
+ * GraphQL end point
+ */
+router.use('/graphql',graphqlHTTP({
+    schema,
+    graphiql: true
+}));
 
 /**
  * POST method to send a friend request to a given user
@@ -147,9 +157,6 @@ router.post('/add/:userId',(req, res)=>{
  * friendId
  */
 router.post('/remove/:userId',(req, res)=>{
-    // TODO: implement this
-    console.log("User1",req.params.userId);
-    console.log("User2",req.body.friendId);
     User.find({$or: [{_id: req.params.userId}, {_id: req.body.friendId}]})
         .then(users => {
             let user1 = null, user2 = null;

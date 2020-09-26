@@ -62,6 +62,8 @@ class ProfilePage extends Component {
                     userEmail: user.data.email,
                     userDP: user.data.userDP ? '/'+user.data.userDP : null,
                     userDPsrc: user.data.userDP ? '/'+user.data.userDP : '/images/default.png',
+                    friends: user.data.friends,
+                    friendRequests: user.data.friendRequests,
                     isLoaded: true
                 });
             })
@@ -232,7 +234,7 @@ class ProfilePage extends Component {
 
         
         if (this.state.isOwner || this.state.friends.length > 0) {
-            tabPages.push(<FriendsTab />);
+            tabPages.push(<FriendsTab friends={this.state.friends}/>);
             tabTitles.push('Friends');
         }
 
