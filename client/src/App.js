@@ -2,6 +2,8 @@ import React from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {connect} from 'react-redux';
 import Cookies from 'universal-cookie';
+import ApolloClient from 'apollo-boost';
+import {ApolloProvider} from 'react-apollo';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -12,8 +14,13 @@ import ProfilePage from './components/ProfilePage/ProfilePage';
 import TestComponent from './components/Utility/test';
 import * as Actions from './actions/actions';
 import axiosExpress from './axios/axiosExpress';
+import {IP,EXPRESS_PORT} from './config';
 
 const cookies = new Cookies();
+
+const graphQLClient = new ApolloClient({
+  uri: `http://${IP}:${EXPRESS_PORT}/friends/graphql`
+});
 
 function App(props) {
 
@@ -43,16 +50,18 @@ function App(props) {
   console.log("App token id:",props.tokenId);
 
   return (
-    <BrowserRouter>
-      <div className="App">
-        <Switch>
-          <Route exact path='/' component={props.isSignedIn ? HomePage : SignUpPage} />
-          <Route exact path='/profile/:userId' component={props.isSignedIn ? ProfilePage : SignUpPage} />
-          <Route exact path='/posts/:postId' component={props.isSignedIn ? PostPage : SignUpPage} />
-          <Route exact path='/test' component={TestComponent} />
-        </Switch>
-      </div>
-    </BrowserRouter>
+    <ApolloProvider client={graphQLClient}>
+      <BrowserRouter>
+        <div className="App">
+          <Switch>
+            <Route exact path='/' component={props.isSignedIn ? HomePage : SignUpPage} />
+            <Route exact path='/profile/:userId' component={props.isSignedIn ? ProfilePage : SignUpPage} />
+            <Route exact path='/posts/:postId' component={props.isSignedIn ? PostPage : SignUpPage} />
+            <Route exact path='/test' component={TestComponent} />
+          </Switch>
+        </div>
+      </BrowserRouter>
+    </ApolloProvider>
   );
 }
 

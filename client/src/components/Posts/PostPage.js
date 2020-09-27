@@ -94,8 +94,8 @@ class PostPage extends Component {
                     <div>
                         {this.state.post.comments.map((comment,index)=>{
                             return (
-                                <div className='comment-container'>
-                                    <Comment comment={comment} key={comment._id} commentId={comment._id} postId={this.state.postId} />
+                                <div className='comment-container' key={comment._id}>
+                                    <Comment comment={comment} commentId={comment._id} postId={this.state.postId} />
                                 </div>
                             )
                         })}

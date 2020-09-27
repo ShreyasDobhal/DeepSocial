@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import FormData from 'form-data'
 import axiosExpress from '../../axios/axiosExpress';
 import ReactCrop from 'react-image-crop';
-import * as Actions from '../../actions/actions';
 import {ToastContainer, toast} from 'react-toastify';
 import { Badge } from 'reactstrap';
 
@@ -234,7 +233,7 @@ class ProfilePage extends Component {
 
         
         if (this.state.isOwner || this.state.friends.length > 0) {
-            tabPages.push(<FriendsTab friends={this.state.friends}/>);
+            tabPages.push(<FriendsTab friends={this.state.friends} userId={this.state.userId}/>);
             tabTitles.push('Friends');
         }
 
@@ -327,10 +326,10 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        setUser: (user) => dispatch(Actions.setUser(user))
-    }
-}
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         setUser: (user) => dispatch(Actions.setUser(user))
+//     }
+// }
 
 export default connect(mapStateToProps)(ProfilePage);

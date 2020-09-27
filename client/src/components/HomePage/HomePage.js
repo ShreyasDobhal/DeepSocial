@@ -84,7 +84,7 @@ class HomePage extends Component {
         if (this.state.loaded) {
             PostHolder = this.state.posts.map(post=>{
                 return (
-                    <Post post={post} onResponseHandler={this.onResponseHandler}/>
+                    <Post key={post._id} post={post} onResponseHandler={this.onResponseHandler}/>
                 );
             });
         } else {

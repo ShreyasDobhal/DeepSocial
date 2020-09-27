@@ -5,7 +5,7 @@ export default (txtarea,text) => {
         "ff" : (document.selection ? "ie" : false ) );
     if (br === "ie") { 
         txtarea.focus();
-        var range = document.selection.createRange();
+        let range = document.selection.createRange();
         range.moveStart ('character', -txtarea.value.length);
         strPos = range.text.length;
     }
@@ -17,7 +17,7 @@ export default (txtarea,text) => {
     strPos = strPos + text.length;
     if (br === "ie") { 
         txtarea.focus();
-        var range = document.selection.createRange();
+        let range = document.selection.createRange();
         range.moveStart ('character', -txtarea.value.length);
         range.moveStart ('character', strPos);
         range.moveEnd ('character', 0);

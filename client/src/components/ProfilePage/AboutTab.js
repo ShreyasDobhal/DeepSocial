@@ -89,7 +89,7 @@ class AboutTab extends Component {
             !this.props.isOwner) {
             
             console.log("No info added");
-            aboutHolder = <Jumbotron title={(<span>🤷‍♂️</span>)} 
+            aboutHolder = <Jumbotron title={(<span role='img' aria-label='sorry'>🤷‍♂️</span>)} 
                                      body1="Sorry the user has't added any information in the 'About' section yet."
                                      body2="Make sure you have added your details, to avoid this page from showing in your Profile page. Click on My Profile button from the drop down menu to go to your own Profile page."/>
         } else {

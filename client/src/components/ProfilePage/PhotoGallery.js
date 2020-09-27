@@ -27,7 +27,7 @@ class PhotoGallery extends Component {
                 <div className='photo-gallery-container'>
                     <h4 className='photo-gallery-heading'>Photos</h4>
                     <div className='text-center'>
-                        <img className='no-image' src='/images/no-images.png'/>
+                        <img className='no-image' src='/images/no-images.png' alt='Nothing added yet'/>
                         <h5>No Photos added yet</h5>
                     </div>
                 </div>

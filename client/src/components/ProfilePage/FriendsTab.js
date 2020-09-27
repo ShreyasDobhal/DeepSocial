@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import Jumbotron from '../Utility/Jumbotron';
-import axiosExpress from '../../axios/axiosExpress';
+import {graphql} from 'react-apollo';
+import {flowRight as compose} from 'lodash';
+import {getFriendsQuery, getUsersQuery} from '../../queries/queries';
+import LoadingSpinner from '../Loader/LoadingSpinner';
 
 class FriendsTab extends Component {
     render () {
@@ -16,20 +19,50 @@ class FriendsTab extends Component {
             );
         } else {
             // TODO: Compelete friends page
-            return this.props.friends.map(friend => {
-                if (!friend) {
-                    return null;
-                } else {
-                    return  (
-                        <div>
-                            <h4>{friend}</h4>
+            // this.props.getFriendsQuery({
+            //     variables: {
+            //         id: this.props.userId
+            //     }
+            // });
+
+            if (this.props.getFriendsQuery.loading) {
+                return (<LoadingSpinner />);
+            } else {
+                return this.props.getFriendsQuery.user.friends.map(friend => {
+                    return (
+                        <div key={friend.id}>
+                            <h4>{friend.fname}</h4>
                         </div>
                     );
-                }
-            });
+                });
+            }
+            // console.log(this.props.getFriendsQuery.user.friends);
+            // return this.props.friends.map(friend => {
+            //     if (!friend) {
+            //         return null;
+            //     } else {
+            //         return  (
+            //             <div>
+            //                 <h4>{friend}</h4>
+            //             </div>
+            //         );
+            //     }
+            // });
         }
         
     }
 }
 
-export default FriendsTab;
+export default compose(
+    graphql(getFriendsQuery, {
+        options: (props) => {
+            return {
+                variables: {
+                    id: props.userId
+                }
+            }
+        },
+        name: "getFriendsQuery"
+    }),
+    graphql(getUsersQuery, {name: "getUsersQuery"}),
+)(FriendsTab);

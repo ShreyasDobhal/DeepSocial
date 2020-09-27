@@ -112,7 +112,6 @@ class AddPost extends Component {
             );
         }
 
-        console.log("USer DP",this.props.userDP);
         return (
             <div>
                 <ToastContainer 

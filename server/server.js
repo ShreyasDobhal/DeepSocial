@@ -4,6 +4,7 @@ const bodyparser = require('body-parser');
 const cookieparser = require('cookie-parser');
 const morgan = require('morgan');
 const passport = require('passport');
+const cors = require('cors');
 
 const app = express();
 
@@ -30,6 +31,9 @@ db.once('open',function(){
     console.log("Connected to MongoDB !");
 });
 
+
+// Allow Cross Origin Requests
+app.use(cors());
 
 // PASSPORT
 app.use(passport.initialize());

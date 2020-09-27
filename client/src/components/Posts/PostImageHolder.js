@@ -20,7 +20,7 @@ class PostImageHolder extends Component {
     }
 
     render() {
-        if (!this.props.images || this.props.images.length==0)
+        if (!this.props.images || this.props.images.length === 0)
             return null;
 
         let leftArrow = (this.props.images.length>1)?(

@@ -19,7 +19,7 @@ class Comment extends Component {
         let replyHolder = [];
         if (this.props.comment.replies) {
             for (let i=0;i<this.props.comment.replies.length;i++) {
-                replyHolder.push(<Comment comment={this.props.comment.replies[i]} commentId={this.props.commentId} postId={this.props.postId}/>)
+                replyHolder.push(<Comment key={'comment-' + this.props.comment.replies[i]._id} comment={this.props.comment.replies[i]} commentId={this.props.commentId} postId={this.props.postId}/>)
             }
         }
 
@@ -47,7 +47,7 @@ class Comment extends Component {
                             </div>
                             <div className='post-footer-container'>
                                 <div className='post-response-holder'>
-                                    <button className='comment-reply-button' onClick={this.onReplyButtonHandler}><i class="fa fa-reply" aria-hidden="true"></i> Reply</button>
+                                    <button className='comment-reply-button' onClick={this.onReplyButtonHandler}><i className="fa fa-reply" aria-hidden="true"></i> Reply</button>
                                     {/* <i className="fa fa-thumbs-o-up post-response-btn" aria-hidden="true"></i><span className='post-response-value'>{this.props.comment.likes}</span> */}
                                     {/* <i className="fa fa-thumbs-o-down post-response-btn" aria-hidden="true"></i><span className='post-response-value'>{this.props.comment.dislikes}</span> */}
                                     {/* <i className="fa fa-comment-o post-response-btn" aria-hidden="true" onClick={this.onCommentClickHandler}></i><span className='post-response-value'>{this.props.post.commentCount}</span> */}
