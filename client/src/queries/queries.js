@@ -4,7 +4,7 @@ import {gql} from 'apollo-boost';
 const getUsersQuery = gql`
 {
     users {
-        id
+        _id
         fname
         lname
         userDP
@@ -13,9 +13,9 @@ const getUsersQuery = gql`
 `
 
 const getUserQuery = gql`
-query($id:ID) {
-    user(id:$id) {
-        id
+query($_id:ID) {
+    user(_id:$_id) {
+        _id
         fname
         lname
         userDP
@@ -24,13 +24,29 @@ query($id:ID) {
 `
 
 const getFriendsQuery = gql`
-query($id:ID) {
-    user(id:$id) {
-        id
+query($_id:ID) {
+    user(_id:$_id) {
+        _id
         fname
         lname
         friends {
-            id
+            _id
+            fname
+            lname
+            userDP
+        }
+    }
+}
+`
+
+const getFriendRequestsQuery = gql`
+query($_id:ID) {
+    user(_id:$_id) {
+        _id
+        fname
+        lname
+        friendRequests {
+            _id
             fname
             lname
             userDP
@@ -40,18 +56,18 @@ query($id:ID) {
 `
 
 const getPostsByFriendsQuery = gql`
-query($id:ID) {
-    user(id:$id) {
-        id
+query($_id:ID) {
+    user(_id:$_id) {
+        _id
         fname
         lname
         friends {
-            id
+            _id
             fname
             lname
             userDP
             posts {
-                id
+                _id
                 postBody
                 postImages
                 postDate
@@ -72,7 +88,7 @@ query($id:ID) {
 const getPostsQuery = gql`
 {
     posts {
-        id
+        _id
         postBody
         postImages
         postDate
@@ -89,9 +105,9 @@ const getPostsQuery = gql`
 `
 
 const getPostQuery = gql`
-query($id:ID) {
-    post(id:$id) {
-        id
+query($_id:ID) {
+    post(_id:$_id) {
+        _id
         postBody
         postImages
         postDate
@@ -111,7 +127,8 @@ export {
     getUsersQuery,
     getUserQuery, 
     getFriendsQuery, 
-    getPostsByFriendsQuery, 
+    getPostsByFriendsQuery,
+    getFriendRequestsQuery,
     getPostsQuery, 
     getPostQuery
 };

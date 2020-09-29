@@ -14,6 +14,7 @@ import PhotoGallery from './PhotoGallery';
 import TimelineTab from './TimelineTab';
 import AboutTab from './AboutTab';
 import FriendsTab from './FriendsTab';
+import RequestsTab from './RequestsTab';
 import TabbedView from '../Utility/TabbedView';
 import Modal from '../Utility/Modal';
 
@@ -44,7 +45,8 @@ class ProfilePage extends Component {
 
         friends: [],
         friendMessage: null,
-        friendMethod: 'request'
+        friendMethod: 'request',
+        friendRequests: []
     }
 
     componentDidMount() {
@@ -222,8 +224,19 @@ class ProfilePage extends Component {
         let tabPages = [];
         let tabTitles = [];
 
+
+        if (this.state.isOwner) {
+            tabPages.push(<RequestsTab userId={this.state.userId} />);
+            tabTitles.push('Requests');
+        }
+
+        if (this.state.isOwner || this.state.friends.length > 0) {
+            tabPages.push(<FriendsTab friends={this.state.friends} userId={this.state.userId} />);
+            tabTitles.push('Friends');
+        }
+
         tabPages.push(<PhotoGallery userId={this.state.userId} />);
-        tabTitles.push(<i class="fa fa-camera" aria-hidden="true"></i>);
+        tabTitles.push(<i className="fa fa-camera" aria-hidden="true"></i>);
         
         tabPages.push(<AboutTab isOwner={this.state.isOwner} userId={this.state.userId}/>);
         tabTitles.push('About');
@@ -232,10 +245,6 @@ class ProfilePage extends Component {
         tabTitles.push('Timeline');
 
         
-        if (this.state.isOwner || this.state.friends.length > 0) {
-            tabPages.push(<FriendsTab friends={this.state.friends} userId={this.state.userId}/>);
-            tabTitles.push('Friends');
-        }
 
         let uploadUserDPModal=null;
 
@@ -279,8 +288,8 @@ class ProfilePage extends Component {
                         <div className='profile-user-container'>
                             <div className={this.state.isOwner?'profile-display-image image-overlay-container':'profile-display-image'}>
                                 <img className="overlay-parent" src={this.state.userDP ? this.state.userDP : '/images/profile.png'} onClick={this.modalHandler} alt='User DP'/>
-                                <div class="overlay-holder">
-                                    <div class="profile-display-image-overlay">Upload</div>
+                                <div className="overlay-holder">
+                                    <div className="profile-display-image-overlay">Upload</div>
                                 </div>
                             </div>
                             <div className='profile-user-info'>

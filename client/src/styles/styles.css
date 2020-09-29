@@ -40,6 +40,13 @@ input:-webkit-autofill:active {
     margin: 5px auto;
 }
 
+.profile-image-large {
+    border-radius: 50%;
+    width: 75px;
+    border: 2px solid darkgray;
+    margin: 5px auto;
+}
+
 .userSpan {
     color: #045377;
     cursor: pointer;

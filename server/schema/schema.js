@@ -16,7 +16,7 @@ const {
 const UserType = new GraphQLObjectType({
     name: 'User',
     fields: () => ({
-        id: {type: GraphQLID},
+        _id: {type: GraphQLID},
         fname: {type: GraphQLString},
         lname: {type: GraphQLString},
         userDP: {type: GraphQLString},
@@ -25,6 +25,12 @@ const UserType = new GraphQLObjectType({
             type: new GraphQLList(UserType),
             resolve(parent, args) {
                 return User.find({friends: parent._id});
+            }
+        },
+        friendRequests: {
+            type: new GraphQLList(UserType),
+            resolve(parent, args) {
+                return User.find({_id: {$in: parent.friendRequests}});
             }
         },
         posts: {
@@ -39,7 +45,7 @@ const UserType = new GraphQLObjectType({
 const PostType = new GraphQLObjectType({
     name: 'Post',
     fields: () => ({
-        id: {type: GraphQLID},
+        _id: {type: GraphQLID},
         postBody: {type: GraphQLString},
         postImages: {type: new GraphQLList(GraphQLString)},
         postDate: {type: GraphQLString},
@@ -62,16 +68,16 @@ const RootQuery = new GraphQLObjectType({
     fields: {
         user: {
             type: UserType,
-            args: {id: {type: GraphQLID}},
+            args: {_id: {type: GraphQLID}},
             resolve(parent, args) {
-                return User.findById(args.id);
+                return User.findById(args._id);
             }
         },
         post: {
             type: PostType,
-            args: {id: {type: GraphQLID}},
+            args: {_id: {type: GraphQLID}},
             resolve(parent, args) {
-                return Post.findById(args.id);
+                return Post.findById(args._id);
             }
         },
         users: {

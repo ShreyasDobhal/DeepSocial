@@ -4,6 +4,7 @@ import {graphql} from 'react-apollo';
 import {flowRight as compose} from 'lodash';
 import {getFriendsQuery, getUsersQuery} from '../../queries/queries';
 import LoadingSpinner from '../Loader/LoadingSpinner';
+import FriendCard from './FriendCard';
 
 class FriendsTab extends Component {
     render () {
@@ -30,9 +31,7 @@ class FriendsTab extends Component {
             } else {
                 return this.props.getFriendsQuery.user.friends.map(friend => {
                     return (
-                        <div key={friend.id}>
-                            <h4>{friend.fname}</h4>
-                        </div>
+                        <FriendCard key={friend._id} friend={friend} />
                     );
                 });
             }
@@ -58,7 +57,7 @@ export default compose(
         options: (props) => {
             return {
                 variables: {
-                    id: props.userId
+                    _id: props.userId
                 }
             }
         },
