@@ -88,6 +88,7 @@ class PostPage extends Component {
             if (this.state.notFound) {
                 PostHolder = (<NotFound />);
             } else {
+                console.log("Post",this.state.post);
                 PostHolder = (<Post post={this.state.post} onResponseHandler={this.onResponseHandler}/>);
                 AddCommentHolder = (<AddComment postId={this.state.postId}/>);
                 CommentHolder = (

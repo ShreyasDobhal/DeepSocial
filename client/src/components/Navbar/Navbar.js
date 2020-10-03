@@ -30,6 +30,7 @@ const NavigationBar = (props) => {
             <Nav >
                 <UncontrolledDropdown nav inNavbar>
                     <DropdownToggle nav caret className='nav-bar-userButton'>
+                        <img className='nav-user-image' src={props.userDP} alt='user-profile'/>
                         {props.userName}
                     </DropdownToggle>
                     <DropdownMenu right>
@@ -84,8 +85,6 @@ const NavigationBar = (props) => {
                         <NavItem>
                             <NavLink href="/friends">Friends</NavLink>
                         </NavItem>
-                        
-                        
                     </Nav>
                     {loginBtn}
                     
@@ -100,7 +99,8 @@ const mapStateToProps = (state) => {
     return {
         tokenId: state.tokenId,
         isSignedIn: state.isSignedIn,
-        userName: state.currentUser.fname
+        userName: state.currentUser.fname,
+        userDP: state.currentUser.userDP ? '/'+state.currentUser.userDP : '/images/profile.png'
     }
 }
 

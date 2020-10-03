@@ -211,7 +211,6 @@ class ProfilePage extends Component {
                     })
             })
             .catch(error => {
-                // console.log(error);
                 if (error.response && error.response.data.message) {
                     console.log(error.response.data.message);
                 }
@@ -223,6 +222,9 @@ class ProfilePage extends Component {
 
         let tabPages = [];
         let tabTitles = [];
+
+        tabPages.push(<TimelineTab userId={this.state.userId}/>);
+        tabTitles.push('Timeline');
         
         tabPages.push(<PhotoGallery userId={this.state.userId} />);
         tabTitles.push(<i className="fa fa-camera" aria-hidden="true"></i>);
@@ -230,8 +232,7 @@ class ProfilePage extends Component {
         tabPages.push(<AboutTab isOwner={this.state.isOwner} userId={this.state.userId}/>);
         tabTitles.push('About');
 
-        tabPages.push(<TimelineTab userId={this.state.userId}/>);
-        tabTitles.push('Timeline');
+        
 
         if (this.state.isOwner || this.state.friends.length > 0) {
             tabPages.push(<FriendsTab friends={this.state.friends} userId={this.state.userId} />);
@@ -333,11 +334,5 @@ const mapStateToProps = (state) => {
         userId: state.tokenId
     }
 }
-
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         setUser: (user) => dispatch(Actions.setUser(user))
-//     }
-// }
 
 export default connect(mapStateToProps)(ProfilePage);

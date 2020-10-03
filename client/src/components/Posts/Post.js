@@ -50,10 +50,15 @@ class Post extends Component {
     
     render() {
         let userDP = (this.props.post.authorDP) ? this.props.post.authorDP : null;
-        if (this.props.post.authorCurrentDP && this.props.post.authorCurrentDP.userDP)
-                userDP = '/'+this.props.post.authorCurrentDP.userDP;
-            else 
-                userDP = (this.props.post.authorDP) ? this.props.post.authorDP : '/images/profile.png';
+        const postDate = ((new Date(this.props.post.postDate)) == 'Invalid Date') ? (new Date(parseInt(this.props.post.postDate))) : (new Date(this.props.post.postDate));
+        if (this.props.post.author && this.props.post.author.userDP)
+            userDP = '/'+this.props.post.author.userDP;
+        else if (this.props.post.authorCurrentDP && this.props.post.authorCurrentDP.userDP)
+            userDP = '/'+this.props.post.authorCurrentDP.userDP;
+        else 
+            userDP = (this.props.post.authorDP) ? this.props.post.authorDP : '/images/profile.png';
+        
+        
         
         return (
             <div className='post-container'>
@@ -63,7 +68,7 @@ class Post extends Component {
                     </div>
                     <div className='post-info-container'>
                         <div className='post-sender-name'><span className='userSpan' onClick={() => handleUserSpanClick(this.props.post.authorId)}>{this.props.post.authorName}</span></div>
-                        <div className='post-upload-time'>{(new Date(this.props.post.postDate)).toDateString()}</div>
+                        <div className='post-upload-time'>{postDate.toDateString()}</div>
                     </div>
                 </div>
                 <div className='post-body-container'>

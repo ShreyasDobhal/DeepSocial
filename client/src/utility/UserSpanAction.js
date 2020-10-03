@@ -1,3 +1,3 @@
-export function handleUserSpanClick() {
-    console.log('Click');
+export function handleUserSpanClick(userId) {
+    window.location.href = '/profile/'+userId;
 }

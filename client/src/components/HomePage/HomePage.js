@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import axiosExpress from '../../axios/axiosExpress';
 import {connect} from 'react-redux';
+import {graphql} from 'react-apollo';
+import {flowRight as compose} from 'lodash';
+import {getPostsByFriendsQuery, getPostsByUserQuery} from '../../queries/queries';
 
 import NavigationBar from '../Navbar/Navbar';
 import AddPost from '../Posts/AddPost';
 import Post from '../Posts/Post';
 import LoadingSpinner from '../Loader/LoadingSpinner';
-
-
 
 class HomePage extends Component {
 
@@ -66,18 +67,24 @@ class HomePage extends Component {
         }
     }
 
-    componentDidMount() {
-        // TODO: get posts of self and friends only
-        axiosExpress.get('/posts')
-            .then(posts=>{
+    componentWillReceiveProps (nextProps) {
+        if (!nextProps.getPostsByUserQuery.loading && !nextProps.getPostsByFriendsQuery.loading) {
+            const userPosts = nextProps.getPostsByUserQuery.user.posts;
+            const friendPosts = [].concat.apply([],nextProps.getPostsByFriendsQuery.user.friends.map(friend =>friend.posts));
+            console.log("User Posts",userPosts);
+            console.log("Friend Posts",friendPosts);
+            let newPosts = [...userPosts, ...friendPosts].sort((post1,post2) => post2.postDate-post1.postDate);
+            console.log("Total Posts",newPosts);
+
+            if (this.state.posts !== newPosts) {
                 this.setState({
-                    posts: posts.data,
+                    posts: newPosts,
                     loaded: true
                 });
-                console.log("Posts ",posts.data);
-            });
+            }
+        }
     }
-    
+ 
     render() {
         let PostHolder = null;
 
@@ -105,10 +112,30 @@ class HomePage extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        userName: state.currentUser.name
+        userName: state.currentUser.name,
+        userId: state.tokenId
     }
 }
 
-
-
-export default connect(mapStateToProps)(HomePage);
+export default connect(mapStateToProps)(compose(
+    graphql(getPostsByFriendsQuery, {
+        options: (props) => {
+            return {
+                variables: {
+                    _id: props.userId
+                }
+            }
+        },
+        name: "getPostsByFriendsQuery"
+    }),
+    graphql(getPostsByUserQuery, {
+        options: (props) => {
+            return {
+                variables: {
+                    _id: props.userId
+                }
+            }
+        },
+        name: "getPostsByUserQuery"
+    })
+)(HomePage))

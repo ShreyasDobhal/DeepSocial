@@ -1,11 +1,15 @@
 import React, {Component} from 'react';
 import axiosExpress from '../../axios/axiosExpress';
 import Post from '../Posts/Post';
+import {graphql} from 'react-apollo';
+import {flowRight as compose} from 'lodash';
+import {getPostsByUserQuery} from '../../queries/queries';
+import LoadingSpinner from '../Loader/LoadingSpinner';
 
 class TimelineTab extends Component {
 
     state = {
-        posts: []
+        posts: null
     }
 
     // Post like - dislike handler
@@ -59,22 +63,44 @@ class TimelineTab extends Component {
         }
     }
 
-    componentDidMount() {
-        axiosExpress.get('/posts')
-            .then(posts=>{
-                let newPosts = posts.data.filter(post => post.authorId === this.props.userId);
-                this.setState({
-                    posts: newPosts
-                });
-                console.log("Posts ",posts.data);
-            });
+    componentWillReceiveProps(nextProps) {
+        if (!nextProps.getPostsByUserQuery.loading) {
+            if (this.state.posts !== nextProps.getPostsByUserQuery.user.posts)
+                this.setState({posts: nextProps.getPostsByUserQuery.user.posts});
+        }
     }
 
     render() {
-        return this.state.posts.map(post=>
-            <Post key={post._id} post={post} onResponseHandler={this.onResponseHandler}/>
-        );
+
+        if (this.props.getPostsByUserQuery.loading || !this.state.posts) {
+            return (<LoadingSpinner />);
+        } else {
+            if (this.state.posts.length === 0) {
+                return (
+                    <div>
+                        <img style={{width: '100%'}} src='/images/no-posts.png'/>
+                    </div>
+                );
+            } else {
+                return this.state.posts.map(post=>
+                    <Post key={post._id} post={post} onResponseHandler={this.onResponseHandler}/>
+                );
+            }
+            
+        }
+        
     }
 }
 
-export default TimelineTab;
+export default compose(
+    graphql(getPostsByUserQuery, {
+        options: (props) => {
+            return {
+                variables: {
+                    _id: props.userId
+                }
+            }
+        },
+        name: "getPostsByUserQuery"
+    })
+)(TimelineTab);

@@ -82,11 +82,39 @@ query($_id:ID) {
                 likes
                 dislikes
                 commentCount
+                likedBy
+                dislikedBy
                 authorName
                 authorId
                 author {
                     userDP
                 }
+            }
+        }
+    }
+}
+`
+
+const getPostsByUserQuery = gql`
+query($_id:ID) {
+    user(_id:$_id) {
+        _id
+        fname
+        lname
+        posts {
+            _id
+            postBody
+            postImages
+            postDate
+            likes
+            dislikes
+            commentCount
+            likedBy
+            dislikedBy
+            authorName
+            authorId
+            author {
+                userDP
             }
         }
     }
@@ -103,6 +131,8 @@ const getPostsQuery = gql`
         likes
         dislikes
         commentCount
+        likedBy
+        dislikedBy
         authorName
         authorId
         author {
@@ -122,6 +152,8 @@ query($_id:ID) {
         likes
         dislikes
         commentCount
+        likedBy
+        dislikedBy
         authorName
         authorId
         author{
@@ -135,8 +167,9 @@ export {
     getUsersQuery,
     getUserQuery, 
     getFriendsQuery, 
-    getPostsByFriendsQuery,
     getFriendRequestsQuery,
+    getPostsByFriendsQuery,
+    getPostsByUserQuery,
     getPostsQuery, 
     getPostQuery
 };

@@ -73,6 +73,8 @@ const PostType = new GraphQLObjectType({
         likes: {type: GraphQLInt},
         dislikes: {type: GraphQLInt},
         commentCount: {type: GraphQLInt},
+        likedBy: {type: new GraphQLList(GraphQLString)},
+        dislikedBy: {type: new GraphQLList(GraphQLString)},
         authorName: {type: GraphQLString},
         authorId: {type: GraphQLID},
         author: {

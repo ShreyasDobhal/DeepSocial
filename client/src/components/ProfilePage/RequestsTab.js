@@ -4,7 +4,7 @@ import {flowRight as compose} from 'lodash';
 import axiosExpress from '../../axios/axiosExpress';
 import {getFriendRequestsQuery} from '../../queries/queries';
 import LoadingSpinner from '../Loader/LoadingSpinner';
-import {ToastContainer, toast} from 'react-toastify';
+import {toast} from 'react-toastify';
 import {handleUserSpanClick}  from '../../utility/UserSpanAction';
 
 class RequestsTab extends Component {

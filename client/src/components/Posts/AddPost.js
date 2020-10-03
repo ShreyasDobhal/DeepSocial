@@ -64,7 +64,8 @@ class AddPost extends Component {
             let formData = new FormData();
             
             formData.append('postImage',this.state.file);
-            formData.append('postBody',this.state.postBody);
+            if (this.state.postBody)
+                formData.append('postBody',this.state.postBody);
             formData.append('tokenId',this.props.tokenId);
             formData.append('authorName',this.props.firstName + ' ' + this.props.lastName);
             formData.append('postDate',new Date());
