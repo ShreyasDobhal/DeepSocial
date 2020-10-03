@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import AddComment from './AddComment';
+import {handleUserSpanClick}  from '../../utility/UserSpanAction';
 
 class Comment extends Component {
 
@@ -38,7 +39,7 @@ class Comment extends Component {
                                     <img src={(this.props.comment.userDP) ? '/'+this.props.comment.userDP : '/images/profile.png'} className='profile-image' alt='userDP'/>
                                 </div>
                                 <div className='post-info-container'>
-                                    <div className='post-sender-name'><span className='userSpan'>{this.props.comment.userName}</span></div>
+                                    <div className='post-sender-name'><span className='userSpan' onClick={() => handleUserSpanClick(this.props.comment.userId)}>{this.props.comment.userName}</span></div>
                                     <div className='post-upload-time'>{(new Date(this.props.comment.commentDate)).toDateString()}</div>
                                 </div>
                             </div>

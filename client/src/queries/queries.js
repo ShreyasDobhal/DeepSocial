@@ -50,6 +50,14 @@ query($_id:ID) {
             fname
             lname
             userDP
+            info {
+                location
+                phone
+                work
+                about
+                education
+                birthday
+            }
         }
     }
 }

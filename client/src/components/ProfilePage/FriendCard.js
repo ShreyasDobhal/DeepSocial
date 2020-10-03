@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Badge } from 'reactstrap';
 import axiosExpress from '../../axios/axiosExpress';
 import {connect} from 'react-redux';
-import {ToastContainer, toast} from 'react-toastify';
+import {handleUserSpanClick}  from '../../utility/UserSpanAction';
 
 class FriendCard extends Component {
 
@@ -53,34 +53,16 @@ class FriendCard extends Component {
             actionButton = <Badge style={{cursor: 'pointer'}} color='info' onClick={this.handleFriendMethod}>{this.state.friendMessage}</Badge>
         }
         return (
-            <div className='friend-card-container'>
-                <div className='friend-card'>
-                    <div className='profile-image-holder'>
-                        <img src={userDP} className='profile-image' alt='userDP' />
-                    </div>
-                    <div className='friend-card-info-container'>
-                        <div className='post-sender-name'><span className='userSpan'>{this.props.friend.fname + ' ' + this.props.friend.lname}</span></div>
-                        {actionButton}
-                    </div>
+            <div className='friend-card'>
+                <div className='profile-image-holder'>
+                    <img src={userDP} className='profile-image' alt='userDP' />
                 </div>
-
-                <div className='friend-card'>
-                    <div className='profile-image-holder'>
-                        <img src={userDP} className='profile-image' alt='userDP' />
-                    </div>
-                    <div className='friend-card-info-container'>
-                        <div className='post-sender-name'><span className='userSpan'>{this.props.friend.fname + ' ' + this.props.friend.lname}</span></div>
-                    </div>
+                <div className='friend-card-info-container'>
+                    <div className='post-sender-name'><span className='userSpan' onClick={() => handleUserSpanClick(this.props.friend._id)}>{this.props.friend.fname + ' ' + this.props.friend.lname}</span></div>
+                    {actionButton}
                 </div>
-                
             </div>
         );
-        // return (
-        //     <div>
-        //         <h4>{this.props.friend.fname + ' ' + this.props.friend.lname}</h4>
-        //         <h4>{this.props.friend.userDP}</h4>
-        //     </div>
-        // );
     }
 }
 

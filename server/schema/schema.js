@@ -13,6 +13,18 @@ const {
     GraphQLInt
 } = graphql;
 
+const InfoType = new GraphQLObjectType({
+    name: 'Info',
+    fields: () => ({
+        location: {type: GraphQLString},
+        phone: {type: GraphQLString},
+        work: {type: GraphQLString},
+        about: {type: GraphQLString},
+        education: {type: GraphQLString},
+        birthday: {type: GraphQLString}
+    })
+});
+
 const UserType = new GraphQLObjectType({
     name: 'User',
     fields: () => ({
@@ -21,6 +33,15 @@ const UserType = new GraphQLObjectType({
         lname: {type: GraphQLString},
         userDP: {type: GraphQLString},
         email: {type: GraphQLString},
+        info: {
+            location: {type: GraphQLString},
+            phone: {type: GraphQLString},
+            work: {type: GraphQLString},
+            about: {type: GraphQLString},
+            education: {type: GraphQLString},
+            birthday: {type: GraphQLString}
+        },
+        info: {type: InfoType},
         friends: {
             type: new GraphQLList(UserType),
             resolve(parent, args) {

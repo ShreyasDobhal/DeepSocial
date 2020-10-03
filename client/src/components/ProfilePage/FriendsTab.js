@@ -19,34 +19,20 @@ class FriendsTab extends Component {
                 </div>
             );
         } else {
-            // TODO: Compelete friends page
-            // this.props.getFriendsQuery({
-            //     variables: {
-            //         id: this.props.userId
-            //     }
-            // });
-
             if (this.props.getFriendsQuery.loading) {
                 return (<LoadingSpinner />);
             } else {
-                return this.props.getFriendsQuery.user.friends.map(friend => {
+                const friendsCards = this.props.getFriendsQuery.user.friends.map(friend => {
                     return (
                         <FriendCard key={friend._id} friend={friend} />
                     );
                 });
+                return (
+                    <div className='friend-card-container'>
+                        {friendsCards}
+                    </div>
+                )
             }
-            // console.log(this.props.getFriendsQuery.user.friends);
-            // return this.props.friends.map(friend => {
-            //     if (!friend) {
-            //         return null;
-            //     } else {
-            //         return  (
-            //             <div>
-            //                 <h4>{friend}</h4>
-            //             </div>
-            //         );
-            //     }
-            // });
         }
         
     }

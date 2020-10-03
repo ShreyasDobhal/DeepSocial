@@ -223,18 +223,7 @@ class ProfilePage extends Component {
 
         let tabPages = [];
         let tabTitles = [];
-
-
-        if (this.state.isOwner) {
-            tabPages.push(<RequestsTab userId={this.state.userId} />);
-            tabTitles.push('Requests');
-        }
-
-        if (this.state.isOwner || this.state.friends.length > 0) {
-            tabPages.push(<FriendsTab friends={this.state.friends} userId={this.state.userId} />);
-            tabTitles.push('Friends');
-        }
-
+        
         tabPages.push(<PhotoGallery userId={this.state.userId} />);
         tabTitles.push(<i className="fa fa-camera" aria-hidden="true"></i>);
         
@@ -243,6 +232,16 @@ class ProfilePage extends Component {
 
         tabPages.push(<TimelineTab userId={this.state.userId}/>);
         tabTitles.push('Timeline');
+
+        if (this.state.isOwner || this.state.friends.length > 0) {
+            tabPages.push(<FriendsTab friends={this.state.friends} userId={this.state.userId} />);
+            tabTitles.push('Friends');
+        }
+
+        if (this.state.isOwner) {
+            tabPages.push(<RequestsTab userId={this.state.userId} />);
+            tabTitles.push('Requests');
+        }
 
         
 

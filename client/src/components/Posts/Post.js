@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import PostImageHolder from './PostImageHolder';
+import {handleUserSpanClick}  from '../../utility/UserSpanAction';
 
 class Post extends Component {
 
@@ -61,7 +62,7 @@ class Post extends Component {
                         <img src={userDP} className='profile-image' alt='userDP' />
                     </div>
                     <div className='post-info-container'>
-                        <div className='post-sender-name'><span className='userSpan'>{this.props.post.authorName}</span></div>
+                        <div className='post-sender-name'><span className='userSpan' onClick={() => handleUserSpanClick(this.props.post.authorId)}>{this.props.post.authorName}</span></div>
                         <div className='post-upload-time'>{(new Date(this.props.post.postDate)).toDateString()}</div>
                     </div>
                 </div>
