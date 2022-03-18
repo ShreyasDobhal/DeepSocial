@@ -3,3 +3,29 @@
     max-width: 615px;
     margin: 10px auto;
 }
+
+.friend-suggestion-container {
+    /* border: 2px solid yellowgreen; */
+    display: flex;
+    overflow-x: scroll;
+    padding: 10px;
+}
+
+.friend-suggestion-card {
+    display: inline-block;
+    border: 1px solid #a8a6a6;
+    box-shadow: 5px 5px 10px grey;
+    border-radius: 10px;
+    width: 50%;
+    padding: 10px;
+    margin: 15px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.friend-suggestion-card-img {
+    width: 100px;
+    border: 2px solid darkgray;
+    border-radius: 50%;
+    margin: 20px;
+}

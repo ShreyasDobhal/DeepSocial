@@ -9,6 +9,7 @@ import NavigationBar from '../Navbar/Navbar';
 import AddPost from '../Posts/AddPost';
 import Post from '../Posts/Post';
 import LoadingSpinner from '../Loader/LoadingSpinner';
+import FriendSuggestions from './FriendSuggestions';
 
 class HomePage extends Component {
 
@@ -103,6 +104,7 @@ class HomePage extends Component {
                 <NavigationBar/>
                 <div className='scroll-container'>
                     <AddPost />
+                    <FriendSuggestions userId={this.props.userId}/>
                     {PostHolder}
                 </div>
             </div>

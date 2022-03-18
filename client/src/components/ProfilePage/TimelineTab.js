@@ -78,7 +78,7 @@ class TimelineTab extends Component {
             if (this.state.posts.length === 0) {
                 return (
                     <div>
-                        <img style={{width: '100%'}} src='/images/no-posts.png'/>
+                        <img style={{width: '100%'}} src='/images/no-posts.png' alt='No Posts'/>
                     </div>
                 );
             } else {
